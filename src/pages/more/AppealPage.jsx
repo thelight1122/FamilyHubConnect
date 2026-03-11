@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackHeader from '../../components/BackHeader';
 import { appeal } from '../../data/mockData';
@@ -8,6 +8,9 @@ export default function AppealPage() {
   const [reason, setReason] = useState('');
   const [alternative, setAlternative] = useState('');
   const [learned, setLearned] = useState('');
+  const [attachedFile, setAttachedFile] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const fileInputRef = useRef(null);
 
   const consequence = {
     label: 'Active Consequence',
@@ -15,10 +18,50 @@ export default function AppealPage() {
     reason: appeal?.reason ?? 'Came home 15 minutes past curfew without notifying parents.',
   };
 
+  const handleFileSelect = (e) => {
+    if (e.target.files?.length > 0) {
+      setAttachedFile(e.target.files[0].name);
+    }
+  };
+
   const handleSubmit = () => {
     if (!reason.trim()) return;
-    navigate('/more/appeal/review');
+    setSubmitted(true);
   };
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
+        <BackHeader title="Submit Appeal" backTo="/more" />
+        <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pb-24">
+          <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mb-4">
+            <span className="material-symbols-outlined text-green-500" style={{ fontSize: '40px' }}>check_circle</span>
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Appeal Submitted!</h2>
+          <p className="text-sm text-slate-500 leading-relaxed mb-6">
+            Your appeal is pending parent review. You'll be notified once a decision is made.
+          </p>
+          <div className="w-full bg-white rounded-2xl border border-slate-100 p-4 text-left mb-6">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">What happens next</p>
+            <div className="space-y-2">
+              {['Parent reviews your case', 'Decision made within 24 hours', "You'll receive a notification"].map((step, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#4c8ce6] text-base">arrow_right</span>
+                  <p className="text-sm text-slate-600">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/more')}
+            className="w-full bg-[#4c8ce6] text-white font-semibold py-3.5 rounded-2xl text-sm"
+          >
+            Back to More
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
@@ -41,7 +84,6 @@ export default function AppealPage() {
 
         {/* Form */}
         <div className="mt-5 flex flex-col gap-4">
-          {/* Reason textarea */}
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
               Your Reason <span className="text-red-400">*</span>
@@ -55,11 +97,8 @@ export default function AppealPage() {
             />
           </div>
 
-          {/* Proposed Alternative */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Proposed Alternative
-            </label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Proposed Alternative</label>
             <input
               type="text"
               value={alternative}
@@ -69,11 +108,8 @@ export default function AppealPage() {
             />
           </div>
 
-          {/* What I've Learned textarea */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              What I've Learned
-            </label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">What I've Learned</label>
             <textarea
               value={learned}
               onChange={(e) => setLearned(e.target.value)}
@@ -85,14 +121,33 @@ export default function AppealPage() {
 
           {/* Evidence upload area */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Evidence (Optional)
-            </label>
-            <div className="w-full border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center gap-2 bg-white">
-              <span className="material-symbols-outlined text-slate-300 text-4xl">upload_file</span>
-              <p className="text-sm text-slate-400 font-medium">Tap to add files</p>
-              <p className="text-xs text-slate-300">Photos, screenshots, or documents</p>
-            </div>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Evidence (Optional)</label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,application/pdf"
+              className="hidden"
+              onChange={handleFileSelect}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center gap-2 bg-white hover:border-[#4c8ce6] transition-colors"
+            >
+              {attachedFile ? (
+                <>
+                  <span className="material-symbols-outlined text-[#4c8ce6] text-4xl">attach_file</span>
+                  <p className="text-sm text-[#4c8ce6] font-semibold truncate max-w-full px-4">{attachedFile}</p>
+                  <p className="text-xs text-slate-400">Tap to change</p>
+                </>
+              ) : (
+                <>
+                  <span className="material-symbols-outlined text-slate-300 text-4xl">upload_file</span>
+                  <p className="text-sm text-slate-400 font-medium">Tap to add files</p>
+                  <p className="text-xs text-slate-300">Photos, screenshots, or documents</p>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
@@ -111,7 +166,8 @@ export default function AppealPage() {
         <div className="mt-4 flex flex-col gap-3">
           <button
             onClick={handleSubmit}
-            className="w-full bg-[#4c8ce6] text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm shadow-sm"
+            disabled={!reason.trim()}
+            className="w-full bg-[#4c8ce6] text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-lg">gavel</span>
             Submit Appeal

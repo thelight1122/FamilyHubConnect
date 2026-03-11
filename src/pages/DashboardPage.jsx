@@ -1,9 +1,17 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../config/routes';
 import { currentMember, dashboardQuickActions, dashboardSchedule, familyName } from '../data/selectors';
 
+const MOCK_NOTIFICATIONS = [
+  { id: 1, icon: 'gavel', color: 'text-[#4c8ce6]', bg: 'bg-[#4c8ce6]/10', text: 'Leo submitted an appeal — pending your review.', ago: '2h ago' },
+  { id: 2, icon: 'star', color: 'text-amber-500', bg: 'bg-amber-50', text: 'Emma completed "Clean Room" and earned 50 pts!', ago: '4h ago' },
+  { id: 3, icon: 'sports_soccer', color: 'text-green-600', bg: 'bg-green-50', text: 'Practice rescheduled to Friday 4 PM.', ago: '1d ago' },
+];
+
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const [showNotifications, setShowNotifications] = useState(false);
 
   return (
     <div className="min-h-screen bg-background-light pb-24">
@@ -12,8 +20,12 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold text-slate-900">Good morning, {currentMember.name}!</h2>
           <p className="text-sm text-slate-500 mt-0.5 font-medium">{familyName}</p>
         </div>
-        <button className="absolute top-6 right-4 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+        <button
+          onClick={() => setShowNotifications(true)}
+          className="absolute top-6 right-4 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors"
+        >
           <span className="material-symbols-outlined text-slate-600">notifications</span>
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
         </button>
       </div>
 
@@ -103,6 +115,40 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Notifications overlay */}
+      {showNotifications && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col justify-start"
+          onClick={() => setShowNotifications(false)}
+        >
+          <div className="absolute inset-0 bg-black/30" />
+          <div
+            className="relative bg-white w-full max-w-md mx-auto rounded-b-3xl shadow-2xl p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-slate-900">Notifications</h3>
+              <button onClick={() => setShowNotifications(false)} className="text-slate-400 hover:text-slate-600">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div className="space-y-3">
+              {MOCK_NOTIFICATIONS.map((n) => (
+                <div key={n.id} className="flex items-start gap-3">
+                  <div className={`w-9 h-9 rounded-xl ${n.bg} flex items-center justify-center shrink-0`}>
+                    <span className={`material-symbols-outlined text-base ${n.color}`}>{n.icon}</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-slate-700 leading-snug">{n.text}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{n.ago}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
 import { pets } from '../../data/mockData';
 
@@ -31,6 +32,14 @@ export default function PetHubPage() {
     { label: 'Age', value: petData.age },
     { label: 'Activity', value: petData.activity },
   ];
+
+  const [walkDone, setWalkDone] = useState(() =>
+    petData.walks.map((w) => w.done ?? false)
+  );
+
+  const toggleWalk = (idx) => {
+    setWalkDone((prev) => prev.map((v, i) => (i === idx ? !v : v)));
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
@@ -92,24 +101,32 @@ export default function PetHubPage() {
             </span>
           </div>
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-            {petData.walks.map((walk, idx) => (
-              <div
-                key={idx}
-                className={`flex items-center gap-3 px-4 py-3.5 ${idx < petData.walks.length - 1 ? 'border-b border-slate-100' : ''}`}
-              >
-                <div className="w-9 h-9 rounded-xl bg-[#4c8ce6]/10 flex items-center justify-center flex-shrink-0">
-                  <span className="material-symbols-outlined text-[#4c8ce6] text-base">directions_walk</span>
+            {petData.walks.map((walk, idx) => {
+              const done = walkDone[idx];
+              return (
+                <div
+                  key={idx}
+                  className={`flex items-center gap-3 px-4 py-3.5 ${idx < petData.walks.length - 1 ? 'border-b border-slate-100' : ''}`}
+                >
+                  <div className="w-9 h-9 rounded-xl bg-[#4c8ce6]/10 flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-[#4c8ce6] text-base">directions_walk</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-slate-800">{walk.label ?? walk.time}</p>
+                    {walk.duration && <p className="text-xs text-slate-400">{walk.duration}</p>}
+                  </div>
+                  <button
+                    onClick={() => toggleWalk(idx)}
+                    className={`text-xs font-semibold px-2 py-0.5 rounded-full mr-2 transition-colors ${
+                      done ? 'bg-green-50 text-green-600' : 'bg-slate-100 text-slate-400 hover:bg-green-50 hover:text-green-600'
+                    }`}
+                  >
+                    {done ? 'Done' : 'Pending'}
+                  </button>
+                  <span className="text-sm font-bold text-slate-600">{walk.distance}</span>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-800">{walk.label ?? walk.time}</p>
-                  {walk.duration && <p className="text-xs text-slate-400">{walk.duration}</p>}
-                </div>
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full mr-2 ${walk.done ? 'bg-green-50 text-green-600' : 'bg-slate-100 text-slate-400'}`}>
-                  {walk.done ? 'Done' : 'Pending'}
-                </span>
-                <span className="text-sm font-bold text-slate-600">{walk.distance}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

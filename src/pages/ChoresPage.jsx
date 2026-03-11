@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { tasks, rewards } from '../data/mockData';
+import Toast from '../components/Toast';
+import useToast from '../hooks/useToast';
 
 export default function ChoresPage() {
   const [activeTab, setActiveTab] = useState('tasks');
   const [completedIds, setCompletedIds] = useState([3]);
+  const [verifyingId, setVerifyingId] = useState(null);
+  const [toast, showToast] = useToast();
+  const fileInputRef = useRef(null);
 
   const toggleTask = (id) => {
     setCompletedIds((prev) =>
@@ -11,8 +16,40 @@ export default function ChoresPage() {
     );
   };
 
+  const handleVerifyClick = (taskId) => {
+    setVerifyingId(taskId);
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelected = (e) => {
+    if (e.target.files?.length > 0 && verifyingId != null) {
+      setCompletedIds((prev) => [...new Set([...prev, verifyingId])]);
+      showToast('✓ Photo submitted — task verified!');
+    }
+    setVerifyingId(null);
+    e.target.value = '';
+  };
+
+  const handleRedeem = (reward) => {
+    if (450 >= reward.points) {
+      showToast(`🎉 Redeemed: ${reward.title}!`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background-light pb-24">
+      <Toast message={toast} />
+
+      {/* Hidden file input for photo verify */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleFileSelected}
+      />
+
       {/* Header */}
       <div className="bg-white px-4 pt-6 pb-4 flex items-center justify-between">
         <div>
@@ -114,7 +151,10 @@ export default function ChoresPage() {
                       <div className="flex items-center gap-3 mt-1.5">
                         <span className="text-xs text-slate-400 font-medium">Due: {task.due}</span>
                         {task.requiresPhoto && !isDone && (
-                          <button className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+                          <button
+                            onClick={() => handleVerifyClick(task.id)}
+                            className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                          >
                             <span className="material-symbols-outlined text-sm leading-none">photo_camera</span>
                             Verify 📷
                           </button>
@@ -154,6 +194,7 @@ export default function ChoresPage() {
                     {reward.points} pts
                   </span>
                   <button
+                    onClick={() => handleRedeem(reward)}
                     className={`w-full py-2 rounded-xl text-xs font-bold transition-colors ${
                       450 >= reward.points
                         ? 'bg-primary text-white hover:bg-primary-dark'

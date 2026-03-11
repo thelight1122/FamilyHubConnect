@@ -108,6 +108,13 @@ export default function TimelinePage() {
       </div>
 
       <div className="flex-1 overflow-y-auto pb-28 px-4 pt-4">
+        {filteredData.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <span className="material-symbols-outlined text-5xl text-slate-300 mb-3">event_note</span>
+            <p className="text-slate-500 font-semibold">No {filter === 'All' ? '' : filter} entries yet</p>
+            <p className="text-xs text-slate-400 mt-1">Start capturing family moments!</p>
+          </div>
+        )}
         {filteredData.map((group) => (
           <div key={group.month} className="mb-6">
             {/* Month label */}

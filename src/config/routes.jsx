@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import AppLayout from '../components/AppLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
+import { paths } from './paths';
+export { paths } from './paths';
 
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
@@ -25,37 +27,13 @@ import InviteFamilyPage from '../pages/onboarding/InviteFamilyPage';
 import OnboardingRulesPage from '../pages/onboarding/OnboardingRulesPage';
 import OnboardingValuesPage from '../pages/onboarding/OnboardingValuesPage';
 
-export const paths = {
-  login: '/login',
-  invite: '/invite',
-  onboardingValues: '/onboarding/values',
-  onboardingRules: '/onboarding/rules',
-  dashboard: '/dashboard',
-  finance: '/finance',
-  financeMarket: '/finance/market',
-  financeLoan: '/finance/loan',
-  financeLoanConfirmation: '/finance/loan/confirmation',
-  chores: '/chores',
-  sports: '/sports',
-  sportsChat: '/sports/chat',
-  more: '/more',
-  moreConstitution: '/more/constitution',
-  moreTimeline: '/more/timeline',
-  morePets: '/more/pets',
-  moreHealth: '/more/health',
-  moreAppeal: '/more/appeal',
-  moreAppealReview: '/more/appeal/review',
-  moreCreator: '/more/creator',
-  moreGovernance: '/more/governance',
-  moreCourt: '/more/court',
-};
 
 export const bottomNavTabs = [
   { label: 'Home', icon: 'home', path: paths.dashboard, match: paths.dashboard },
   { label: 'Finance', icon: 'account_balance_wallet', path: paths.finance, match: paths.finance },
   { label: 'Chores', icon: 'checklist', path: paths.chores, match: paths.chores },
-  { label: 'Sports', icon: 'sports_soccer', path: paths.sports, match: paths.sports },
-  { label: 'More', icon: 'grid_view', path: paths.more, match: paths.more },
+  { label: 'Sports', icon: 'sports_soccer', path: paths.sports, match: paths.sports, badge: 2 },
+  { label: 'More', icon: 'grid_view', path: paths.more, match: paths.more, badge: 1 },
 ];
 
 export const publicRoutes = [

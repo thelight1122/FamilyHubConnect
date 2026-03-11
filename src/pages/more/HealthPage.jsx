@@ -1,13 +1,30 @@
+import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
 import { healthData } from '../../data/mockData';
+
+const EVENT_TYPES = ['Illness', 'Injury', 'Doctor Visit', 'Medication Change', 'Other'];
 
 export default function HealthPage() {
   const health = healthData;
   const member = health?.member ?? { name: 'Leo Thompson', age: 12, bloodType: 'A+', allergies: 'None', vaccinationStatus: 'Up to Date' };
   const colorDot = { red: 'bg-red-400', orange: 'bg-orange-400', primary: 'bg-[#4c8ce6]', blue: 'bg-blue-400' };
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [logType, setLogType] = useState(EVENT_TYPES[0]);
+  const [logNote, setLogNote] = useState('');
+  const [toast, showToast] = useToast();
+
+  const handleLogSubmit = () => {
+    if (!logNote.trim()) return;
+    setShowLogModal(false);
+    setLogNote('');
+    showToast('✓ Health event logged successfully');
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
+      <Toast message={toast} />
       <BackHeader title="Leo's Health Logs" rightIcon="more_vert" />
 
       <div className="flex-1 overflow-y-auto pb-24">
@@ -35,7 +52,7 @@ export default function HealthPage() {
         {/* Log New Health Event button */}
         <div className="px-4 mt-4">
           <button
-            onClick={() => {}}
+            onClick={() => setShowLogModal(true)}
             className="w-full bg-[#4c8ce6] text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm shadow-sm"
           >
             <span className="material-symbols-outlined text-lg">add_circle</span>
@@ -77,13 +94,12 @@ export default function HealthPage() {
         <div className="px-4 mt-5">
           <h3 className="text-base font-bold text-slate-800 mb-3">Health History</h3>
           <div className="relative">
-            {/* Vertical line */}
             <div className="absolute left-2.5 top-0 bottom-0 w-0.5 bg-slate-200" />
             <div className="flex flex-col gap-4">
               {health.history.map((event, idx) => (
                 <div key={idx} className="flex gap-4">
                   <div className="flex flex-col items-center flex-shrink-0 z-10">
-                    <div className={`w-5 h-5 rounded-full ${colorDot[event.color] ?? event.color ?? 'bg-slate-400'} border-2 border-white shadow-sm mt-1`} />
+                    <div className={`w-5 h-5 rounded-full ${colorDot[event.color] ?? 'bg-slate-400'} border-2 border-white shadow-sm mt-1`} />
                   </div>
                   <div className="flex-1 bg-white rounded-2xl border border-slate-100 p-4 mb-1">
                     <p className="font-bold text-slate-800 text-sm">{event.title}</p>
@@ -96,11 +112,62 @@ export default function HealthPage() {
           </div>
         </div>
 
-        {/* Medical disclaimer */}
         <p className="text-xs text-slate-400 text-center px-8 mt-6 mb-4 leading-relaxed">
           This log is for informational purposes only and does not replace professional medical advice. Always consult a qualified healthcare provider.
         </p>
       </div>
+
+      {/* Log Event Modal */}
+      {showLogModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center"
+          onClick={() => setShowLogModal(false)}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+          <div
+            className="relative bg-white w-full max-w-md rounded-t-3xl p-6 pb-10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-5" />
+            <h3 className="text-lg font-black text-slate-900 mb-4">Log Health Event</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Event Type</label>
+              <div className="flex flex-wrap gap-2">
+                {EVENT_TYPES.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setLogType(t)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                      logType === t
+                        ? 'bg-[#4c8ce6] text-white border-[#4c8ce6]'
+                        : 'bg-white text-slate-600 border-slate-200'
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="mb-5">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Notes</label>
+              <textarea
+                value={logNote}
+                onChange={(e) => setLogNote(e.target.value)}
+                placeholder="Describe the event..."
+                rows={3}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#4c8ce6] resize-none"
+              />
+            </div>
+            <button
+              onClick={handleLogSubmit}
+              disabled={!logNote.trim()}
+              className="w-full bg-[#4c8ce6] text-white font-semibold py-3.5 rounded-2xl text-sm disabled:opacity-50"
+            >
+              Save Event
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

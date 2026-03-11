@@ -1,26 +1,13 @@
 import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
 import { creatorStudio } from '../../data/mockData';
 
 const CREATE_TYPES = [
-  {
-    id: 'photo',
-    label: 'Photo Story',
-    icon: 'photo_camera',
-    gradient: 'from-pink-400 to-rose-500',
-  },
-  {
-    id: 'voice',
-    label: 'Voice Memo',
-    icon: 'mic',
-    gradient: 'from-emerald-400 to-emerald-600',
-  },
-  {
-    id: 'poll',
-    label: 'Family Poll',
-    icon: 'poll',
-    gradient: 'from-violet-400 to-violet-600',
-  },
+  { id: 'photo', label: 'Photo Story', icon: 'photo_camera', gradient: 'from-pink-400 to-rose-500' },
+  { id: 'voice', label: 'Voice Memo', icon: 'mic', gradient: 'from-emerald-400 to-emerald-600' },
+  { id: 'poll', label: 'Family Poll', icon: 'poll', gradient: 'from-violet-400 to-violet-600' },
 ];
 
 const TYPE_BADGE_COLORS = {
@@ -31,31 +18,33 @@ const TYPE_BADGE_COLORS = {
 
 export default function CreatorStudioPage() {
   const [showCreate, setShowCreate] = useState(false);
+  const [toast, showToast] = useToast();
 
   const { stats, creations } = creatorStudio;
 
+  const handleCreate = (type) => {
+    setShowCreate(false);
+    showToast(`${type.label} creator coming soon!`);
+  };
+
   return (
     <div className="min-h-dvh bg-[#f6f7f8] relative">
+      <Toast message={toast} />
       <BackHeader title="Creator's Studio" backTo="/more" />
 
       <div className="pb-28">
         {/* Stats Row */}
         <div className="grid grid-cols-3 gap-3 px-4 mt-4">
-          {/* Posts */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
             <span className="material-symbols-outlined text-[#4c8ce6] text-2xl">edit</span>
             <p className="text-lg font-black text-slate-900">{stats.posts}</p>
             <p className="text-xs text-slate-500">Posts</p>
           </div>
-
-          {/* Views */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
             <span className="material-symbols-outlined text-blue-500 text-2xl">visibility</span>
             <p className="text-lg font-black text-slate-900">{stats.views}</p>
             <p className="text-xs text-slate-500">Views</p>
           </div>
-
-          {/* Likes */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
             <span className="material-symbols-outlined text-rose-500 text-2xl">favorite</span>
             <p className="text-lg font-black text-slate-900">{stats.likes}</p>
@@ -74,7 +63,10 @@ export default function CreatorStudioPage() {
               >
                 <span className="material-symbols-outlined text-white text-4xl">{type.icon}</span>
                 <p className="text-white font-bold text-sm">{type.label}</p>
-                <button className="mt-auto bg-white/20 text-white text-xs font-semibold py-1.5 px-3 rounded-lg hover:bg-white/30 transition-colors self-start">
+                <button
+                  onClick={() => handleCreate(type)}
+                  className="mt-auto bg-white/20 text-white text-xs font-semibold py-1.5 px-3 rounded-lg hover:bg-white/30 transition-colors self-start"
+                >
                   Create →
                 </button>
               </div>
@@ -173,14 +165,12 @@ export default function CreatorStudioPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-5" />
-            <h3 className="text-lg font-black text-slate-900 mb-4 text-center">
-              Create New Content
-            </h3>
+            <h3 className="text-lg font-black text-slate-900 mb-4 text-center">Create New Content</h3>
             <div className="space-y-3">
               {CREATE_TYPES.map((type) => (
                 <button
                   key={type.id}
-                  onClick={() => setShowCreate(false)}
+                  onClick={() => handleCreate(type)}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r ${type.gradient} text-left`}
                 >
                   <span className="material-symbols-outlined text-white text-3xl">{type.icon}</span>

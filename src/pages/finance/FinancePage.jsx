@@ -83,7 +83,7 @@ export default function FinancePage() {
                   <p className="text-xs text-slate-400 font-medium">{item.date}</p>
                 </div>
                 <p className={`text-sm font-bold tabular-nums ${item.amount > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                  {item.amount > 0 ? '+' : ''}${Math.abs(item.amount).toFixed(2)}
+                  {item.amount > 0 ? '+' : '-'}${Math.abs(item.amount).toFixed(2)}
                 </p>
               </div>
             ))}

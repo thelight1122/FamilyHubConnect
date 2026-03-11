@@ -12,7 +12,9 @@
       "Bash(fi)",
       "Bash(done)",
       "Bash(npm create vite@latest fhc-app -- --template react)",
-      "mcp__Desktop_Commander__read_multiple_files"
+      "mcp__Desktop_Commander__read_multiple_files",
+      "Bash(wc -l \"H:\\\\FamilyHubConnect\\\\src\\\\pages\\\\more\"/*.jsx)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
