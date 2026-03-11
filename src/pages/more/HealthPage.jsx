@@ -1,10 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import BackHeader from '../../components/BackHeader';
 import { healthData } from '../../data/mockData';
 
 export default function HealthPage() {
-  const navigate = useNavigate();
-
   const health = healthData;
   const member = health?.member ?? { name: 'Leo Thompson', age: 12, bloodType: 'A+', allergies: 'None', vaccinationStatus: 'Up to Date' };
   const colorDot = { red: 'bg-red-400', orange: 'bg-orange-400', primary: 'bg-[#4c8ce6]', blue: 'bg-blue-400' };

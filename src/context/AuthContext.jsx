@@ -1,7 +1,5 @@
-import { createContext, useContext, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-
-const AuthContext = createContext(null);
+import { useState } from 'react';
+import AuthContext from './auth-context';
 
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('fhc_logged_in') === 'true');
@@ -19,17 +17,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-export function ProtectedRoute({ children }) {
-  const { isLoggedIn } = useAuth();
-  const location = useLocation();
-  if (!isLoggedIn) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-  return children;
 }

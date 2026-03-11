@@ -1,19 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { tasks, rewards } from '../data/mockData';
 
 export default function ChoresPage() {
   const [activeTab, setActiveTab] = useState('tasks');
   const [completedIds, setCompletedIds] = useState([3]);
-  const navigate = useNavigate();
 
   const toggleTask = (id) => {
     setCompletedIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
-
-  const totalPoints = tasks.reduce((sum, t) => sum + t.points, 0);
 
   return (
     <div className="min-h-screen bg-background-light pb-24">

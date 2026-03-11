@@ -1,12 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const tabs = [
-  { label: 'Home', icon: 'home', path: '/dashboard', match: '/dashboard' },
-  { label: 'Finance', icon: 'account_balance_wallet', path: '/finance', match: '/finance' },
-  { label: 'Chores', icon: 'checklist', path: '/chores', match: '/chores' },
-  { label: 'Sports', icon: 'sports_soccer', path: '/sports', match: '/sports' },
-  { label: 'More', icon: 'grid_view', path: '/more', match: '/more' },
-];
+import { bottomNavTabs } from '../config/routes';
 
 export default function BottomNav() {
   const navigate = useNavigate();
@@ -15,7 +8,7 @@ export default function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-slate-100 z-50">
       <div className="flex">
-        {tabs.map((tab) => {
+        {bottomNavTabs.map((tab) => {
           const active = pathname.startsWith(tab.match);
           return (
             <button

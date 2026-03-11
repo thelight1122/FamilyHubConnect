@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
-import { useNavigate } from 'react-router-dom';
 import { timeline } from '../../data/mockData';
 
 export default function TimelinePage() {
-  const navigate = useNavigate();
   const [filter, setFilter] = useState('All');
 
   const filters = ['All', 'Achievements', 'Memories', 'Journal'];

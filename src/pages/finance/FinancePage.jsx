@@ -1,28 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { familyMembers, finances } from '../../data/mockData';
-
-const tools = [
-  { label: 'Allowance', icon: 'payments', color: 'text-primary bg-primary/10', path: null },
-  { label: 'Savings Goals', icon: 'savings', color: 'text-green-600 bg-green-50', path: null },
-  { label: 'Family Bank', icon: 'account_balance', color: 'text-violet-600 bg-violet-50', path: '/finance/loan' },
-  { label: 'Market Sim', icon: 'show_chart', color: 'text-orange-500 bg-orange-50', path: '/finance/market' },
-];
-
-const walletMembers = [
-  { name: 'Dad', wallet: 8400, avatarIndex: 1 },
-  { name: 'Mom', wallet: 12200, avatarIndex: 2 },
-  { name: 'Leo', wallet: 450, avatarIndex: 0 },
-  { name: 'Sarah', wallet: 530, avatarIndex: 3 },
-];
+import { financeTools, maxWalletBalance, totalFamilySavings, walletMembers } from '../../data/selectors';
+import { finances } from '../../data/mockData';
 
 export default function FinancePage() {
   const navigate = useNavigate();
 
-  const getAvatar = (index) => familyMembers[index]?.avatar;
-
   return (
     <div className="min-h-screen bg-background-light pb-24">
-      {/* Page header */}
       <div className="bg-white px-4 pt-6 pb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Finance Hub</h1>
         <button className="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-full flex items-center gap-1.5 hover:bg-amber-100 transition-colors">
@@ -32,28 +16,25 @@ export default function FinancePage() {
       </div>
 
       <div className="px-4 pt-4 space-y-4">
-        {/* Hero card */}
         <div className="bg-primary text-white rounded-2xl p-5">
           <p className="text-sm font-medium opacity-80 mb-1">Total Family Savings</p>
-          <p className="text-4xl font-bold tracking-tight mb-1">$24,580</p>
+          <p className="text-4xl font-bold tracking-tight mb-1">${totalFamilySavings.toLocaleString()}</p>
           <div className="flex items-center gap-1.5 mt-2">
-            <span className="text-xs font-semibold bg-white/20 rounded-full px-2.5 py-0.5">↑ $1,240 this month</span>
+            <span className="text-xs font-semibold bg-white/20 rounded-full px-2.5 py-0.5">Up $1,240 this month</span>
           </div>
         </div>
 
-        {/* AI Tip card */}
         <div className="bg-white rounded-2xl p-4 flex items-start gap-3 border border-amber-100">
           <span className="material-symbols-outlined text-amber-500 text-2xl mt-0.5 shrink-0">lightbulb</span>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Try setting up automated savings goals for each family member to build financial discipline!
+            Try setting up automated savings goals for each family member to build financial discipline.
           </p>
         </div>
 
-        {/* Finance Tools grid */}
         <div className="bg-white rounded-2xl p-4">
           <h3 className="text-base font-bold text-slate-900 mb-3">Finance Tools</h3>
           <div className="grid grid-cols-2 gap-3">
-            {tools.map((tool) => (
+            {financeTools.map((tool) => (
               <button
                 key={tool.label}
                 onClick={() => tool.path && navigate(tool.path)}
@@ -68,35 +49,27 @@ export default function FinancePage() {
           </div>
         </div>
 
-        {/* Member Wallets */}
         <div className="bg-white rounded-2xl p-4">
           <h3 className="text-base font-bold text-slate-900 mb-3">Member Wallets</h3>
           <div className="space-y-3">
             {walletMembers.map((member) => (
-              <div key={member.name} className="flex items-center gap-3">
-                <img
-                  src={getAvatar(member.avatarIndex)}
-                  alt={member.name}
-                  className="w-10 h-10 rounded-full object-cover shrink-0"
-                />
+              <div key={member.id} className="flex items-center gap-3">
+                <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-slate-800">{member.name}</p>
                   <div className="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
                     <div
                       className="h-full bg-primary rounded-full"
-                      style={{ width: `${Math.min(100, (member.wallet / 12200) * 100)}%` }}
+                      style={{ width: `${Math.min(100, (member.wallet / maxWalletBalance) * 100)}%` }}
                     />
                   </div>
                 </div>
-                <p className="text-sm font-bold text-slate-900 tabular-nums">
-                  ${member.wallet.toLocaleString()}
-                </p>
+                <p className="text-sm font-bold text-slate-900 tabular-nums">${member.wallet.toLocaleString()}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Activity */}
         <div className="bg-white rounded-2xl p-4">
           <h3 className="text-base font-bold text-slate-900 mb-3">Recent Activity</h3>
           <div className="space-y-3">

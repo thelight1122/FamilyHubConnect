@@ -1,5 +1,5 @@
 import BackHeader from '../../components/BackHeader';
-import { constitution, familyMembers } from '../../data/mockData';
+import { constitution } from '../../data/mockData';
 
 export default function ConstitutionPage() {
   const missionText =
