@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Family Hub Connect - Leo's Dashboard</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="bg-white dark:bg-slate-900 px-6 pt-8 pb-4 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Young boy with a happy smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJLjl6Ef7bK-u_B2NcS7dt7erjVSdao2IuOgK27fYvgiRYQ1c6TSjOn2sdLMrDArlKAERFzjINx7uZP06Noe9OuWk9booq3wx_Ryr2CnXiJmlGeFfkTTvbnQ2nyIl1AS87YfbZI6bo_EWwXAAb_y-FPf38D3Wjt2L_CCENy3dwziFH1GbRkcUEW70bREGv3h0R9w_7URV-lb-elowFiRVjBwBTZCHCe2qrwSOOSwX374fPBHyuCHdlgpBTKVSwwDgPaoq16c8oURM"/>
+</div>
+<div>
+<h1 class="text-xl font-bold leading-tight">Good Morning, Leo!</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Monday, October 23rd</p>
+</div>
+</div>
+<button class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-6 py-6 space-y-6 overflow-y-auto pb-24">
+<section>
+<div class="flex items-center justify-between mb-3">
+<h2 class="font-bold text-lg">Today's Schedule</h2>
+<button class="text-primary text-sm font-semibold">See All</button>
+</div>
+<div class="space-y-3">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">sports_soccer</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Soccer Practice</p>
+<p class="text-xs text-slate-500">4:00 PM - 5:30 PM</p>
+</div>
+<span class="text-[10px] font-bold px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500">TODAY</span>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-lg bg-orange-100 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Math Tutoring</p>
+<p class="text-xs text-slate-500">6:00 PM - 7:00 PM</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-bold text-lg">My Chores</h2>
+<span class="text-sm font-medium text-primary">2/4 Done</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full mb-6">
+<div class="bg-primary h-2 rounded-full w-[50%]"></div>
+</div>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<div class="size-6 rounded-md border-2 border-primary bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="text-sm text-slate-400 line-through">Walk the dog</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="size-6 rounded-md border-2 border-primary bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="text-sm text-slate-400 line-through">Make bed</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="size-6 rounded-md border-2 border-slate-300 dark:border-slate-600"></div>
+<span class="text-sm font-medium">Feed the Dog</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="size-6 rounded-md border-2 border-slate-300 dark:border-slate-600"></div>
+<span class="text-sm font-medium">Fold Laundry</span>
+</li>
+</ul>
+</section>
+<section class="grid grid-cols-2 gap-4">
+<div class="bg-primary p-5 rounded-xl text-white shadow-md relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-xs opacity-80 mb-1">Total Balance</p>
+<h3 class="text-2xl font-bold">1,250</h3>
+<p class="text-[10px] font-medium tracking-wider mt-2">POINTS EARNED</p>
+</div>
+<div class="absolute -bottom-2 -right-2 opacity-20">
+<span class="material-symbols-outlined text-6xl">payments</span>
+</div>
+</div>
+<div class="bg-amber-100 dark:bg-amber-900/30 p-5 rounded-xl border border-amber-200 dark:border-amber-800/50">
+<p class="text-xs text-amber-700 dark:text-amber-400 mb-1">Allowance</p>
+<h3 class="text-2xl font-bold text-amber-800 dark:text-amber-200">$15.00</h3>
+<p class="text-[10px] font-bold text-amber-600 dark:text-amber-500 mt-2 uppercase">Next payout: Sat</p>
+</div>
+</section>
+<section>
+<h2 class="font-bold text-lg mb-3">Shout-Outs</h2>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border-l-4 border-primary shadow-sm">
+<div class="flex items-start gap-3">
+<div class="size-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 shrink-0">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<p class="text-sm italic text-slate-700 dark:text-slate-300">"Great job on your math test, Leo! I'm so proud of how hard you studied."</p>
+<p class="text-xs font-bold mt-2 text-primary">— Mom</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 px-2 pb-6 pt-2">
+<div class="flex justify-around items-center">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-bold">Chores</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-bold">Finance</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">videogame_asset</span>
+<span class="text-[10px] font-bold">Fun</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Hub Connect - Trip Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .filled-icon { font-variation-settings: 'FILL' 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Trip Planner</h1>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<main class="pb-24">
+<!-- Current Trip Hero Section -->
+<section class="p-4">
+<div class="relative overflow-hidden rounded-xl bg-primary/10 dark:bg-primary/5 p-6 border border-primary/20">
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="w-24 h-24 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-4xl">directions_car</span>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Summer Road Trip 2024</h2>
+<p class="text-slate-600 dark:text-slate-400 font-medium">June 15 - June 30, 2024</p>
+</div>
+<!-- Countdown -->
+<div class="flex gap-3 w-full max-w-sm">
+<div class="flex-1 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm text-center">
+<p class="text-xl font-bold text-primary">14</p>
+<p class="text-[10px] uppercase tracking-wider text-slate-500">Days</p>
+</div>
+<div class="flex-1 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm text-center">
+<p class="text-xl font-bold text-primary">08</p>
+<p class="text-[10px] uppercase tracking-wider text-slate-500">Hours</p>
+</div>
+<div class="flex-1 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm text-center">
+<p class="text-xl font-bold text-primary">45</p>
+<p class="text-[10px] uppercase tracking-wider text-slate-500">Mins</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Checklists Section -->
+<section class="px-4 py-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Trip Checklists</h3>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mr-3">check_box_outline_blank</span>
+<span class="flex-1 font-medium">Book Flight Tickets</span>
+<span class="text-xs font-semibold px-2 py-1 bg-amber-100 text-amber-700 rounded uppercase">High</span>
+</div>
+<div class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mr-3 filled-icon">check_box</span>
+<span class="flex-1 font-medium line-through text-slate-400">Reserve Beachfront Hotel</span>
+<span class="material-symbols-outlined text-green-500">verified</span>
+</div>
+<div class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mr-3">check_box_outline_blank</span>
+<span class="flex-1 font-medium">Check Car Maintenance</span>
+<span class="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded uppercase">Normal</span>
+</div>
+</div>
+</section>
+<!-- Collaborative Packing List -->
+<section class="px-4 py-6">
+<h3 class="text-lg font-bold mb-4">Collaborative Packing List</h3>
+<div class="flex overflow-x-auto gap-4 pb-2 no-scrollbar">
+<!-- Dad -->
+<div class="min-w-[160px] bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">D</div>
+<span class="font-bold text-sm">Dad</span>
+</div>
+<ul class="text-xs space-y-2 text-slate-600 dark:text-slate-400">
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Fishing Gear</li>
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Hiking Boots</li>
+<li class="text-primary font-semibold">+ Add Item</li>
+</ul>
+</div>
+<!-- Mom -->
+<div class="min-w-[160px] bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-xs">M</div>
+<span class="font-bold text-sm">Mom</span>
+</div>
+<ul class="text-xs space-y-2 text-slate-600 dark:text-slate-400">
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> First Aid Kit</li>
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Camera Bag</li>
+<li class="text-primary font-semibold">+ Add Item</li>
+</ul>
+</div>
+<!-- Kids -->
+<div class="min-w-[160px] bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 font-bold text-xs">K</div>
+<span class="font-bold text-sm">Kids</span>
+</div>
+<ul class="text-xs space-y-2 text-slate-600 dark:text-slate-400">
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Nintendo Switch</li>
+<li class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Swimwear</li>
+<li class="text-primary font-semibold">+ Add Item</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- AI Sightseeing Suggestions -->
+<section class="px-4 py-2">
+<div class="bg-gradient-to-br from-primary to-indigo-600 rounded-xl p-5 text-white shadow-lg">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined filled-icon">auto_awesome</span>
+<h3 class="font-bold">AI Sightseeing Suggestions</h3>
+</div>
+<p class="text-sm opacity-90 mb-4">Powered by Gemini - Based on your route to the coast:</p>
+<div class="space-y-3">
+<div class="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+<p class="font-bold text-sm">Hidden Waterfall Hike</p>
+<p class="text-xs opacity-80">30 mins off Route 66, perfect for kids and dog-friendly.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+<p class="font-bold text-sm">Retro Diner Breakfast</p>
+<p class="text-xs opacity-80">Highly rated family-owned diner in Springfield.</p>
+</div>
+</div>
+<button class="w-full mt-4 py-2 bg-white text-primary font-bold rounded-lg text-sm">Generate More Plans</button>
+</div>
+</section>
+<!-- Family Trip Journal -->
+<section class="px-4 py-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Family Trip Journal</h3>
+<button class="material-symbols-outlined text-primary">add_a_photo</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative aspect-square rounded-xl overflow-hidden bg-slate-200 group">
+<img alt="Family packing car" class="object-cover w-full h-full" data-alt="A family enthusiastically packing a blue SUV for a summer road trip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlLZH8HtJsWuArQi5_vNZ4C91Xlg4iD3uBQYhqWF-bokDhTV488jyPnbaJkQNOUQdtPCEEykEXkHay0O4ueBnpmwcyKlFREbAe8PSoFVz6QByBAxuQGwComDaYtrGihdC3r6xhJlvy8lArGa_qZ2dZgXdQLv-F_0NMUl3iiRYgFp5zmx3LetUsv45az5q4eyCEudPYKJYs8basTjKJwY6GJ73FceKS1BbeBdNhvHVn0P0LGfY429wogmYSA3mQFGailHj0Pd-tSZA"/>
+<div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
+<p class="text-white text-[10px] font-medium">Pre-trip packing!</p>
+</div>
+</div>
+<div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-3xl mb-1">note_add</span>
+<p class="text-[10px] font-bold">Add Note</p>
+</div>
+</div>
+<div class="mt-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+<p class="text-xs text-slate-500 mb-1">May 28, 2024 • Mom</p>
+<p class="text-sm italic">"Can't wait to see the kids' faces when we hit the ocean! Just finished the itinerary."</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-6 flex items-center justify-between z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled-icon">map</span>
+<span class="text-[10px] font-bold">Trip</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-bold">Tasks</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</a>
+</nav>
+</body></html>

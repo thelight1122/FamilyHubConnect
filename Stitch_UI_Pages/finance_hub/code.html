@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Finance Hub | Family Hub Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#4c8ce6",
+                "background-light": "#f6f7f8",
+                "background-dark": "#111821",
+              },
+              fontFamily: {
+                "display": ["Plus Jakarta Sans", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<div class="text-primary flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-3xl">account_balance_wallet</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Family Finance</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Dashboard Content -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Total Savings Card -->
+<div class="p-4">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-primary text-white shadow-lg shadow-primary/20">
+<div class="flex justify-between items-start">
+<p class="opacity-90 text-sm font-medium">Total Family Savings</p>
+<span class="material-symbols-outlined opacity-80">trending_up</span>
+</div>
+<p class="text-3xl font-bold leading-tight tracking-tight">$24,580.00</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-white/20 px-2 py-0.5 rounded text-xs font-bold">+2.4% this month</span>
+</div>
+</div>
+</div>
+<!-- Financial Tip of the Day (AI Powered) -->
+<div class="px-4 pb-4">
+<div class="flex gap-4 rounded-xl p-4 bg-primary/10 border border-primary/20 items-center">
+<div class="bg-primary/20 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">lightbulb_circle</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary uppercase tracking-wider">AI Financial Tip</p>
+<p class="text-sm text-slate-700 dark:text-slate-300 leading-snug">Setting aside just $5/week for Sarah's goal could reach the target 2 months earlier!</p>
+</div>
+</div>
+</div>
+<!-- Quick Links / Action Grid -->
+<div class="px-4 py-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold mb-3">Finance Tools</h3>
+<div class="grid grid-cols-2 gap-3">
+<a class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 gap-2" href="#">
+<span class="material-symbols-outlined text-primary">payments</span>
+<span class="text-sm font-semibold">Allowance</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 gap-2" href="#">
+<span class="material-symbols-outlined text-primary">target</span>
+<span class="text-sm font-semibold">Savings Goals</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 gap-2" href="#">
+<span class="material-symbols-outlined text-primary">account_balance</span>
+<span class="text-sm font-semibold">Family Bank</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 gap-2" href="#">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+<span class="text-sm font-semibold">Market Simulator</span>
+</a>
+</div>
+</div>
+<!-- Member Wallets -->
+<div class="pt-6">
+<div class="flex items-center justify-between px-4 pb-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold tracking-tight">Member Wallets</h3>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4">
+<!-- Dad -->
+<div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="size-16 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling middle-aged man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCHzAmckYooADZpKaH2UZzfS-q1we1IVKibAswbz2GMCsNkWOCwbFb85p5lZftGD2LGCIl29-GJpZt44noQOh9vBAbfzmv4zUaKL_HcppnWgZk8Vk5x6R0AM7re32czMSN1pcMhC-Enm6b2KfeRNpIzPC98jtFW-KnnNfRo8suf35W582jxWC6ZRSCZ3COV4I3qeCYkkJHneMKMpdmS-Qfz1hi3s9qqmX89lqrFrCO05b22THacaBuBsJnB7ydFmMKrclCY37_nZM"/>
+</div>
+<div class="text-center">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Dad</p>
+<p class="text-primary text-xs font-bold">$8,400</p>
+</div>
+</div>
+<!-- Mom -->
+<div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="size-16 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling middle-aged woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOBhu7iQP2P4p7ec1T3_FHqy2ZLpWBOssiNxlREpjvjkJV-_y-JDuUm7UQ0NQvkgNh8tQbXIPIoTWMZ9cQqLWRqGdngCgcfLhjmgNM-MtB5jjUAnFRT7jJoPQrPyQhj3Z3uKmajgQGLynYgXfNnHWWsBaT4L7CQKbXn5clnMouEGAo5FLjciiKmmImz7OX8UvSFEsdIxAxLDFQRXhDV8S5ZmilkXDfeTW_vSogo5OqNLr8DoRa38LxA4VBuPSROQp84XpTHFm70KM"/>
+</div>
+<div class="text-center">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Mom</p>
+<p class="text-primary text-xs font-bold">$12,200</p>
+</div>
+</div>
+<!-- Leo -->
+<div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="size-16 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young teenage boy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtkM0Kz8TVPiuRxqDjNn33-crPQUMT3MkHVNxNXGTEuym3T1rpaZ12iCWtjA6xOer7eW1SGYP-xp4wmd09AHMyX6F_Zjta6d2wogH7HUdNLYdl3D6l9r9Ho2xr35rvUx4IuhDmtjgIme18QsfsA56SJYelHH_6h5B2xpAf76l8V3uAWCuqrZvikExrstN_Z3W7Ho6zueJpVqkKQet4Muw15unKvs_gE6Cu0eak-IOKitFMBNHw6ezgpvGqNaNBvEFFXQ_drOM49iM"/>
+</div>
+<div class="text-center">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Leo</p>
+<p class="text-primary text-xs font-bold">$450</p>
+</div>
+</div>
+<!-- Sarah -->
+<div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="size-16 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young teenage girl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1h1WK3gY4N6biYRHC-pOhef4d_ZeFFOLS6ZzmjSlMCSGDVSleiHSHvGtQjHqk63VRbTAhP3JVKs-M0521O1GrpN20vLEW2Svhz6ehvlcfBSz_TtU0vYu0PzfxVyG9Pw9TjK6AfzVulenKO5QY3j8cuKaebNE2yK5wxzW6ijIzD_cFU9SFbg3-PZ5zNaaIU0AYvubIAFPUG1-oWbwmvggDtM6kBNtD2Ul_sla0TMvZRy7sfOeSu8NtbParRs0lQzGk1IYuwF9Pkz0"/>
+</div>
+<div class="text-center">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Sarah</p>
+<p class="text-primary text-xs font-bold">$530</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Transactions Mini-List -->
+<div class="px-4 py-4">
+<div class="flex items-center justify-between pb-3">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold">Recent Activity</h3>
+<button class="text-slate-500 text-xs">See History</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-green-100 text-green-600 rounded-full">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+<div>
+<p class="text-sm font-bold">Allowance Added</p>
+<p class="text-xs text-slate-500">Leo • Yesterday</p>
+</div>
+</div>
+<p class="text-sm font-bold text-green-600">+$20.00</p>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-blue-100 text-blue-600 rounded-full">
+<span class="material-symbols-outlined text-sm">savings</span>
+</div>
+<div>
+<p class="text-sm font-bold">Goal Progress</p>
+<p class="text-xs text-slate-500">Sarah • 2 days ago</p>
+</div>
+</div>
+<p class="text-sm font-bold text-primary">+$15.00</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-background-dark px-4 pb-3 pt-2">
+<div class="flex gap-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_balance_wallet</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Finance</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Tasks</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Calendar</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Settings</p>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

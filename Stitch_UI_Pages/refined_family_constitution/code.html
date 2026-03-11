@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Constitution - Family Hub Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-md mx-auto flex items-center justify-between p-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined block">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Family Constitution</h1>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined block">history</span>
+</button>
+</div>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full pb-24">
+<!-- Hero Section / Preamble -->
+<section class="p-6 text-center space-y-4">
+<div class="relative inline-block">
+<div class="w-32 h-32 rounded-full mx-auto border-4 border-primary/20 p-1">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Happy family laughing together in a park" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAnsWk7_azuM6hjdxSQ80QWWg3512vCqfZEi3fLwmO1wsCt194jvP1UGzx8zaTArFjv_Nsd8Wn7Du_R7J3fPLno1uLCaDbGtPCDTnJs4T0RmrYhDZkUzvAvjpQziX0BkEqZ0_7Vb1fekRxf17GgrH94rnmOe4bwwDjGnM3Hpt6EFFDWqXIM00dH3qoEzFcHU246Ls9aVdKC5Opw2uVTOuJcn4mC9uiIbW66RbkYrjmW6_iIGTAJz40swNN4iYKnB5t_d67CiR869Is')"></div>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-sm block">verified_user</span>
+</div>
+</div>
+<div class="space-y-2">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50">The Thompson Mission</h2>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed italic">
+                    "To foster a home of unconditional love, continuous growth, and unwavering support for every member of our family. We grow together, learn together, and celebrate each other."
+                </p>
+<div class="pt-2">
+<span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full uppercase tracking-wider">
+                        Established June 2024
+                    </span>
+</div>
+</div>
+</section>
+<!-- Core Values Section -->
+<section class="px-4 py-6 space-y-4">
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h3 class="text-lg font-bold">Our Core Values</h3>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<div class="flex items-start gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm">
+<div class="p-2 bg-red-50 dark:bg-red-950/30 text-red-500 rounded-lg">
+<span class="material-symbols-outlined block">favorite</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-50">Kindness</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Treating everyone with empathy and understanding, even during disagreements.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm">
+<div class="p-2 bg-blue-50 dark:bg-blue-950/30 text-blue-500 rounded-lg">
+<span class="material-symbols-outlined block">gavel</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-50">Honesty</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Speaking our truth with love and maintaining transparency in our actions.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm">
+<div class="p-2 bg-amber-50 dark:bg-amber-950/30 text-amber-500 rounded-lg">
+<span class="material-symbols-outlined block">lightbulb</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-50">Curiosity</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Never stop learning about ourselves, each other, and the world around us.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Family Rules Section -->
+<section class="px-4 py-6 space-y-4 bg-primary/5 dark:bg-primary/5 my-4">
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-primary">rule</span>
+<h3 class="text-lg font-bold">Family Rules</h3>
+</div>
+<ul class="space-y-2">
+<li class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span class="text-sm font-medium">No phones at the dinner table.</span>
+</li>
+<li class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span class="text-sm font-medium">Listen before reacting or interrupting.</span>
+</li>
+<li class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span class="text-sm font-medium">Always say "I love you" before sleep.</span>
+</li>
+<li class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span class="text-sm font-medium">Own your mistakes and apologize sincerely.</span>
+</li>
+</ul>
+</section>
+<!-- Acknowledgment Section -->
+<section class="px-4 py-6 space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="text-lg font-bold">Signatories</h3>
+<span class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">Last Updated: Oct 12, 2023</span>
+</div>
+<div class="flex flex-wrap items-center gap-3 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover bg-center" data-alt="Portrait of a smiling father" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCU8w09BdJ7vaCxFAEOWMZuqONHsohLgiCVmfaMeNmBIbIwoYgK0mifTceWClXLflEqGOu9chN44ruX28Dccu4JFEz5pT6jWH2IdGkJklUGECqil5up8KtS4kaNBw-dUtpNQ4wAQvQGQ091ds_Hpnt03flFZ9gzdWnvnNoC3__u6YWc593HvWVK0xRekK3vWtkqD_L6Gu0vgMgi9vP8AytsBpaAy0pK5jpr-BD57uHo0REJDwxnO-zuPl6YupF3Ntky3Zy9D9ZkZzk')"></div>
+<div class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover bg-center" data-alt="Portrait of a smiling mother" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMUoBDD4sRfCVK6BAtNZ5lNjgBfJ_WrTpKQ9zfMxxbCdhUtUYvcC7_VZWbyIPBNwmiNXLIfgkfGzg-y1t1X1-iHYN3Ex_naGemA0CfYRbBl-J3bTqmUn9-ZX-v2Pl26Pb9iuo2vzFngBRwixSMV_6qkm-etVqV_qjMKbZii15LwMZdG9Wf_Olu9n5WdPZMk7xx-9q8P2Hd6Wm8XeDNmoDth5DjWxmU0vbKlXGC959fURI7cUUJxStJZ41bpRdqkHE1_iBdbqtp6pI')"></div>
+<div class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover bg-center" data-alt="Portrait of a teenage son" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmwR0id4AUufFVdn8FW-517Vdpi0q6twuC18_hGFgeDxoWM8__rwMoLtaXKx1R4q2wn30xkkGoeIJTfhf8SFTVoljXAKzme_6oFTdL4PEuPyC9rVBvOAkwHLjDQFrRC-RMP513Y-d3abATR4pRaDQeTBPd33h9pURDBQRvRzAd15VmkawRmCJEZvuoWhY1NH8Tkc4wyonnqc6n5xOXYkz0EXAF01Rl2NMRI-fP73FPj_wYHgEhzM_WxW_ZB-hxgvzL-uCVFh7q99Q')"></div>
+<div class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover bg-center" data-alt="Portrait of a young daughter" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLc_INlwrspIN-xnrh-zXmDlzlCBOsFanBv0FPfraKkHtj9WI64LIP8I0UKt23FWevM-4MLC0WUdmjWbG1KY4aj50zCwb6Zudo1qAhSKZPOI6KDeRVmWEL0ekjP1MSt1DgpwzW5Q9iW1wrOVrQf3zw-RRidMP0mowbkp1nZmJpXHt2_xxCo7S8MNpU2HedFePMj6VuOWv70IFUOTZZ2szuo2qUW-fQYFEfkfVvN6_Nx8BVJLcaXHVYvpUL263LGnIkIbBPI1hPkrU')"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">All members have signed</p>
+<p class="text-xs text-slate-500">Thompson Family Hub</p>
+</div>
+<div class="text-primary">
+<span class="material-symbols-outlined block">verified</span>
+</div>
+</div>
+</section>
+<!-- Actions -->
+<div class="px-6 py-4">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-lg">edit_note</span>
+                Propose Amendment
+            </button>
+<p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-tighter">
+                Amendments will be discussed in the next family meeting
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-4 pt-2 z-50">
+<div class="max-w-md mx-auto flex gap-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-semibold">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<span class="text-[10px] font-semibold">Calendar</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">description</span>
+<span class="text-[10px] font-semibold">Rules</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">forum</span>
+<span class="text-[10px] font-semibold">Chat</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-semibold">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

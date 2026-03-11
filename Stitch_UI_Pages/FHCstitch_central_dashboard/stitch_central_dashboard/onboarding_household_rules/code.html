@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Hub Connect - Onboarding Step 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="bg-white dark:bg-background-dark/50 sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-md mx-auto flex items-center p-4 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors" data-icon="ArrowLeft">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Family Hub Connect</h1>
+</div>
+</header>
+<main class="max-w-md mx-auto w-full flex-1 flex flex-col pb-24">
+<!-- Progress Bar Section -->
+<div class="flex flex-col gap-3 p-6">
+<div class="flex gap-6 justify-between items-end">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Onboarding Progress</p>
+<p class="text-primary text-sm font-bold">2 of 4</p>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-slate-700 h-2.5 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 50%;"></div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Next: Core Values</p>
+</div>
+<!-- Header Content -->
+<div class="px-6 pb-6">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-extrabold leading-tight mb-2">Step 2 of 4: Household Rules</h2>
+<p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Set initial rules for your family to keep everyone on the same page. You can always adjust these later.</p>
+</div>
+<!-- Suggested Rules List -->
+<div class="px-6 space-y-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tips_and_updates</span>
+                Suggested Rules
+            </h3>
+<div class="space-y-3">
+<!-- Rule Item 1 -->
+<label class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">no_sim</span>
+</div>
+<span class="font-medium text-slate-800 dark:text-slate-200">No phones at dinner</span>
+</div>
+<input checked="" class="w-6 h-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<!-- Rule Item 2 -->
+<label class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<span class="font-medium text-slate-800 dark:text-slate-200">Bedtime at 9 PM</span>
+</div>
+<input checked="" class="w-6 h-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<!-- Rule Item 3 -->
+<label class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<span class="font-medium text-slate-800 dark:text-slate-200">Homework before screens</span>
+</div>
+<input class="w-6 h-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<!-- Rule Item 4 -->
+<label class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">cleaning_services</span>
+</div>
+<span class="font-medium text-slate-800 dark:text-slate-200">Tidy room daily</span>
+</div>
+<input class="w-6 h-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+<!-- Add Custom Rule Button -->
+<button class="w-full mt-4 flex items-center justify-center gap-2 py-4 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl text-slate-500 dark:text-slate-400 font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+                Add Custom Rule
+            </button>
+</div>
+<div class="px-6 py-8">
+<div class="bg-primary/5 rounded-xl p-4 border border-primary/10 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-tight">These rules will be shared with the whole family once they join the hub.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Action Buttons -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 py-4">
+<div class="max-w-md mx-auto flex gap-4">
+<button class="flex-1 py-4 px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                Back
+            </button>
+<button class="flex-[2] py-4 px-6 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2">
+                Next: Core Values
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

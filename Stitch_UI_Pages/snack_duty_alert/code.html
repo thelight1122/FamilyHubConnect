@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Family Hub Connect - Snack Duty</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4">
+<!-- Mobile Screen Container -->
+<div class="relative w-full max-w-[375px] h-[667px] bg-slate-200 dark:bg-slate-800 rounded-[3rem] border-[8px] border-slate-900 overflow-hidden shadow-2xl">
+<!-- Status Bar -->
+<div class="flex justify-between px-8 pt-4 pb-2 text-xs font-semibold">
+<span>9:41</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-sm">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-sm">wifi</span>
+<span class="material-symbols-outlined text-sm">battery_full</span>
+</div>
+</div>
+<!-- Lock Screen / App Content Area -->
+<div class="flex flex-col h-full bg-gradient-to-b from-primary/10 to-background-light dark:to-background-dark">
+<!-- App Header -->
+<div class="flex items-center px-6 py-4 justify-between">
+<div class="flex items-center gap-2">
+<div class="bg-primary p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">family_restroom</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold tracking-tight">Family Hub Connect</h1>
+</div>
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">notifications</span>
+</div>
+<!-- Content Area -->
+<div class="px-6 pt-8">
+<h2 class="text-2xl font-bold mb-6">Upcoming Alert</h2>
+<!-- Main Notification Component -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-5">
+<div class="flex justify-between items-start mb-4">
+<div class="flex flex-col gap-1">
+<span class="text-primary font-bold text-xs uppercase tracking-widest">Snack Duty</span>
+<h3 class="text-xl font-bold leading-tight">Don't forget the snacks!</h3>
+</div>
+<div class="bg-primary/10 p-3 rounded-full">
+<span class="material-symbols-outlined text-primary text-2xl">ios</span>
+</div>
+</div>
+<div class="flex items-center gap-3 mb-6 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-slate-400">sports_soccer</span>
+<div class="flex flex-col">
+<p class="text-sm font-semibold">Tigers vs. Hawks</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Tomorrow at 9:00 AM</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+<span>View Details</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Notification Image Representation -->
+<div class="h-32 w-full bg-cover bg-center" data-alt="Variety of healthy snacks like fruit and granola bars in a basket" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqb1THujl56QTwbiY9GLlnUkBJfC47orRwo--9FmeEKwbrpDJcYvZw9JubnjN6diWVrcez5PaK5XvW5ByK_AvfNWON5E6Pf_e_zmWolMEOSlJb77IGn7OCK4cIkIfJ__LLSCga-04dSDOGEcSXbryGVK1xpU7UvWPj9zYIO6OcVXG8zDRambAyvQw2UgKISOcXgmP795Wz-HdrebgKcKl1LCff7U4szovXFF08p5V6ltXBvaPcpQdaQudzdN5szZV1MlrcKXsLCT0')">
+</div>
+</div>
+<!-- Secondary Task -->
+<div class="mt-8">
+<h3 class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Also Scheduled</h3>
+<div class="flex items-center gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="bg-slate-200 dark:bg-slate-700 p-2 rounded-lg">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">directions_car</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Carpool for Piano Lessons</p>
+<p class="text-xs text-slate-500">4:30 PM • 3 kids</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="absolute bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 pb-8 pt-4">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-bold">Schedule</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-bold">Duties</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</a>
+</div>
+<!-- Home Indicator -->
+<div class="mt-4 mx-auto w-32 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+</div>
+</div>
+</div>
+</body></html>

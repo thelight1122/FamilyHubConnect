@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Digital Vault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header / Top Bar -->
+<header class="bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+<div class="flex items-center p-4 justify-between max-w-2xl mx-auto w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">shield_lock</span>
+<h1 class="text-xl font-bold tracking-tight">Family Vault</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-sm mr-1">verified_user</span>
+<span class="text-emerald-700 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">Secure</span>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">lock_open</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-2xl mx-auto w-full pb-24">
+<!-- Search Bar -->
+<div class="px-4 py-4">
+<label class="flex flex-col w-full group">
+<div class="flex w-full items-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-sm h-12">
+<span class="material-symbols-outlined text-slate-400 ml-4">search</span>
+<input class="flex w-full bg-transparent border-none focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 px-4 text-base" placeholder="Search family documents..." type="text"/>
+</div>
+</label>
+</div>
+<!-- Security Status Card -->
+<div class="px-4 mb-6">
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined text-xl">fingerprint</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">Biometric Unlock Enabled</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Secured with FaceID &amp; 2FA</p>
+</div>
+</div>
+<label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700 p-0.5 has-[:checked]:bg-primary transition-colors">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></div>
+</label>
+</div>
+</div>
+<!-- Categories Horizontal Scroll -->
+<section class="mb-8">
+<div class="flex items-center justify-between px-4 mb-3">
+<h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Categories</h2>
+</div>
+<div class="flex gap-4 overflow-x-auto px-4 pb-2 no-scrollbar">
+<div class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">badge</span>
+</div>
+<span class="text-xs font-medium">Passports</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">child_care</span>
+</div>
+<span class="text-xs font-medium">Birth Cert.</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">policy</span>
+</div>
+<span class="text-xs font-medium">Insurance</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">real_estate_agent</span>
+</div>
+<span class="text-xs font-medium">Property</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">more_horiz</span>
+</div>
+<span class="text-xs font-medium">All Files</span>
+</div>
+</div>
+</section>
+<!-- Pinned Section -->
+<section class="px-4 mb-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold">Pinned Documents</h2>
+<button class="text-primary text-sm font-bold">View All</button>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Document Card 1 -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Passport - John Smith</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">PDF • Updated 2 days ago</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">push_pin</span>
+</div>
+<!-- Document Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">medical_information</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Health Insurance Policy</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Image • Updated Oct 12, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">push_pin</span>
+</div>
+<!-- Document Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">house</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Main St. Property Deed</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">PDF • Updated Sep 05, 2023</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">push_pin</span>
+</div>
+</div>
+</section>
+<!-- Floating Action Button Area -->
+<div class="fixed bottom-24 right-4 flex flex-col items-end gap-3 pointer-events-none">
+<button class="pointer-events-auto bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-full shadow-lg border border-slate-200 dark:border-slate-700 flex items-center gap-2 text-sm font-bold">
+<span class="material-symbols-outlined text-xl">document_scanner</span>
+                Scan
+            </button>
+<button class="pointer-events-auto bg-primary text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="max-w-2xl mx-auto flex items-center justify-around h-20 px-4">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">cached</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Vault</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Tasks</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
+</a>
+</div>
+</nav>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</body></html>

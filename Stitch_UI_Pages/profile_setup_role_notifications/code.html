@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#4c8ce6",
+                "background-light": "#f6f7f8",
+                "background-dark": "#111821",
+              },
+              fontFamily: {
+                "display": ["Plus Jakarta Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-white dark:bg-slate-900 shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<button class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Profile Setup</h2>
+</div>
+<!-- Progress Indicator -->
+<div class="flex flex-col gap-3 p-4">
+<div class="flex gap-6 justify-between">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal">Role &amp; Permissions</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">2 of 5</p>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-slate-700 h-2 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 40%;"></div>
+</div>
+</div>
+<!-- Profile Brief -->
+<div class="flex p-4">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full border-4 border-primary/20 min-h-24 w-24" data-alt="Professional portrait of a smiling woman with dark hair" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDvccBZPlFPjybospQgsEW_UEMoCjD5iM0ZYWnxGx3K7xm5OsKNiAFqeb5fOG8-hv2pPtLBr0N0-6zHew9V0HI88oj75UH-wC-sUos4nnGkb50aAkd1JlIqrQS5kvYqetJAmCmO0C89WaFboNZzQ7pyVvnuKmm2s9zQQZxpJ0kdpFj9bZlZ6iieZQx-nUu6N-cnlMjCcdhzhRp9eNCqwZgTQRgJzLkf0Wd4ojXYNkGsttArVbXG0W0Oow8Jl927u1CT3cljPuval5E");'></div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight tracking-tight text-center">Sarah Thompson</p>
+<div class="mt-1 px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">Adult / Parent</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Permissions Section -->
+<div class="px-4 py-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight pb-4">Family Hub Permissions</h3>
+<div class="space-y-3">
+<!-- Permission Item 1 -->
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-normal">Manage Chores</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-snug">Assign and approve tasks for everyone</p>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<!-- Permission Item 2 -->
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-normal">Edit Calendar</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-snug">Full access to modify family events</p>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<!-- Permission Item 3 -->
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-normal">View Vault</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-snug">Access shared documents and passwords</p>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Preferences Section -->
+<div class="px-4 py-6">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight pb-4">Notification Preferences</h3>
+<div class="space-y-4">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium">Push Notifications</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Instant updates on your device</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium">Email Summaries</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Weekly digest of family activity</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="mt-auto p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98]">
+                Confirm &amp; Continue
+            </button>
+<p class="text-center text-slate-400 dark:text-slate-500 text-xs mt-4">
+                You can change these settings later in your profile.
+            </p>
+</div>
+</div>
+</body></html>

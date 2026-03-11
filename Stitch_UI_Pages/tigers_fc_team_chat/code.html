@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Locker Room - Tigers FC</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Top App Bar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark border-b border-primary/10 p-4 justify-between sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<div class="text-primary cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Leo's Soccer - Tigers FC</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">24 Members • 8 Online</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</header>
+<!-- Online Status Avatars -->
+<div class="flex items-center px-4 py-3 justify-start gap-1 bg-white dark:bg-slate-900/50 border-b border-primary/5 overflow-x-auto no-scrollbar">
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover border-2 border-primary bg-primary/20 rounded-full size-10" data-alt="Coach Dave's professional headshot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLLWcTmIbuwgDOyk4_y5L7k3VWam2UpwQbZ5r5XqlBdDXNI7LBEn9xergosfxdydxJ46FE3gpr0MKkWnDjEmNYLEaACki4qm2G1jWrazix_YDkp9wxARRWbmp9g70eOeTCbr9TPfwR6Gkv6KSCVgQ4AfvcSWbypPbEFb3I8_JXvU3U-r_ntjjBuwDTg1w1d6W4tvuHxu9xpBRsKvfDwoIs-yl2Om-E0vSYH8YYn2USpRcGnjbvsORy15SnBdwA_HVxb3MdKeiVfNI");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+</div>
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover border-2 border-transparent bg-slate-200 dark:bg-slate-700 rounded-full size-10" data-alt="Sarah's Mom profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAdBnai83BD3iCTD4_zN9ef2ciqYTW4qWYhRbqKYOGXFZqc6NXMZAfJbkeBHZVWcYpH6ujsxqqYwz0mDaxxlDX1vjrW-UbL269pE-3mSO12B2WMAGTGUAkRY7j-Jcd_JzqfG7U0xRL0BLyIi0VjYT5k-6mZfB5GPyrkQEfSbiHh0WIAzhj-4iNIDurMB0Dc4gBDqJXnZ5yPDsai0HRDE_jDSLWE4pNzpwfn3X8CaTg31NcmyNeul0jxAtXEyxwi6ZdryaeGlzIBfxE");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+</div>
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover border-2 border-transparent bg-slate-200 dark:bg-slate-700 rounded-full size-10" data-alt="Leo's Dad profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9u66aInloUA2LydiGAjb2eSG-ZceRskmLGlqT_uhe_PhUbA7GuJJKNind8XSUO2_NMmSvZecekL77aG2rH9bkupJqTtkaWW-520RpUJ5Tyc32Qvksg85O2BNCq6UHBPonKOGRSQf2pFT_UUPHuJ97hpbX4xN9Vif51ZqiJYxDGl1o1bCgldh4e6R8uKh_x2P4V1XFTF4V5wuMO6bXp6LuzOTv4uwpLVRUfHbFJ-MLxcNtEgiHajPxc109T2XbEveRb-Zxvtt8LVw");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+</div>
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover border-2 border-transparent bg-slate-200 dark:bg-slate-700 rounded-full size-10" data-alt="Team Manager profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtcWNOje0yfMmwE9Jm-G9lEnj6e-JlMM9jukNkgQGcDxXJR-xJSVzJl-PHKHqAB8NwHz-tF_xcjoH6c7siZ2JXLdyoibBsPy6avtkDkMvEqJHPUw4idPSjnayEUbmvIXmsvCXqy7vnnPjCgUYOecvbb73BvDANyYlRsMJZ9CanTmEXOMi0EqD3XthdpLcggnh-MUHZKhd88WTyKj-jTPzUcj50l6dMoo7OoaWZJrXoOpRuwaa7dsvhLGFfuSzZQ0VLEf02eMScPwM");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+</div>
+<div class="flex-shrink-0 size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold border-2 border-transparent">
+                +14
+            </div>
+</div>
+<!-- Chat Container -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Announcement Card -->
+<div class="w-full">
+<div class="flex flex-col gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-6xl">campaign</span>
+</div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-xl">campaign</span>
+<p class="text-sm font-bold uppercase tracking-wider">Team Announcement</p>
+</div>
+<div class="space-y-1">
+<p class="font-bold text-slate-900 dark:text-slate-100">Practice Location Change</p>
+<p class="text-sm text-slate-600 dark:text-slate-400">Practice moved to Field 4 this Thursday due to maintenance. Please arrive 15 minutes early for warmups.</p>
+</div>
+<button class="flex items-center gap-2 text-sm font-bold text-primary hover:underline group">
+                        View Full Schedule
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Chat Messages -->
+<div class="space-y-4">
+<div class="flex justify-center">
+<span class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-widest bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded">Today</span>
+</div>
+<!-- Coach Message -->
+<div class="flex items-end gap-3 max-w-[85%]">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 shrink-0 shadow-sm border border-primary/20" data-alt="Coach Dave Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmGqhGcitYyRzh3edEpuGnkRDeJZIvNLIZTXs3Tccl9VAdq5yd5KMS-aS4MaD4ilDcx8qZn9ZSMtATEcLa8sFRp23Iai5x1bjLAulmd_rPWKExl-YdAquL6fi5toh9h4E22gTFZ2vthym1Apv7jlKljXXqzqMr1IRdnRXZ95uUQpacg3RRjAHopXEROZDr4blDdchqpSBgjp9-Psn4lt3L81IE_d_rcmbNIxn9WF6OCczyTUk00WtJAPpBQj09IQrls4NmF9ZY90Y");'></div>
+<div class="flex flex-col gap-1">
+<p class="text-primary text-[11px] font-bold ml-1 uppercase">Coach Dave</p>
+<div class="rounded-2xl rounded-bl-none px-4 py-2.5 bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700">
+<p class="text-sm leading-relaxed">Hey team, don't forget orange slices for Saturday's game! Also, we'll be wearing the away kits (white jerseys).</p>
+</div>
+<p class="text-[10px] text-slate-400 ml-1">10:24 AM</p>
+</div>
+</div>
+<!-- Parent Message (Right aligned / Self) -->
+<div class="flex items-end gap-3 justify-end ml-auto max-w-[85%]">
+<div class="flex flex-col gap-1 items-end">
+<p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold mr-1 uppercase">Sarah's Dad (You)</p>
+<div class="rounded-2xl rounded-br-none px-4 py-2.5 bg-primary text-white shadow-md">
+<p class="text-sm leading-relaxed">Got it Coach. I'll bring the cooler too. Just checked the weather, looks like a clear day!</p>
+</div>
+<p class="text-[10px] text-slate-400 mr-1">10:31 AM</p>
+</div>
+</div>
+<!-- Attachment Example -->
+<div class="flex items-end gap-3 max-w-[85%]">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 shrink-0 shadow-sm border border-slate-200" data-alt="Sarah's Mom Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClj_9PC5WQ3OD7S5JNqx5pBKxHCt98UBY7j7ASLVHOt8L99wNsgIcsGixcw3wxM__le36cCSjEm1ABkWhvQmdB9NdGcyEURlQK-nJzPTFz1zqWfc4JRDc3GG51-phdk_fUq1wpvsrw8k6gBUMbPTixxpAWf89Faw2krHutOzwpLD3gbs5XlDwkh9yOkGoS_weK7vWsf11hV9O1agfOoui1Kee1nMzFkbjfhmYkQZXt6Q27znoYMqLlA2Y9upn1qW1CMb2MceGMMUw");'></div>
+<div class="flex flex-col gap-1">
+<p class="text-primary text-[11px] font-bold ml-1 uppercase">Sarah's Mom</p>
+<div class="space-y-2">
+<div class="rounded-2xl rounded-bl-none px-4 py-2.5 bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700">
+<p class="text-sm leading-relaxed">Here's the field map for the away game for anyone who hasn't been there yet!</p>
+</div>
+<div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 max-w-[240px]">
+<img class="w-full h-auto" data-alt="Soccer field location map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3kWmwHn51vXiwLcpGiSzRCfJOIXX6I3lI6OlxGCqxWNlSB9m88Brl_XE8UykBGJEBFacVN1qic8zrcSH_8fPxd1u4ZfMZM01Vh_w1erB7KT3Y7CIae8svuG6_mgOv6kTYbDJ69slf3t0gK1HpIAr1Ew9rBVPVEfFeAaGxNLdD646O0nhyQJS2WfAHH_Ats3MaRs7z_-VcgwWx0LqBP_RIA-V551wWqJIOhulnOdqkI9qfD0IrI0qosY0WqbuzBTojbA8wREfZP0k"/>
+<div class="p-2 bg-slate-50 dark:bg-slate-800/80 flex items-center justify-between">
+<span class="text-[10px] font-medium truncate mr-2">park_layout_v2.png</span>
+<span class="material-symbols-outlined text-primary text-sm">download</span>
+</div>
+</div>
+</div>
+<p class="text-[10px] text-slate-400 ml-1">11:05 AM</p>
+</div>
+</div>
+<!-- Someone Typing -->
+<div class="flex items-center gap-2 ml-11">
+<div class="flex gap-1">
+<span class="size-1.5 bg-primary/40 rounded-full"></span>
+<span class="size-1.5 bg-primary/40 rounded-full"></span>
+<span class="size-1.5 bg-primary/40 rounded-full"></span>
+</div>
+<p class="text-[10px] text-slate-400 italic">Coach Dave is typing...</p>
+</div>
+</div>
+</main>
+<!-- Message Input -->
+<footer class="p-4 bg-background-light dark:bg-background-dark border-t border-primary/10">
+<div class="flex items-center gap-2 max-w-4xl mx-auto">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="relative flex-1">
+<input class="w-full rounded-full border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 px-4 pr-12 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-slate-100 placeholder:text-slate-400" placeholder="Type a message to the team..." type="text"/>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<button class="p-1.5 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-xl">image</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-xl">mood</span>
+</button>
+</div>
+</div>
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<!-- Padding for mobile safe areas -->
+<div class="h-2"></div>
+</footer>
+</div>
+</body></html>

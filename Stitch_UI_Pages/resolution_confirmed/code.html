@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden max-w-md mx-auto shadow-xl">
+<!-- Top Bar -->
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 pb-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="text-primary flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">task_alt</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Resolution Confirmed</h2>
+</div>
+<!-- Celebration Header -->
+<div class="px-4 pb-3 pt-8 text-center">
+<div class="inline-flex items-center justify-center p-4 bg-primary/10 rounded-full mb-4">
+<span class="material-symbols-outlined text-primary text-5xl">celebration</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-[32px] font-bold leading-tight">Agreement Reached!</h1>
+<p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-normal pt-2">Fairness win! Thanks for working together to find a solution.</p>
+</div>
+<!-- Summary Card -->
+<div class="p-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="w-full bg-center bg-no-repeat aspect-[16/9] bg-cover" data-alt="Happy family members shaking hands or high fiving" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLKshr2kXVtf8Y6QND8fFl1T05oshu76_dJe3dJNtO7qVh7rabkJsIae_vyChdX0S5iVJZ4aNcqKWz3JUaaJPEqg7OxauHniaTKvKv4DSKCuK8CjT9CQJu6DRb0Jl1HpKfk4h40OICEAmJsK5dxmYIcrGf3XN-XeGRUqsJDzsaaVPiI38oDM0ztBGkyMlVEIAWozGd64dC6_tQDgtfmdnGrZV4v-bdF0NJHmy6Eyz1s1ASPtrqV06EPf5wkdwhM1q1DK-Ujytd3nM");'></div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 px-4">
+<p class="text-primary text-sm font-bold uppercase tracking-wider mb-1">Final Decision Summary</p>
+<p class="text-slate-800 dark:text-slate-200 text-base font-normal leading-relaxed">
+                    Leo's 1-day screen time ban has been replaced with washing all dinner dishes tonight and a half-day ban starting after his project.
+                </p>
+</div>
+</div>
+</div>
+<!-- New Terms Section -->
+<div class="px-4 py-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Updated Terms</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">skillet</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-slate-100 font-bold">Chore: Dinner Dishes</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Due: Tonight, 7:00 PM</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">hourglass_top</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-slate-100 font-bold">Screen Time Adjustment</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Reduced to 4 hours total today</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Next Steps Section -->
+<div class="px-4 py-4">
+<div class="bg-primary/5 rounded-xl p-4 border border-primary/20">
+<h3 class="text-primary text-sm font-bold uppercase tracking-wider mb-3">Automation Status</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Task added to Chore Hub</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Screen time limit updated in Router Control</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Notification sent to Leo and Parents</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-auto p-4 flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-colors shadow-md">
+            Back to Dashboard
+        </button>
+<button class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold py-3 rounded-xl transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+            View Agreement History
+        </button>
+</div>
+<div class="h-6"></div>
+</div>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Loan Approved - Family Bank</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto bg-white dark:bg-background-dark min-h-screen flex flex-col shadow-xl">
+<!-- Top App Bar -->
+<div class="flex items-center p-4 justify-between sticky top-0 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Loan Approved! 🎉</h2>
+</div>
+<div class="flex-1 overflow-y-auto pb-8">
+<!-- Hero Image -->
+<div class="px-4 py-3">
+<div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden bg-primary/10 rounded-xl min-h-[200px] border border-primary/20" data-alt="A cool modern mountain bike in a forest setting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkrxyZDUdttyvQzJT7iar7YwBS8NhHyDA9BfmUMa-sQa8nRRo3Oh0WwwTQ1i3bApWTYDSsfC4-KXqiDXm6HofZorAAWIJu_Tcn6Iu9HaG8pfYwXjNvSdhRqhzP7JeQkKn3X1njSFoIDzGn61ZTuA7JiDu8AVRsUiNp_XRXciv_ogNU-uAVJeVoTSOIe230OGw7Hg5V0FIL5K4YeCtI2tgGvPesd81qBpXCOQMoGoNPMFIxg8eXikzd7iy2X8C0pIe2VCO7gyMGBR0");'>
+</div>
+</div>
+<!-- Amount Display -->
+<div class="text-center px-4 pt-4">
+<span class="text-primary font-semibold text-sm uppercase tracking-widest">Total Approved</span>
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-[48px] font-bold leading-tight pb-2">$200.00</h1>
+</div>
+<!-- Personalized Message -->
+<div class="px-6 text-center mb-8">
+<h3 class="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-tight pb-2">Great news, Leo!</h3>
+<p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed">Your loan for the new mountain bike has been approved and is ready to use.</p>
+</div>
+<!-- Terms Summary Card -->
+<div class="mx-4 bg-primary/5 dark:bg-primary/10 rounded-xl p-6 border border-primary/10 mb-6">
+<h4 class="text-primary font-bold text-sm mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+                    LOAN TERMS
+                </h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Interest Rate</span>
+<span class="text-slate-900 dark:text-slate-100 font-semibold text-sm">0% (Family Rate)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Repayment Method</span>
+<span class="text-slate-900 dark:text-slate-100 font-semibold text-sm">Allowance Deduction</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Target Completion</span>
+<span class="text-slate-900 dark:text-slate-100 font-semibold text-sm">Oct 15, 2026</span>
+</div>
+</div>
+</div>
+<!-- Next Steps -->
+<div class="px-6 mb-8">
+<h4 class="text-slate-900 dark:text-slate-100 font-bold text-lg mb-4">Next Steps</h4>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="size-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-semibold text-sm">Funds Transferred</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">The $200.00 has been added to your Digital Wallet.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-8 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-semibold text-sm">Scheduled Repayment</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">First deduction starts this Friday from your weekly allowance.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                    Back to Family Bank
+                    <span class="material-symbols-outlined">home</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

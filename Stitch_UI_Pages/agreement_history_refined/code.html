@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<a class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<div class="ml-2 flex-1">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Agreement History</h2>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Family Governance Council</p>
+</div>
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="px-4 py-4 bg-white dark:bg-slate-900">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
+<div class="text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-xl">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 h-full placeholder:text-slate-400 px-4 rounded-r-xl text-base font-normal" placeholder="Search cases or members..." value=""/>
+</div>
+</label>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 px-4 pb-4 overflow-x-auto no-scrollbar bg-white dark:bg-slate-900">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-4 text-sm font-medium shadow-sm shadow-primary/20">
+<span>All History</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 text-sm font-medium">
+<span>Members</span>
+<span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 text-sm font-medium">
+<span>Case Type</span>
+<span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">tune</span>
+</button>
+</div>
+<!-- History List -->
+<div class="flex-1 space-y-4 p-4 bg-background-light dark:bg-background-dark">
+<!-- Entry 1 -->
+<div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+<div class="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-start">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary px-2 py-0.5 bg-primary/10 rounded">Case #12345</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-0.5 bg-green-50 rounded">Completed</span>
+</div>
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Missed Curfew Incident</h3>
+</div>
+<p class="text-[11px] text-slate-400 font-medium">Oct 12, 2023</p>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 flex items-center justify-center text-[10px] font-bold">L</div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">M</div>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Leo <span class="text-slate-400 mx-1">vs</span> Mom</p>
+</div>
+<div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<div class="space-y-1">
+<p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Original</p>
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">No electronics for a week.</p>
+</div>
+<div class="space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3">
+<p class="text-[10px] uppercase font-bold text-primary tracking-wider">Final Agreement</p>
+<p class="text-xs text-slate-900 dark:text-white font-semibold leading-relaxed">10 PM curfew for 2 weeks.</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 bg-slate-50/50 dark:bg-slate-800/20 flex justify-end">
+<button class="text-primary text-xs font-bold flex items-center gap-1">
+                        View Full Transcript <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+<div class="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-start">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary px-2 py-0.5 bg-primary/10 rounded">Case #12340</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 px-2 py-0.5 bg-amber-50 rounded">In Progress</span>
+</div>
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Dishwashing Schedule Dispute</h3>
+</div>
+<p class="text-[11px] text-slate-400 font-medium">Sep 28, 2023</p>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 flex items-center justify-center text-[10px] font-bold">S</div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-300 flex items-center justify-center text-[10px] font-bold">L</div>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Sarah <span class="text-slate-400 mx-1">vs</span> Leo</p>
+</div>
+<div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<div class="space-y-1">
+<p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Original</p>
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Alternate days strictly.</p>
+</div>
+<div class="space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3">
+<p class="text-[10px] uppercase font-bold text-primary tracking-wider">Proposed</p>
+<p class="text-xs text-slate-900 dark:text-white font-semibold leading-relaxed">Points system based on load size.</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 bg-slate-50/50 dark:bg-slate-800/20 flex justify-end">
+<button class="text-primary text-xs font-bold flex items-center gap-1">
+                        Contribute to Vote <span class="material-symbols-outlined text-sm">how_to_vote</span>
+</button>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+<div class="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-start">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary px-2 py-0.5 bg-primary/10 rounded">Case #12338</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-0.5 bg-green-50 rounded">Completed</span>
+</div>
+<h3 class="text-slate-900 dark:text-slate-100 font-bold text-base leading-tight">Extra Screen Time Request</h3>
+</div>
+<p class="text-[11px] text-slate-400 font-medium">Sep 15, 2023</p>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 flex items-center justify-center text-[10px] font-bold">S</div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">D</div>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Sarah <span class="text-slate-400 mx-1">vs</span> Dad</p>
+</div>
+<div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<div class="space-y-1">
+<p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Original</p>
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Max 2 hours daily.</p>
+</div>
+<div class="space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3">
+<p class="text-[10px] uppercase font-bold text-primary tracking-wider">Final Agreement</p>
+<p class="text-xs text-slate-900 dark:text-white font-semibold leading-relaxed">3 hours if GPA &gt; 3.8.</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 bg-slate-50/50 dark:bg-slate-800/20 flex justify-end">
+<button class="text-primary text-xs font-bold flex items-center gap-1">
+                        View Full Transcript <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Nav Bar -->
+<div class="flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-6 pt-2 sticky bottom-0">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Governance</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">history</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">History</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

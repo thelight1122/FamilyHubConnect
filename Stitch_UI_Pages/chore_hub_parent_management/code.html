@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Hub Connect - Chore Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between p-4 max-w-2xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_back</span>
+<h1 class="text-xl font-bold tracking-tight">Chore Management</h1>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">analytics</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pb-24 max-w-2xl mx-auto">
+<!-- Quick Stats -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-4 bg-primary/10 border border-primary/20">
+<div class="flex items-center justify-between">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Pending Review</p>
+<span class="material-symbols-outlined text-primary text-lg">fact_check</span>
+</div>
+<p class="text-3xl font-bold text-primary">5</p>
+</div>
+<div class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-4 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-between">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Points Today</p>
+<span class="material-symbols-outlined text-slate-500 text-lg">stars</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-slate-100">1,250</p>
+</div>
+</div>
+<!-- Progress Chart -->
+<section class="px-4 py-4">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-lg font-bold">Household Progress</h2>
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-500">Weekly Completion</span>
+<span class="text-xs font-bold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+12%</span>
+</div>
+</div>
+<p class="text-3xl font-bold tracking-tight text-primary">85%</p>
+</div>
+<div class="grid grid-cols-7 gap-3 items-end h-32 px-2">
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-sm h-[80%] hover:bg-primary transition-all"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">M</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-sm h-[85%] hover:bg-primary transition-all"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">T</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-sm h-[60%] hover:bg-primary transition-all"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">W</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-sm h-[95%]"></div>
+<span class="text-[10px] font-bold text-primary uppercase">T</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-sm h-[70%] hover:bg-primary transition-all"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">F</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-sm h-[40%] hover:bg-primary transition-all"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">S</span>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-800 rounded-t-sm h-[10%]"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">S</span>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Suggestions / Create New -->
+<section class="px-4 py-4">
+<div class="bg-primary p-4 rounded-xl flex items-center justify-between text-white shadow-lg shadow-primary/20">
+<div class="flex items-center gap-3">
+<div class="bg-white/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-white">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-bold leading-tight">AI-Powered Suggestions</h3>
+<p class="text-xs opacity-90">3 new recurring chores identified</p>
+</div>
+</div>
+<button class="bg-white text-primary font-bold px-4 py-2 rounded-lg text-sm">Review</button>
+</div>
+</section>
+<!-- Pending Review List -->
+<section class="px-4 py-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold">Review Required</h2>
+<a class="text-primary text-sm font-semibold" href="#">View All</a>
+</div>
+<div class="space-y-3">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="relative w-16 h-16 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Photo of a clean kitchen counter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbw24voFvW2WRRa19qKR_yudza2yWVF19-Zird-005Sloh_nWhUEKxuyXoLHvBJ3Jp-wZYSE17pta4jXheJOw2Bu1BPSWiKVJc0cwUA4kQfwDQoTDZwlD_mDddymWrGKd6G_S9mh8kUEWQ_HYNHXuyEYzxqJSD6YAEILBV9CH32pFh3DDbZAaqgYkHrVhVO6dZaPWeDmo4fq9qvViV5Ghbo9hrXgaXLMBCn1HHFAq2-p3aQTcMVXAtL9hfpgn6uM-GT1HWGS3gQ8U"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">photo_camera</span>
+</div>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Clean Kitchen Counter</h4>
+<p class="text-xs text-slate-500">Completed by <span class="text-primary font-medium">Leo</span></p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px] text-primary">stars</span>
+<span class="text-xs font-bold">50 pts</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="p-1.5 rounded-full bg-green-500 text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+<button class="p-1.5 rounded-full bg-red-500 text-white">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4 opacity-80">
+<div class="relative w-16 h-16 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Photo of neatly folded laundry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoxAf53uF5XexLQMPhQyygGIypC8Ok-MxJPBG5yUKia8cnr9AX4uIMvSUFCaQchz6xmTQQbhrNyaq76cfkA0DpYIkla7kipFnZksBVG4NDEj0WA5jbZ9sPY6sLrgCje6VCWO85A60bVWbsOkrIOyQnQTFmf2TLprAtSP2LWHIgQnxYkEEithNl9hYB0Se3nwuin485I8fLhuMXM9v6VO0zGGYMn7VMa5jUzWq2tSaOe154rVaThw4DQYc23cJ-ge3EJvyGr4L9TAc"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">photo_camera</span>
+</div>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Fold Laundry</h4>
+<p class="text-xs text-slate-500">Completed by <span class="text-primary font-medium">Sarah</span></p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px] text-primary">stars</span>
+<span class="text-xs font-bold">75 pts</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="p-1.5 rounded-full bg-green-500 text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+<button class="p-1.5 rounded-full bg-red-500 text-white">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Active Chores / Assignment -->
+<section class="px-4 py-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold">Active Chores</h2>
+<button class="flex items-center gap-1 text-primary text-sm font-semibold bg-primary/10 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm">add</span>
+                    New Chore
+                </button>
+</div>
+<div class="space-y-3">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">delete</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Take out Trash</h4>
+<p class="text-xs text-slate-500">Assigned to: <span class="font-medium text-slate-700 dark:text-slate-300">Unassigned</span></p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2 mr-2">
+<img class="w-8 h-8 rounded-full border-2 border-white dark:border-slate-900" data-alt="Profile of a young boy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmA3aJYBe6H2MCDSWuF9Msvz9itkZyIPARfOyxxItazU08EDIuwa4pyK_ruG-FGv2_7WSSIt3TbPQqnulaaNhcwZvXn8sm9BnvFrFz5gL-FoVlHUxnMq6AoRy_0UwVWEqZj1y5GjPAMWLqXut8YGOxnWxDzag9vfOlG3toaQhDsC6yLmihe3z1hAbA8baZQFYx1l6QjcnFJzxUO2dw_tacuGJA_uNtGBTB-yGnpcbHS296vjLeeDljUH9xVBNlp4jyfD9Wg8l65sY"/>
+<img class="w-8 h-8 rounded-full border-2 border-white dark:border-slate-900" data-alt="Profile of a teenage girl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA-GOqphmU4ejmDLtIniAPJvWHHLOuRkL7FhMb66h4697Kdqh2r6yb3twyV5y_C84SVWJJT8XGocm3_AUfbuDsDKZDA2gGEOvnxEaYQlsSXT4bpVebVafjUy_bW9QaJ9qIIW2v_Dk6cJOxKEP4PYR-tckYWc45jhD_P6DGRKaHicX87JvQT1gWB1ruoDGsiK3EJ5puj7VGkh-Ahe-oi4gfc88ETTk4dqxUTWyZAyfeulF0XSpwa8NzKSNZ-oNApBWtXXc3fTxk3IU"/>
+</div>
+<button class="bg-primary/10 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined text-sm">person_add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-l-primary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">pets</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Walk the Dog</h4>
+<p class="text-xs text-slate-500">Assigned to: <span class="font-medium text-slate-700 dark:text-slate-300">Sarah</span></p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary">stars</span>
+<span class="text-sm font-bold">30</span>
+</div>
+<button class="text-slate-400">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pb-safe z-20">
+<div class="flex justify-around items-center h-16 max-w-2xl mx-auto px-4">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Hub</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">task_alt</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Chores</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Calendar</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Members</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Care Hub - Family Hub Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Family Care Hub</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-slate-900 dark:text-slate-100 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-6 p-4">
+<!-- Family Health Status Section -->
+<section>
+<div class="flex items-center justify-between mb-3">
+<h2 class="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-[-0.015em] font-display">Family Health</h2>
+<span class="text-primary text-sm font-semibold">View Reports</span>
+</div>
+<div class="flex items-center mb-4">
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block size-12 rounded-full ring-4 ring-white dark:ring-slate-900 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a smiling young woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyhKMOdISLyb3v9mhW1nGZxObUa_Y2XMYbcuEBdG-MAGATwJX1H7IRPEYE-C7xi1moG2eVw_bBMw5wC6szEK4pnbunz5kzn43i0d7vPfK_YltUX8ZSM2Q45IeS3YBk9FS98PTyMlzHTlxK36rKeqcPCYHiX4NhKQgTTxaUgl227I9ZqU7E_DnEFEZvSz4I0F4zShve6KTC32flRTJD8uP4mJR58ERZ7-34610uS_6bPGahIjTahoAzTFhOALJY3Vz_cLhF8LnqlLM");'></div>
+<div class="inline-block size-12 rounded-full ring-4 ring-white dark:ring-slate-900 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a middle-aged man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAx-WojLilFrGoj-n41Hl7ezXXd8L6lNk98faBkt7ayg_BgGtDwflJ5A79H5w4Ydr_dItUPKI7X10of4lkXnUXG-QL7dMXFX6c3-o36jJGlO97_Pu6rWcO752h9db6otAXaHFZYTZIAhi34IAKrAUC4LmbBLwyIpRY5r1ukeMXkmsYrX8GubDL6oruxDoeTg-inqcRSMhocztZO0i6o-QKmvYugGrQWZMOPYy5TdAysLFWIX7Akd0zZ3EZkzcH4Q3OrztdxSlU4T8E");'></div>
+<div class="inline-block size-12 rounded-full ring-4 ring-white dark:ring-slate-900 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a smiling young boy" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEp0dIQLU2Cdj121ESOM5AcQrccnFJCJq3IArI4bGu9xoLql_cPn0fnEJae0iQ9iSoMTzpTFJ2HFOqMsAE7KNWJmqJwPNW4p3R0iLMMMk2R7uqTejAMkK7px2c2H-4vPP2dyoiFAYxfTIUajLHr0lDUIRvmN1pFdYPygvHjegkosSee5NdxbtHLYB-nvtGUvrMcGvo9_S-BlHD5r77xlQSHz8j4i77mgoaNrJ3YR7pjio5T3AJ4VNwTySxU_uw1Rhpti6rQRc8muI");'></div>
+<div class="inline-block size-12 rounded-full ring-4 ring-white dark:ring-slate-900 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-bold">+2</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-2 rounded-xl p-4 bg-primary/10 border border-primary/20">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">favorite</span>
+<p class="text-sm font-semibold leading-normal">Health Score</p>
+</div>
+<p class="text-slate-900 dark:text-slate-100 tracking-light text-2xl font-bold leading-tight">92%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50">
+<div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined text-lg">sync</span>
+<p class="text-sm font-semibold leading-normal">Vitals Sync</p>
+</div>
+<p class="text-slate-900 dark:text-slate-100 tracking-light text-2xl font-bold leading-tight">10m ago</p>
+</div>
+</div>
+</section>
+<!-- AI Nurse Bot Quick Feature -->
+<section class="bg-gradient-to-br from-primary to-blue-600 rounded-2xl p-5 text-white shadow-lg shadow-primary/20">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<div>
+<h3 class="font-bold text-lg font-display">AI Nurse-Bot</h3>
+<p class="text-white/80 text-xs font-medium">Available 24/7 for health tips</p>
+</div>
+</div>
+</div>
+<div class="bg-white/10 rounded-xl p-3 mb-4 backdrop-blur-sm border border-white/10">
+<p class="text-sm italic">"Flu season is starting. Make sure everyone has their vitamin C today!"</p>
+</div>
+<button class="w-full bg-white text-primary font-bold py-2.5 rounded-lg text-sm transition-transform active:scale-95">Ask a Question</button>
+</section>
+<!-- Quick Links to Health Logs -->
+<section>
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold mb-4 font-display">Health Logs</h3>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="flex-none flex flex-col items-center gap-2 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-800 min-w-[90px] shadow-sm">
+<div class="size-10 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 flex items-center justify-center">
+<span class="material-symbols-outlined">bloodtype</span>
+</div>
+<span class="text-xs font-bold">Vitals</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-800 min-w-[90px] shadow-sm">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-500 flex items-center justify-center">
+<span class="material-symbols-outlined">medication</span>
+</div>
+<span class="text-xs font-bold">Meds</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-800 min-w-[90px] shadow-sm">
+<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-500 flex items-center justify-center">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<span class="text-xs font-bold">Diet</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-800 min-w-[90px] shadow-sm">
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-500 flex items-center justify-center">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<span class="text-xs font-bold">Sleep</span>
+</button>
+</div>
+</section>
+<!-- Upcoming Appointments -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold font-display">Appointments</h3>
+<span class="text-primary text-sm font-semibold">View All</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col items-center justify-center size-14 rounded-lg bg-primary text-white shrink-0 font-display">
+<span class="text-xs font-medium uppercase leading-none">Oct</span>
+<span class="text-xl font-bold">24</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Pediatrician Visit</h4>
+<p class="text-slate-500 text-xs font-medium mt-0.5">Leo Miller • 10:30 AM</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col items-center justify-center size-14 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0 font-display">
+<span class="text-xs font-medium uppercase leading-none">Oct</span>
+<span class="text-xl font-bold">28</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Dental Cleaning</h4>
+<p class="text-slate-500 text-xs font-medium mt-0.5">Sarah Miller • 2:00 PM</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Active Medications -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold font-display">Active Medications</h3>
+<span class="text-primary text-sm font-semibold">Track All</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">pill</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Amoxicillin 500mg</h4>
+<p class="text-slate-500 text-xs font-medium">Leo • Twice Daily (Next: 8:00 PM)</p>
+</div>
+<button class="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">check</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">pill</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Vitamin D3 2000IU</h4>
+<p class="text-slate-500 text-xs font-medium">Sarah • Daily (Next: Tomorrow)</p>
+</div>
+<div class="size-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">done_all</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pb-4 pt-2 z-50">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined fill-1">pulse_alert</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Care Hub</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Tasks</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

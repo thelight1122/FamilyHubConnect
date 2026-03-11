@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Desktop_Commander__list_directory",
+      "Bash(unzip -o \"C:/Users/theli/Downloads/FHCstitch_central_dashboard.zip\" -d \"H:/FamilyHubConnect/FHCstitch_central_dashboard\")",
+      "Skill(frontend-excellence:frontend)",
+      "Skill(frontend-excellence:frontend:*)",
+      "mcp__Desktop_Commander__write_file",
+      "mcp__Desktop_Commander__read_file",
+      "mcp__Desktop_Commander__get_file_info",
+      "Bash(xargs -I {} basename {})",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(npm create vite@latest fhc-app -- --template react)",
+      "mcp__Desktop_Commander__read_multiple_files"
+    ]
+  }
+}

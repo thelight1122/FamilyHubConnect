@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Fridge - Family Hub Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 border-b border-slate-100 dark:border-slate-800 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">The Fridge</h2>
+<div class="flex size-10 items-center justify-end cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="bg-white dark:bg-background-dark">
+<div class="flex border-b border-slate-100 dark:border-slate-800 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-2 border-primary text-primary pb-3 pt-4" href="#">
+<p class="text-sm font-bold tracking-tight">Plan</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4" href="#">
+<p class="text-sm font-bold tracking-tight">Recipes</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4" href="#">
+<p class="text-sm font-bold tracking-tight">Pantry</p>
+</a>
+</div>
+</div>
+<!-- Weekly Calendar Section -->
+<section class="p-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Weekly Meal Plan</h2>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<!-- Day Card Active -->
+<div class="flex flex-col items-center justify-center min-w-[64px] h-20 bg-primary text-white rounded-xl shadow-md">
+<p class="text-[11px] font-semibold uppercase opacity-80">Mon</p>
+<p class="text-xl font-bold">12</p>
+</div>
+<!-- Day Card -->
+<div class="flex flex-col items-center justify-center min-w-[64px] h-20 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl">
+<p class="text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-400">Tue</p>
+<p class="text-xl font-bold">13</p>
+</div>
+<!-- Day Card -->
+<div class="flex flex-col items-center justify-center min-w-[64px] h-20 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl">
+<p class="text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-400">Wed</p>
+<p class="text-xl font-bold">14</p>
+</div>
+<!-- Day Card -->
+<div class="flex flex-col items-center justify-center min-w-[64px] h-20 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl">
+<p class="text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-400">Thu</p>
+<p class="text-xl font-bold">15</p>
+</div>
+</div>
+<!-- Daily Schedule -->
+<div class="mt-4 space-y-3">
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
+<div class="size-12 rounded-lg overflow-hidden bg-slate-200 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Avocado toast breakfast on a white plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA2gnlhQq19PSWxdDijBulvOdEsBWsTHIu6NFWspK5Ixczdw_eOh2TLuNUEaGQvoTv_PVudHpMDcuftNst46Z0_tvUA4cUTYOL0J3yW_-UuJF05kd02TsKhz3ux0VygR3zteAPdSmBjhj_800AEva6f8L6TcUFwdCGWhcnsP81iyXl_teoIVKZ_toecuQ76rJkChzSeEymt7lohpMDUjA5uqNYBnucvqS6vGTcOeqR41PEQ_A7uT-yOrjiSW5A1R-S7jGEo0NI4E0"/>
+</div>
+<div class="flex-1">
+<p class="text-[11px] font-bold text-primary uppercase">Breakfast</p>
+<p class="text-sm font-semibold">Avocado Toast &amp; Poached Eggs</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
+<div class="size-12 rounded-lg overflow-hidden bg-slate-200 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Fresh mediterranean salad in a ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcUOhY5716WJo3e5i9FbpI0mNRMnSUEaItLdd-SmQqXQI1ntHPZLsuhCtVI1fYgFg049FlvL1AJ0dGNfMnb3vJtMDuDgFlo0P_ibdPyh0Hz7NvpwIaOWy3EbgkuQnDxrKwYUjzr0espkSkQBmCzHjhzxb3WkfOcZPiRS27ACYbkv4kVjtnhZjhdBfSwtNPnrZzudz4lqosSMagN12d92PLKTzIDzqAok-LWk3ChfaWU-iFvr916UaxhJaAW3HV5ZpFz29MxqO2Hq0"/>
+</div>
+<div class="flex-1">
+<p class="text-[11px] font-bold text-primary uppercase">Lunch</p>
+<p class="text-sm font-semibold">Greek Quinoa Salad</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl ring-2 ring-primary/20">
+<div class="size-12 rounded-lg overflow-hidden bg-slate-200 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Roasted salmon with asparagus and lemon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA00YL37OZ3J_X0re7cq51ix5Q7B2JkljNdAxBXAFUbm8Jss4chnhqZIn6wmbew_bN1HQXZ6x_sr6Nn8WgpJQQrC_HYn78imwrAzPlBF_XSJqcLEz0G-MR3NU2xyAcBSxQLv66F7gG5kbIPGzqD4eOi9vqbDWFOKQBwyVWglSj7crsE5ZKnmy2N1-d4RtCnHdu99zHnRw_1krZxC4G6FNCjkntycmFfttiekpSyhR4gRt71Yyk1uBVJrfoGt8nMAlmPG6ZLHhCLHqM"/>
+</div>
+<div class="flex-1">
+<p class="text-[11px] font-bold text-primary uppercase">Dinner</p>
+<p class="text-sm font-semibold">Lemon Garlic Salmon</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</div>
+</div>
+</section>
+<!-- AI Suggestions -->
+<section class="p-4 bg-primary/5 dark:bg-primary/10 mt-2">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">auto_awesome</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold tracking-tight">AI Recipe Suggestions</h2>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+<div class="min-w-[160px] bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="h-24 bg-slate-200 relative">
+<img class="w-full h-full object-cover" data-alt="Spicy ground beef tacos on a wooden board" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv9Yec4xLcivI75goOLh2TPYZnvecAbo2L74yRJDyuxVeLdp5kbblnSOGBGhVtS6BqxuwwAFd6US7ybuCD8CGipJxtj9Ls13BN0QsddHXd-GxmAao9bDHM_gTxtl41_QN5V1V93-VkbK9kaRroSbn9m2xz2_e-pn2c5j2UV52C2vdLtwVCGoR5VVLGurlzDuuJz7cJAlj5pm9gmNTJYHC8ipMyq6Ro0p8dOqBF-vqP-IWi9w-dSyVhj-aN2vG3BXlK9EEImwpRC_g"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 bg-white/90 rounded text-[10px] font-bold text-primary">🌮 Taco Tuesday</div>
+</div>
+<div class="p-3">
+<p class="text-xs font-bold leading-tight mb-1">Authentic Street Tacos</p>
+<p class="text-[10px] text-slate-500">Uses 4 pantry items</p>
+</div>
+</div>
+<div class="min-w-[160px] bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="h-24 bg-slate-200 relative">
+<img class="w-full h-full object-cover" data-alt="Classic pasta carbonara with parsley garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATq5Q9hlDHNuns6WGDMF7nlOfSJOh_jRWAAvrklfS8GEyVbIuLU0yOBVFTiVllWx1S84XmF9j-WbdRgm4o-Nb1FSvOdeO4x-hst2cQGpC0pVwS91kJ85Wfk4LpPO1YzZChFI60baMFbbzah4rmf0iHoj4QJYc1tc_yDd0zIqODCrPuEPYHYWRXhePdDOZTj4YbTVYAhIRY4-b7gSX6wStQy5kUlT2ou9z9agXVkGEpir3t6uOzLgAhaIAenmWfO7Mib3K5qNXyx_8"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 bg-white/90 rounded text-[10px] font-bold text-primary">🍝 15-Min Pasta</div>
+</div>
+<div class="p-3">
+<p class="text-xs font-bold leading-tight mb-1">Quick Pasta Night</p>
+<p class="text-[10px] text-slate-500">Uses current eggs &amp; milk</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border-2 border-primary text-primary text-xs font-bold rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                Generate More Ideas
+            </button>
+</section>
+<!-- Pantry Summary -->
+<section class="p-4">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold tracking-tight mb-3">Pantry Inventory</h2>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-100 dark:border-emerald-800">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-emerald-600">inventory_2</span>
+<span class="text-emerald-700 dark:text-emerald-400 text-xs font-bold">80% Full</span>
+</div>
+<p class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Essentials</p>
+<p class="text-[10px] text-emerald-600 dark:text-emerald-500 mt-1">Stocked up</p>
+</div>
+<div class="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl border border-orange-100 dark:border-orange-800">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-orange-600">warning</span>
+<span class="text-orange-700 dark:text-orange-400 text-xs font-bold">Running Low</span>
+</div>
+<p class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Shopping List</p>
+<p class="text-[10px] text-orange-600 dark:text-orange-500 mt-1">Milk, Eggs, Bread</p>
+</div>
+</div>
+</section>
+<!-- Family Recipes Quick Access -->
+<section class="px-4 py-2">
+<div class="flex items-center justify-between p-4 bg-slate-900 rounded-xl text-white">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-sm">Family Recipe Book</p>
+<p class="text-[10px] opacity-70">128 saved favorites</p>
+</div>
+</div>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</section>
+<!-- Main Action Buttons -->
+<section class="p-4 space-y-3 pb-24">
+<button class="w-full py-3 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                Add to Grocery List
+            </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm font-bold rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+                    Plan Next Week
+                </button>
+<button class="py-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm font-bold rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+                    Quick Recipe
+                </button>
+</div>
+</section>
+<!-- Bottom Navbar -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm px-4 pb-6 pt-2 z-20">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">kitchen</span>
+<p class="text-[10px] font-medium">Fridge</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+<p class="text-[10px] font-medium">Tasks</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">payments</span>
+<p class="text-[10px] font-medium">Budget</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

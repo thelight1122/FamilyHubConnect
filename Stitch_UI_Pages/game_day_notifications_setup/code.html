@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Game Day Notification Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Game Day Alerts</h2>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-y-auto">
+<!-- Global Toggle Section -->
+<div class="px-4 py-6 bg-primary/5 dark:bg-primary/10">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-xl bg-primary shrink-0 size-12">
+<span class="material-symbols-outlined active-icon">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold">Game Day Alerts</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Master toggle for all sports events</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[27px] rounded-full bg-white shadow-md"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Arrival Settings -->
+<h3 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider px-4 pb-2 pt-6">Logistics</h3>
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Arrival Reminder</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">60 mins before game starts</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[28px] w-[46px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[24px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">check_box</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Uniform &amp; Gear Checklist</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Reminder the night before</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[28px] w-[46px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[24px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Team Support -->
+<h3 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider px-4 pb-2 pt-6">Family &amp; Team</h3>
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">fastfood</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Snack Duty Alert</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Notify when it's your turn</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[28px] w-[46px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[24px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">scoreboard</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Real-time Score Updates</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Share live progress with family</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[28px] w-[46px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[24px] rounded-full bg-white shadow-sm"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- External Integrations -->
+<h3 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider px-4 pb-2 pt-6">Field Conditions</h3>
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">thunderstorm</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">Weather Integration</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Outdoor game delay warnings</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[28px] w-[46px] cursor-pointer items-center rounded-full border-none bg-slate-300 dark:bg-slate-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[24px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Save Button Section -->
+<div class="p-6 mt-4">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span>
+                    Save Settings
+                </button>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="flex gap-2 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark px-4 pb-6 pt-3 sticky bottom-0">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-tight">Calendar</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined active-icon">sports_kabaddi</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-tight">Locker Room</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">checklist</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-tight">Chores</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-tight">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thompson Family Hub - Sarah's Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-20">
+<!-- Top Header -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center px-4 py-3 justify-between max-w-2xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">family_restroom</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">Thompson Family Hub</h1>
+</div>
+<button class="size-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto p-4 space-y-6">
+<!-- Welcome Section -->
+<section class="flex items-center gap-4 bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="size-20 rounded-full border-4 border-primary/20 bg-cover bg-center shrink-0" data-alt="Profile photo of Sarah Thompson smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4NoibfOqP4WJyZkNIinjE9kLpaDbe8FNtiel_H7aW7X0mfYyWq3IIUh8wPjUEMEeC4JAFh8Du8Bfm5DvNZ126gxc3l8F3_dcUg1_HjbuJZt203FoJZ-xApUd5i6Rw00SICo-XhscjI6_hwWHU7vp-KT5M55qu2okKAJHFGHm0P-sovE9FPSz5dGG1-AZd8MB-dQdhbenAACmxsfCJFxyvh31sQd0fznExDC0huxELeT4inmVDcIVCJBawdkpPt5U3eLCEd6nVobU')"></div>
+<div>
+<h2 class="text-2xl font-bold leading-tight">Welcome, Sarah</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Managing the Thompson household today</p>
+</div>
+</section>
+<!-- Family at a Glance -->
+<section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3 px-1">Family at a Glance</h3>
+<div class="flex items-center gap-2 bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block size-10 rounded-full border-2 border-white dark:border-slate-900 bg-cover bg-center" data-alt="Family member avatar Mark" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_aAFWHWz3uTPPQ1GXpWffc1I1W3n0rtKXiv1JQ4uOUTGTD2Aujjroq6-xzfoSq2hcWjg5ZSybbSCj-13KcDTaB6ZYkPRQqKjBqn5dwKhIfWh348Eos7QSvtkgtRqJAx3YUcsdOjaPBMD7U9he30izUE0IJuX6etCNdpJZwAZvnldCLQxbiJ9XKS6qTZydiCXWlLNxxZVJrufc_5j2evxYW4aqF6kIVkYK_eHWQMqrfLMhXIN8KMdGzWhRMQn56hcI_i4FKywTWKo')"></div>
+<div class="inline-block size-10 rounded-full border-2 border-white dark:border-slate-900 bg-cover bg-center" data-alt="Family member avatar Emily" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClglX87GzjZODlzbRZ0tvWxwcNlUMhCdntCUxHWbTEiZ0XJ2efhCmPOEEY5KQgPO5U28CEBT9EfP06cdJI8-VH3hXQn6PZBuExQevys-ZTg_HLmJin5nn_ftKbG9O7VaqtHGVCnTbNkx3mKa6HouDszkxrQStSK4F8FTuFEywBbg7tGWFeDdiPySj-_5CYllWXgXTY9gICsB_jWNvW2VF9TIaO1l25jqx8lpUKoyn5FEM77sG8F63ARAtTxHML9tpt-0Sa7lC75CA')"></div>
+<div class="inline-block size-10 rounded-full border-2 border-white dark:border-slate-900 bg-cover bg-center" data-alt="Family member avatar Leo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqeuNoTuGqhy5YXlZp1XgQuTQ57jGduUmWNju1w-MofEU0EprLZ5Bup_Fwb_pxAG2qaDRpbwkwMXJxY3Gg5bkAEZXkoLySltxpFlc9-TXeVaVnn6UtcewVqWqH1VpUDYWxG1XbZtEfoWLU91DkKHaUMvc70k8tbhKF6Vb9_mMprwWvSptVgI9qQ_frKmWzjkT0KOJIZZGkp_09f0SMdwUhWVBGpNol7EJJtxYszqWextfXIto1rzqiW73LpSq-LAsy_Y-QSkNTneE')"></div>
+<div class="flex items-center justify-center size-10 rounded-full border-2 border-white dark:border-slate-900 bg-primary/10 text-primary text-xs font-bold">+2</div>
+</div>
+<div class="ml-auto">
+<button class="text-primary text-sm font-semibold hover:underline flex items-center gap-1">
+                        View Status <span class="material-symbols-outlined text-xs">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center gap-2 bg-primary text-white p-4 rounded-xl shadow-md transition-transform active:scale-95">
+<span class="material-symbols-outlined">person_add</span>
+<span class="text-sm font-semibold">Invite Member</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl shadow-sm transition-transform active:scale-95">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+<span class="text-sm font-semibold">Add Expense</span>
+</button>
+</section>
+<!-- Today's Schedule -->
+<section>
+<div class="flex items-center justify-between mb-3 px-1">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Today's Schedule</h3>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">2 Events</span>
+</div>
+<div class="space-y-3"><div class="flex gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border-l-4 border-primary shadow-sm border-y border-r border-slate-100 dark:border-slate-800">
+<div class="flex flex-col items-center justify-center shrink-0 w-12 border-r border-slate-100 dark:border-slate-800 pr-3">
+<span class="text-xs font-bold text-slate-400">10:00</span>
+<span class="text-xs font-bold text-slate-400">AM</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Pay Water Bill</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Finance • Utility Portal</p>
+</div>
+</div>
+<div class="flex gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border-l-4 border-amber-400 shadow-sm border-y border-r border-slate-100 dark:border-slate-800">
+<div class="flex flex-col items-center justify-center shrink-0 w-12 border-r border-slate-100 dark:border-slate-800 pr-3">
+<span class="text-xs font-bold text-slate-400">04:30</span>
+<span class="text-xs font-bold text-slate-400">PM</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Pick up Luna from Vet</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Pet Care • City Animal Clinic</p>
+</div>
+</div></div>
+</section>
+<!-- Active Chores -->
+<section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3 px-1">Meal Planning</h3>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4">
+<div class="size-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Tonight's Dinner</p>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Homemade Lasagna</h4>
+</div>
+<button class="size-8 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 text-sm">edit</span>
+</button>
+</div>
+</section><section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3 px-1">Household Overview</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-lg">stars</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Family Points</span>
+</div>
+<div class="text-2xl font-bold text-slate-900 dark:text-slate-100">1,250</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-emerald-500 text-lg">account_balance</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Budget Left</span>
+</div>
+<div class="text-2xl font-bold text-slate-900 dark:text-slate-100">$420.50</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="flex max-w-2xl mx-auto items-center justify-around px-4 pb-6 pt-2">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-medium">Calendar</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-[10px] font-medium">Chores</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[10px] font-medium">Expenses</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

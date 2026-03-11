@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen shadow-xl flex flex-col">
+<!-- Header -->
+<header class="flex items-center p-4 border-b border-slate-100 dark:border-slate-800 sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10">
+<button class="text-slate-900 dark:text-slate-100 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined block">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold ml-2">Review Loan Pitch</h1>
+</header>
+<main class="flex-1 overflow-y-auto pb-32">
+<!-- Child Pitch Summary -->
+<section class="p-6 flex flex-col items-center border-b border-slate-50 dark:border-slate-800">
+<div class="relative">
+<div class="w-24 h-24 rounded-full border-4 border-primary/20 p-1">
+<div class="w-full h-full rounded-full bg-center bg-cover" data-alt="Close up portrait of a smiling boy named Leo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBhMQ2rgH7zv3cV3US_oug68ihs_ByNp6dRiQum_4FIuf7YPmgdxMno4u_3XfnVlYbSNRh8PWr3YDec6wKmSf25-ELXdpO80YOE4hcWGeFBdwXn5zbKvNTTFW8eIiQen1mk4g01Yv6nL9nNlC6LVksd7NPdCWHPkU__0pNVZR16ngXwghNF81-Ool0xvOIfASHaBc7N4ZjvOu3eNC6T0gwTmpdb4D3ZAZiFo1F4wNu9rP5FoKsEtRZqYYJOFdX4sPWmhdCXkn4qqr0')"></div>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary text-white p-1 rounded-full border-2 border-white dark:border-slate-900">
+<span class="material-symbols-outlined text-xs block">verified</span>
+</div>
+</div>
+<div class="text-center mt-4">
+<p class="text-3xl font-bold text-primary">$200.00</p>
+<p class="text-slate-500 dark:text-slate-400 font-medium">Pitch by Leo • June 12, 2024</p>
+</div>
+</section>
+<!-- Vision Section -->
+<section class="px-6 py-5">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">The Vision</h3>
+<div class="bg-primary/5 dark:bg-primary/10 p-4 rounded-xl border-l-4 border-primary">
+<p class="text-slate-700 dark:text-slate-200 leading-relaxed italic">
+                        "A new mountain bike for the summer trails. I've been saving up, but need a little extra to get the safety gear too. I'll take care of it and ride it to school every day."
+                    </p>
+</div>
+</section>
+<!-- Loan Details Grid -->
+<section class="px-6 py-4">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Loan Details</h3>
+<div class="grid grid-cols-1 gap-3">
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">category</span>
+<span class="text-slate-600 dark:text-slate-300">Category</span>
+</div>
+<span class="font-semibold">Sports &amp; Outdoors</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">payments</span>
+<span class="text-slate-600 dark:text-slate-300">Payback Plan</span>
+</div>
+<span class="font-semibold text-right">Weekly Allowance Deductions</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-slate-600 dark:text-slate-300">Target Date</span>
+</div>
+<span class="font-semibold text-right">Oct 15, 2026</span>
+</div>
+</div>
+</section>
+<!-- AI Insight Card -->
+<section class="px-6 py-4">
+<div class="bg-slate-900 dark:bg-primary/20 text-white p-4 rounded-xl shadow-lg relative overflow-hidden">
+<div class="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-xl"></div>
+<div class="flex gap-3 items-start relative z-10">
+<span class="material-symbols-outlined text-primary shrink-0">auto_awesome</span>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-1">AI Insight</p>
+<p class="text-sm text-slate-200 dark:text-slate-100 leading-snug">
+<span class="font-bold">Educational Opportunity:</span> This is a great chance to discuss interest rates and the value of maintenance to ensure the bike lasts beyond the loan term.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Evidence Section -->
+<section class="px-6 py-4">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Evidence &amp; Attachments</h3>
+<div class="flex gap-3 overflow-x-auto pb-2">
+<div class="shrink-0 w-32 h-24 rounded-lg bg-center bg-cover border border-slate-200 dark:border-slate-700" data-alt="Photo of a modern blue mountain bike in a shop" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhDc8Ed2MNWp76wWc8TdhzkiQiMLWJpTaNORwYeten_-g0d6r-LjN5Q4JaYVx_RDKoOGPtK6UI8u8j8_Sd_poJVT3ZQYnbAw3EJnhQuCl92kaEs4-SJV5dGLhc7odonWuYG4N6ap4pTJgr3BHklr0w5YvolO3a2ofsBsIJVETh1Nb3TtIjObgda_BLi3hIKOVvXpzw6zTPQNgTRNli2ENhrBYaqP6lO5ZXTAMqnMzOjMVkYiYiOBuv9kxwPag2lO4pDHZ_2mTWgDA')"></div>
+<div class="shrink-0 w-32 h-24 rounded-lg bg-center bg-cover border border-slate-200 dark:border-slate-700" data-alt="Price tag and safety gear set on a shelf" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCfKbWPegDSbKKS4KQj3e9-DEsc-HuOFmhk915VtVyX0Hs3tkc8pZm1U96n3MDMx0V2RqfERkLS06t3VTPtI0bsehw2_vlDz4wsiMeaaICfLTuwG5L7eiDH_r6HoeRjJ9rYw-1z3xb3aEU6n-wKa5jOGCV-YV31KB28jHJdTA1ixJajZ8d7LoCuXjFv3p-UD1ah0ADcGEl0vx_lEUXuLCdS6p4bNI7d2hEJtdgqbAx2TKmSujiQ3CkEh3agqLwmud5RyqUdCPpo2LY')"></div>
+<div class="shrink-0 w-32 h-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+<span class="material-symbols-outlined text-slate-400">description</span>
+<span class="text-[10px] text-slate-500 mt-1 uppercase font-bold">Web Quote.pdf</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Fixed Action Footer -->
+<footer class="fixed bottom-0 max-w-md w-full bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 p-4 pb-8 space-y-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg transition-transform active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                Approve Loan
+            </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-1 py-3 px-2 border-2 border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+                    Negotiate
+                </button>
+<button class="flex items-center justify-center gap-1 py-3 px-2 border-2 border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                    Deny
+                </button>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leo's Chore &amp; Rewards Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600;700,FILL@0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Header / Profile Section -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="flex items-center p-4 justify-between max-w-2xl mx-auto">
+<div class="flex size-12 shrink-0 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="A cheerful young boy smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0ngvLToV6V4frOIHVhOWxIvGrGEDqpvYfTCuxkiYvd7doL4cOsA87hDyMv4pMXlOsXbqOLV_aqbbpIex2QIa9_goJV6vdXuxRFRp-oSw8yUvVHE2jPd3hoEkaN7wdnWe-YAAU-eswd1xp1pj7NS6f3IPSgbeMzFgQGZoma2ikgdv4aRKpgJYh1e4oGt7HM4dJ090kAsI_jMiXIGq7pRx4bpvgEOqp38jSpiNPKZCaAJkcML6SpZEZQq-jVeEG2Xjel62csLX-YXg");'></div>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Leo's Dashboard</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-xl h-10 w-10 bg-primary/10 text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-4">
+<!-- Hero Section -->
+<div class="py-6 @container">
+<div class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
+<div class="flex gap-4 items-center">
+<div class="bg-primary/20 rounded-2xl p-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-5xl">rocket_launch</span>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight">Great job, Leo!</p>
+<p class="text-slate-600 dark:text-slate-400 text-base">You're almost at your weekly goal.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Point Balance Card -->
+<div class="grid grid-cols-1 gap-4 mb-8">
+<div class="flex flex-row items-center justify-between gap-2 rounded-2xl p-6 bg-primary text-white shadow-lg shadow-primary/20">
+<div>
+<p class="text-white/80 text-sm font-medium uppercase tracking-wider">Current Balance</p>
+<p class="text-4xl font-bold">450 <span class="text-xl font-normal">pts</span></p>
+</div>
+<div class="bg-white/20 p-3 rounded-full">
+<span class="material-symbols-outlined text-4xl text-white">stars</span>
+</div>
+</div>
+</div>
+<!-- My Tasks Section -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold">My Tasks for Today</h2>
+<span class="text-primary text-sm font-bold">2/4 Done</span>
+</div>
+<div class="space-y-3">
+<!-- Task Item 1 (Pending) -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-2xl flex items-center gap-4 border border-slate-200 dark:border-slate-700">
+<div class="size-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-3xl">bed</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Make your bed</h3>
+<p class="text-sm text-slate-500">Earn 10 points</p>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                        Verify
+                    </button>
+</div>
+<!-- Task Item 2 (Pending) -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-2xl flex items-center gap-4 border border-slate-200 dark:border-slate-700">
+<div class="size-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined text-3xl">recycling</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Take out the trash</h3>
+<p class="text-sm text-slate-500">Earn 25 points</p>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                        Verify
+                    </button>
+</div>
+<!-- Task Item 3 (Completed) -->
+<div class="bg-slate-100 dark:bg-slate-800/30 p-4 rounded-2xl flex items-center gap-4 opacity-75">
+<div class="size-12 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-400 line-through">Read for 20 mins</h3>
+<p class="text-sm text-slate-400">Completed!</p>
+</div>
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Rewards Store -->
+<section class="mb-10">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold">Rewards Store</h2>
+<a class="text-primary text-sm font-bold" href="#">See All</a>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Reward 1 -->
+<div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col">
+<div class="h-32 bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Computer screen and gaming controller" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMej0Wdsz3Xzgku3ZBCTZirLNz9e1rYuhgJ1pcPlWAbEpHrV9cKmrQDZFJZeM1g3ZBnmkfBX9h-YVIV4o38DMjzxxf1TvqwX-Hpk7rB3fVPCqnhlC6MSPk8iNWi8QFkYK3bjC1wdC-ngc-fSmttHCfaeXB6oONaq-yMGxCHxaPBb8cqkVVpd5DR-z8t83G-JKNTZv2BRBEseRjm1xWEzTFbV-poi4zKbWIBmue_NwZ0prtcNeKHN_I3Rgjk_fGLo-BZI4B1N6FcGg"/>
+<div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full">POPULAR</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">30m Screen Time</h4>
+<div class="mt-auto flex items-center justify-between pt-2">
+<span class="text-primary font-bold text-sm">100 pts</span>
+<button class="bg-primary/10 text-primary p-1 rounded-lg">
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Reward 2 -->
+<div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col">
+<div class="h-32 bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cute pandas at the zoo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSJI7-HJfJse6Sn4NflsNcXTYDmipvAlMZi32pfJMe9x1lmmqUkIjwdWBIXnln2p-Ck5kPeHhnvReERjIN0kn7c6ZzDRKmzLAHvOfLIt9SiBrjUzCb5Xm3nYuE41GTJHTobq4ohL-e3rABeDkha5SIMBVOIRZRE3PNpDUGKdBmAY21aGmJzh7AMZ4MJaeQltp5zzvd-oO-I6h3-McH64d1ad3tj6BFpf3BfzkMT-K8uHNQyPgp437Jc9y3FHBZDjdi3-rczISXvLM"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">Trip to the Zoo</h4>
+<div class="mt-auto flex items-center justify-between pt-2">
+<span class="text-primary font-bold text-sm">500 pts</span>
+<button class="bg-slate-100 dark:bg-slate-700 text-slate-400 p-1 rounded-lg cursor-not-allowed">
+<span class="material-symbols-outlined text-lg">lock</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Reward 3 -->
+<div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col">
+<div class="h-32 bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Delicious chocolate sundae dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6gXHkOzN6WHGK6wbMTLyGcBKWKYy_3S1Oz2khRp5-cepRmYWDp49zO6yRk1FRe0KerZBHH9DeC_c5jDAZSTvlfAlTnmRQ076inuVZ_tPThLpNeZhsLvQfohpcy0wh5RSfWPLDWkv853mEljSYhewKvNlO9IjkFMKlwj9ubHqw5oVdvQprspyCCtwb34BOTnmij4zQyPOxaRRZuQx9OxMo3Qb9069B-GtL4ZH1ji6rmdrt-su73ByBcEOiy80zxCylDLE-IhKm-FQ"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">Ice Cream Date</h4>
+<div class="mt-auto flex items-center justify-between pt-2">
+<span class="text-primary font-bold text-sm">250 pts</span>
+<button class="bg-primary/10 text-primary p-1 rounded-lg">
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Reward 4 -->
+<div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col">
+<div class="h-32 bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Game controller and tech background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlRUOinb7Ek7TUWRb0zQAIe1ahCjhSPo5jWIkyDmLUYIkECl7tmMFqjNHQ7kS5pxVk9Q6RQt_KvyCGMmPPCto_ls5xEcHMHTsBbongEb30A9YJpVxQ4CNtr0KqUuFF31OhfF40es0779NRiGj8V-8huHTfwvtRl0_VtZ_DEqmkcURXlk414Y-72gLVeJaIwYG61ppo9b7JxM7bJkJINAeSpMKZSs3uI4Da-4u1DX-IMWd5MrlTzd3jMNCtdz9BdF_dIlU-NA5qu6E"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">New Toy Set</h4>
+<div class="mt-auto flex items-center justify-between pt-2">
+<span class="text-primary font-bold text-sm">1000 pts</span>
+<button class="bg-slate-100 dark:bg-slate-700 text-slate-400 p-1 rounded-lg cursor-not-allowed">
+<span class="material-symbols-outlined text-lg">lock</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-6 pb-6 pt-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined font-fill text-2xl">task_alt</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Tasks</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">storefront</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Store</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">military_tech</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Badges</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+</body></html>

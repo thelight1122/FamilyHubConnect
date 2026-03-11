@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-background-dark overflow-hidden border-x border-primary/10">
+<!-- TopAppBar -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Negotiation: Case #12345</h2>
+<p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Family Court Protocol</p>
+</div>
+<div class="size-10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">gavel</span>
+</div>
+</div>
+<!-- Progress/Status Area -->
+<div class="flex flex-col gap-2 p-4 bg-primary/5">
+<div class="flex gap-6 justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<p class="text-primary text-sm font-semibold leading-normal">Actively Negotiating</p>
+</div>
+<p class="text-slate-500 text-xs font-bold leading-normal">MODERATION: 50%</p>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-slate-700 h-1.5 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 50%;"></div>
+</div>
+</div>
+<!-- Appeal Summary Card -->
+<div class="p-4 bg-white dark:bg-background-dark">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-sm border border-primary/10 bg-white dark:bg-slate-800 overflow-hidden">
+<div class="flex w-full flex-col items-stretch justify-center gap-3 p-4">
+<div class="flex items-center gap-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">description</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-tight">Appeal Summary</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Original</p>
+<p class="text-slate-700 dark:text-slate-300 text-xs font-medium">1-day screen time ban</p>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-primary text-[10px] font-bold uppercase tracking-widest">Proposed</p>
+<p class="text-slate-700 dark:text-slate-300 text-xs font-medium">1h ban + extra chores</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Container -->
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<h4 class="text-slate-400 text-[11px] font-bold leading-normal tracking-widest uppercase text-center">Today</h4>
+<!-- Child Message -->
+<div class="flex items-end gap-3">
+<div class="bg-primary/20 aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="Avatar of a young boy Leo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX6b-AzxCeIRsYQIiLGu7axgkQ4rG3Jc062zuOfC6Y-Xox4wscbly0tBYExLSaxSnzCVCbMXAKha_RJh1Q0Z8cOhvNcJmfLMvCPLKSibi9u9bdGIgceq25dAld01T6Sy0__u-NrzfqoEZBxJDK9D2mgG03ShvCCghDZ6FLNCvyuQZ5PDJOQBqOBRd5ZiKDD5tcYZD72SG6422N-Z4R0gXxv2N58Ambo6ybzXHAgxhduCg0ag4rwUroJKuTXpq0xtJY3YETqbUwvAM"/>
+</div>
+<div class="flex flex-col gap-1 items-start max-w-[80%]">
+<p class="text-slate-500 text-[11px] font-bold ml-1 uppercase">Leo</p>
+<div class="text-sm font-normal leading-relaxed rounded-2xl rounded-bl-none px-4 py-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-sm">
+                        Mom, I really need my phone for the group project tonight. Can we negotiate?
+                    </div>
+</div>
+</div>
+<!-- Parent Proposal Bubble -->
+<div class="flex items-end gap-3 flex-row-reverse">
+<div class="bg-primary aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Avatar of Mom smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC40ZtEokMS-LTmJLHG2DjNzDt_zPjNy4AHpNnMesnrQC2scXIdlkt5K2RBqN5vcgzZqFeDUZv4I0ebPVyu8-AOU3rpj_HLIaAfKx_ERsij-2N9IDCvE6a9Ct7MwNNredRmwxkLlO7zJ9tJg2By9_MknECsFgQ-DGu0gW8cG7gR1D-k2SgIR20LCrTISDo4WtZsL0b8T52PL71JUeMMQ13d2cUpzLBokdDmposg7_bjICoM1i5f0LvV_n4GsI_UGsP8DNjTBl9dcfA"/>
+</div>
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<p class="text-primary text-[11px] font-bold mr-1 uppercase">Mom (Proposal)</p>
+<div class="rounded-2xl rounded-br-none border-2 border-primary bg-primary/5 p-4 shadow-md flex flex-col gap-3">
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-100">New Proposed Terms:</p>
+<div class="bg-white dark:bg-slate-900 rounded-lg p-3 text-sm text-slate-600 dark:text-slate-300 border border-primary/20">
+<ul class="space-y-1">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">check_circle</span>
+                                    Half-day ban (starts after project)
+                                </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">check_circle</span>
+                                    Wash all dinner dishes tonight
+                                </li>
+</ul>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white text-xs font-bold py-2 rounded-lg hover:brightness-110 transition-all">ACCEPT</button>
+<button class="flex-1 border border-primary text-primary text-xs font-bold py-2 rounded-lg hover:bg-primary/10 transition-all">COUNTER</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Child Message Response -->
+<div class="flex items-end gap-3">
+<div class="bg-primary/20 aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="Avatar of a young boy Leo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKAvrBRPWXK6DWsBaOVLBUEL28lDW0STmeyPYpWLVOZlavqawzNiw-FONfr1nJ4bgoTUJmoG8JAesxnwWMPmhin6UpVEWYZ6sgp6f8UYUB6Rj9neR3xU-XWkqtc5f_VT2a0Wvx-up1zWldEJAGqFSfmHjZt6MBPYIkd_GxbsUHZ3qAD5MfjcoyRdG1FR38j-h2NZYsT_8GAiIzHF153mX9_7eXxvh-50Ryiqdi-TF9lPTgzPQaLiOhAwz9FB0eFqT-VSzNO6fPawM"/>
+</div>
+<div class="flex flex-col gap-1 items-start max-w-[80%]">
+<p class="text-slate-500 text-[11px] font-bold ml-1 uppercase">Leo</p>
+<div class="text-sm font-normal leading-relaxed rounded-2xl rounded-bl-none px-4 py-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-sm">
+                        That sounds fair. Can I do the dishes tomorrow instead? I have a lot of homework after the project.
+                    </div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 border-t border-primary/10 bg-white dark:bg-background-dark">
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2">
+<span class="material-symbols-outlined text-slate-400">add_circle</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-1 placeholder:text-slate-500" placeholder="Type a message or proposal..." type="text"/>
+<button class="bg-primary text-white rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">send</span>
+</button>
+</div>
+<div class="flex justify-center gap-4 mt-3">
+<button class="flex items-center gap-1 text-[11px] font-bold text-primary uppercase">
+<span class="material-symbols-outlined text-sm">handshake</span>
+                    Quick Proposal
+                </button>
+<div class="w-px h-3 bg-slate-300 self-center"></div>
+<button class="flex items-center gap-1 text-[11px] font-bold text-slate-500 uppercase">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                    Set Deadline
+                </button>
+</div>
+</div>
+</div>
+</body></html>

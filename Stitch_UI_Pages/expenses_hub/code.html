@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Hub Connect - Expenses Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between p-4 max-w-2xl mx-auto w-full">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-primary/20">
+<img alt="Sarah's Profile" class="w-full h-full object-cover" data-alt="Portrait of a smiling professional woman named Sarah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPE51jw4_fWBajpOSY-rd3YOsZyZBGbE_hDx10oGiS8ak3qKDZVwyLt8V-SwWt6abETr5nrw5ZBFRkg8z-oszW6NU5QbiDmpjqEhTfrzluwxUwHuLwyNrOUIU8vqjX4HV24R9QYMBvu-tSqVxxHjZfZkZZt5Z92Tgh_V9m9t3_ucinVS-s60tetJ8NWCR3C592-AYKRzcE1DU2-adzOoK8APsM3so2Rf2-9C9dPSGpi8_-OIz6xljOoU1M6_I22tWKM3jPzZz_i_4"/>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">Expenses Hub</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Welcome back, Sarah</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 p-4 max-w-2xl mx-auto w-full space-y-6">
+<!-- Budget Health Card -->
+<section class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Monthly Budget Health</h2>
+<p class="text-3xl font-bold mt-1">$1,625 <span class="text-base font-normal text-slate-400">/ $2,500</span></p>
+</div>
+<div class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded text-xs font-bold">
+                    ON TRACK
+                </div>
+</div>
+<div class="space-y-2">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 65%;"></div>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500 dark:text-slate-400">65% of budget used</span>
+<span class="text-primary font-medium">$875 remaining</span>
+</div>
+</div>
+</section>
+<!-- Category Breakdown -->
+<section>
+<div class="flex items-center justify-between mb-3 px-1">
+<h2 class="text-lg font-bold">Spending by Category</h2>
+<button class="text-primary text-sm font-semibold">View Details</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Groceries -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-orange-500 text-xl">shopping_cart</span>
+<span class="text-sm font-medium">Groceries</span>
+</div>
+<p class="text-xl font-bold">$450.00</p>
+<div class="mt-2 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full">
+<div class="bg-orange-500 h-full rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+<!-- Utilities -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-blue-500 text-xl">bolt</span>
+<span class="text-sm font-medium">Utilities</span>
+</div>
+<p class="text-xl font-bold">$320.50</p>
+<div class="mt-2 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full">
+<div class="bg-blue-500 h-full rounded-full" style="width: 20%;"></div>
+</div>
+</div>
+<!-- Entertainment -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-purple-500 text-xl">movie</span>
+<span class="text-sm font-medium">Entertainment</span>
+</div>
+<p class="text-xl font-bold">$185.00</p>
+<div class="mt-2 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full">
+<div class="bg-purple-500 h-full rounded-full" style="width: 12%;"></div>
+</div>
+</div>
+<!-- Pet Care -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-emerald-500 text-xl">pets</span>
+<span class="text-sm font-medium">Pet Care</span>
+</div>
+<p class="text-xl font-bold">$120.00</p>
+<div class="mt-2 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 8%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/25 flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+            Add New Family Expense
+        </button>
+<!-- Recent Expenses -->
+<section class="pb-24">
+<div class="flex items-center justify-between mb-4 px-1">
+<h2 class="text-lg font-bold">Recent Family Expenses</h2>
+<span class="material-symbols-outlined text-slate-400">filter_list</span>
+</div>
+<div class="space-y-3">
+<!-- Expense Item -->
+<div class="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600">shopping_basket</span>
+</div>
+<div>
+<p class="font-bold text-sm">Whole Foods Market</p>
+<p class="text-xs text-slate-500">Groceries • Today, 2:45 PM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">-$142.30</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">Sarah</p>
+</div>
+</div>
+<!-- Expense Item -->
+<div class="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">water_drop</span>
+</div>
+<div>
+<p class="font-bold text-sm">City Water Dept</p>
+<p class="text-xs text-slate-500">Utilities • Yesterday</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">-$85.00</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">Auto-pay</p>
+</div>
+</div>
+<!-- Expense Item -->
+<div class="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">confirmation_number</span>
+</div>
+<div>
+<p class="font-bold text-sm">AMC Theatres</p>
+<p class="text-xs text-slate-500">Entertainment • Oct 24</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">-$64.00</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">David</p>
+</div>
+</div>
+<!-- Expense Item -->
+<div class="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600">medical_services</span>
+</div>
+<div>
+<p class="font-bold text-sm">Paws &amp; Claws Vet</p>
+<p class="text-xs text-slate-500">Pet Care • Oct 22</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">-$120.00</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">Sarah</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+<div class="max-w-2xl mx-auto flex justify-between px-2 pt-2 pb-3">
+<a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-medium">Calendar</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="text-[10px] font-medium">Chores</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined font-fill text-primary">account_balance_wallet</span>
+<span class="text-[10px] font-bold">Expenses</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

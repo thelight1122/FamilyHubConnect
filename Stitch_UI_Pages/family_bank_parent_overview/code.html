@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Family Bank - Parent View</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 border-b border-slate-200 dark:border-slate-800 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Family Bank</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-transparent text-slate-900 dark:text-slate-100 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<section class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-5 bg-primary text-white shadow-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">account_balance_wallet</span>
+<p class="text-white/90 text-sm font-medium leading-normal uppercase tracking-wider">Shared Pool</p>
+</div>
+<p class="text-white tracking-tight text-3xl font-bold leading-tight">$1,250.00</p>
+<p class="text-white/80 text-xs">+ $120.00 from last month</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-sm">payments</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Active Loans</p>
+</div>
+<p class="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-bold leading-tight">$435.00</p>
+<p class="text-primary text-xs font-semibold">3 Total Borrowers</p>
+</div>
+</section>
+<section class="px-4 py-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Pending Loan Pitches</h3>
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full uppercase">2 New</span>
+</div>
+<div class="space-y-3">
+<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Maya's Tablet Pitch</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Requested: $200.00 • 2% Interest</p>
+</div>
+</div>
+<span class="text-xs text-slate-400 italic">2h ago</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">"I want to buy a tablet for my digital art classes. I'll pay back $20 every week from my allowance..."</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white font-bold py-2 rounded-lg text-sm transition-opacity hover:opacity-90">Review Pitch</button>
+<button class="px-4 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium py-2 rounded-lg text-sm">Decline</button>
+</div>
+</div>
+</div>
+</section>
+<section class="px-4 py-6">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight mb-4">Active Loans</h3>
+<div class="grid grid-cols-1 gap-4">
+<div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-slate-100 dark:border-slate-700" data-alt="Close up of a modern bicycle frame" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEq6b-jPDFRXAwVarZG2Xmmv8Vi5dixCmOG7HzBQix0F6tKHqquhNg-dy4sKc9O20XONt0YnM6_UUhYV2Hkwck0bIVphTb9LLksENkkCFdsvunUgyCSIJLEOTnD7GTZAYeJ-p5SDMFdYi5J9H0GzxLrAbLdN2x-xPaq3M8_YzCY1AKFxKZLDIeud8Xmsscqyh1yTnvyARoE18HltYKaJH6_O9NMxtR-yOcVpEQz-idUtBwQqULyPIOajbjDwYtLriC-vTz1lWHL2M");'></div>
+<div class="flex-1 min-w-0">
+<p class="text-primary text-xs font-bold uppercase">Leo</p>
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate text-base">Leo's Bike Loan</p>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-[10px] mt-1 uppercase font-bold">$45.00 remaining of $150.00</p>
+</div>
+<button class="size-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-700 text-slate-400">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+<div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-slate-100 dark:border-slate-700" data-alt="Modern tablet on a desk with a stylus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQxAvPHVGQ_5ubRP6gUlY_3hCiezAldsLm1V8NMa5NXPXMnlv-mnpYixLw646IDxY2lk-yMdRO3Vj_IkVnKFZKs9IxE0KwWCdahvAIaRqbVZKSXaUK3DHf49M5scRNeSKZdv-oRYGHd7djE_FYkGppONYFA0za13KCEmrAXANam5QaultW0qpaP16871bEHjQtkCei-WAXqlMkkXFHeElRqmNB046Mr5ajcvLwzPUJEytO0SAShI5JLXgUeZbe8fOFFHtmKPgnxBE");'></div>
+<div class="flex-1 min-w-0">
+<p class="text-primary text-xs font-bold uppercase">Maya</p>
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate text-base">Maya's Tablet Loan</p>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 30%"></div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-[10px] mt-1 uppercase font-bold">$280.00 remaining of $400.00</p>
+</div>
+<button class="size-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-700 text-slate-400">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<section class="px-4 py-4 bg-slate-100 dark:bg-slate-900/50 mt-4 rounded-t-3xl border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-4 pt-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Bank Settings</h3>
+</div>
+<div class="space-y-4">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Global Interest Rates</p>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<p class="text-sm font-bold">Educational</p>
+<p class="text-[10px] text-slate-500 uppercase">Lower rates encourage learning</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">1.5%</span>
+<span class="material-symbols-outlined text-slate-400 text-lg">edit</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-600">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div>
+<p class="text-sm font-bold">Fun &amp; Entertainment</p>
+<p class="text-[10px] text-slate-500 uppercase">Standard market rates</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">5.0%</span>
+<span class="material-symbols-outlined text-slate-400 text-lg">edit</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined">emergency</span>
+</div>
+<div>
+<p class="text-sm font-bold">Emergency</p>
+<p class="text-[10px] text-slate-500 uppercase">Interest-free safety net</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">0.0%</span>
+<span class="material-symbols-outlined text-slate-400 text-lg">edit</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 flex border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-4 pt-2 safe-area-inset-bottom z-20">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-none">Hub</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_balance</span>
+<p class="text-[10px] font-bold leading-none">Bank</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">check_box</span>
+<p class="text-[10px] font-medium leading-none">Tasks</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-medium leading-none">Profile</p>
+</a>
+</nav>
+</div>
+</body></html>

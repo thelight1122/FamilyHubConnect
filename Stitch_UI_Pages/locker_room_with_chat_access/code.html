@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locker Room - Family Hub Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-4">
+<div class="flex items-center justify-between max-w-2xl mx-auto">
+<button class="flex items-center justify-center p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight">Locker Room</h1>
+<button class="flex items-center justify-center p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors text-primary">
+<span class="material-symbols-outlined filled-icon">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-4 py-6 space-y-8">
+<!-- Quick Switch Teams -->
+<section>
+<div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex flex-col items-center gap-2 min-w-[72px]">
+<div class="size-16 rounded-full border-4 border-primary p-0.5 bg-background-light dark:bg-background-dark">
+<div class="w-full h-full rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Action shot of a soccer ball on grass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbXUEHKF84ekcjfKN-giHAd_A0orABvNzOxKP3SKFqH23mjKaY4nfZzcOBwxZ-Z7QRqW5M2McT5BcRFpEK24p-4QeDuQzf6XTDoPmmvRrTOhjat-SO8NdDZ1j-4wKM3O1V8RJtWFPOsf5lV3O-aCocA9a5wtAVJ8XBYF7PG5z6_yZGjsjg_aL3MMQWHpg5cl-qzvaL6EjmzITLdtUXMZ6_t1-MWGykI5JE5HEOzc2MTyNqGylQ8gslCa-X74Zam2Q_71hrPA4Y1wI"/>
+</div>
+</div>
+<span class="text-xs font-bold text-primary">Leo's Soccer</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[72px] opacity-60">
+<div class="size-16 rounded-full border-2 border-slate-200 dark:border-slate-700 p-0.5">
+<div class="w-full h-full rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Pair of pink ballet slippers on wood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7UMMPz5c8Mn8F5es_lKw965A1CQDy_5TjE2JNTxvmd-chLvGfkqG16plCDTLrCRkhAjWedOt70rjK0LzIyIMUVmfJISqN0xfbmf4wdVMy1T5r_jM4ouTB0ADHB3F-5mEZmeUJ0m5ynEwa21XJFpuZWVfE2LUBXYjFF9argapbjp_xrNhQ4rGHv9L-_hpQ4Rv6agGaqI0K8nntV6M8PRSRHDpnnXRqXV2-NIoOiWAlDIDIj9ITPNvuZYknRSVHWoTT2YmjCdmeBHA"/>
+</div>
+</div>
+<span class="text-xs font-medium">Maya's Ballet</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[72px] opacity-60">
+<div class="size-16 rounded-full border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+<span class="material-symbols-outlined text-slate-400">add</span>
+</div>
+<span class="text-xs font-medium">Add Team</span>
+</div>
+</div>
+</section>
+<!-- Current Active Team Display -->
+<section class="relative overflow-hidden rounded-xl bg-primary/10 dark:bg-primary/5 border border-primary/20 p-5">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Active Team</span>
+</div>
+<h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Leo's Soccer - Tigers FC</h2>
+<p class="text-slate-600 dark:text-slate-400 text-sm mt-1">U10 Regional League • Spring Season</p>
+<div class="flex gap-4 mt-4">
+<div class="flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-sm">emoji_events</span>
+<span class="text-sm font-semibold">Rank: 3rd</span>
+</div>
+<div class="flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-sm">leaderboard</span>
+<span class="text-sm font-semibold">4-1-0</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl text-primary/10 -rotate-12 select-none">sports_soccer</span>
+</section>
+<!-- Upcoming Games/Practices -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+                    Schedule
+                </h3>
+<a class="text-primary text-sm font-bold" href="#">View Full</a>
+</div>
+<div class="space-y-3">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="flex flex-col items-center justify-center bg-primary/10 dark:bg-primary/20 text-primary w-14 h-14 rounded-lg">
+<span class="text-xs font-bold uppercase">Sat</span>
+<span class="text-xl font-extrabold">14</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-primary uppercase">Game Day</p>
+<h4 class="font-bold text-slate-900 dark:text-white">Tigers vs. Hawks</h4>
+<p class="text-sm text-slate-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Westside Park, Field 4
+                        </p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">9:00 AM</p>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] px-2 py-0.5 rounded-full font-bold">Confirmed</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 w-14 h-14 rounded-lg">
+<span class="text-xs font-bold uppercase">Tue</span>
+<span class="text-xl font-extrabold">17</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-slate-400 uppercase">Practice</p>
+<h4 class="font-bold text-slate-900 dark:text-white">Midweek Drills</h4>
+<p class="text-sm text-slate-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Community Center
+                        </p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">5:30 PM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Equipment Checklist -->
+<section>
+<div class="bg-slate-900 dark:bg-black rounded-2xl p-6 text-white overflow-hidden relative">
+<div class="relative z-10"><div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">checklist</span>
+            Equipment Checklist
+        </h3>
+<span class="text-xs font-medium text-slate-400">3 of 5 packed</span>
+</div>
+<button class="flex items-center gap-1 px-3 py-1.5 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg transition-colors border border-primary/30">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+<span class="text-xs font-bold">Add Item</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Item 1: Team Jersey -->
+<div class="bg-white/5 rounded-xl border border-white/10 p-3 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input checked="" class="rounded border-white/20 text-primary focus:ring-primary bg-transparent size-5 opacity-50" type="checkbox"/>
+<span class="text-sm font-medium line-through opacity-50">Team Jersey (Home)</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full uppercase">Packed</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/5">
+<button class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                Verified
+            </button>
+<button class="text-xs text-slate-400">Edit Status</button>
+</div>
+</div>
+<!-- Item 2: Shin Guards -->
+<div class="bg-white/5 rounded-xl border border-white/10 p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input checked="" class="rounded border-white/20 text-primary focus:ring-primary bg-transparent size-5 opacity-50" type="checkbox"/>
+<span class="text-sm font-medium line-through opacity-50">Shin Guards</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full uppercase">Packed</span>
+</div>
+<!-- Item 3: Soccer Cleats -->
+<div class="bg-white/5 rounded-xl border border-white/10 p-3 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input class="rounded border-white/20 text-primary focus:ring-primary bg-transparent size-5" type="checkbox"/>
+<span class="text-sm font-medium">Soccer Cleats</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded-full uppercase">To-Wash</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/5">
+<button class="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 font-bold">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                Verify Photo
+            </button>
+<button class="text-xs text-slate-400">Edit Status</button>
+</div>
+</div>
+<!-- Item 4: Water Bottle -->
+<div class="bg-white/10 rounded-xl border border-primary/50 p-3 shadow-[0_0_15px_rgba(236,91,19,0.2)]">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input class="rounded border-white/20 text-primary focus:ring-primary bg-transparent size-5" type="checkbox"/>
+<div>
+<span class="text-sm font-medium block">Water Bottle (32oz)</span>
+<span class="text-[10px] font-bold text-primary uppercase">Critical</span>
+</div>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-red-500/20 text-red-400 rounded-full uppercase">Missing</span>
+</div>
+</div>
+<!-- Item 5: Snack -->
+<div class="bg-white/5 rounded-xl border border-white/10 p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input class="rounded border-white/20 text-primary focus:ring-primary bg-transparent size-5" type="checkbox"/>
+<span class="text-sm font-medium">Snack for Post-Game</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-slate-500/20 text-slate-400 rounded-full uppercase">Pending</span>
+</div>
+</div></div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-[80px] rounded-full"></div>
+</div>
+</section>
+<!-- Team Contacts -->
+<!-- Team Chat Section -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">forum</span>
+      Team Chat
+    </h3>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">2 NEW</span>
+</div>
+<a class="block bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 transition-colors shadow-sm active:scale-[0.98]" href="#">
+<div class="flex items-start gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of Coach Mike" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYECR27IDzxddN4wML17spxEAmw-tVkH2-fazaQOESnmvA_zwFmGlwEDuQPbXbYfWNdim1VNde2R0d2gym6hsJvmxbE2GZ4OX-P_XzzCtcEKldAMpR198NGpgTT_yoON1OxL_-LTX_6At8b9KbiyDGeOvq-LcU3-7vFMJRiW4q2M5nydofzPPEcZf7FekekbynV27iqBw1KpGi5jeQf0yMNZlIt4TTPl8XHcF2UjiqI4OptZJgcpxJEL9WwsIPiyBSzFUXKP1pOnI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-bold text-sm">Coach Mike</h4>
+<span class="text-[10px] text-slate-400 font-medium">2m ago</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-1 italic">
+          "Don't forget to bring the extra orange slices for tomorrow's tournament..."
+        </p>
+</div>
+<div class="flex items-center self-center text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</a>
+</section><section>
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                Team Contacts
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Coach -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+<div class="size-12 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling male coach" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYECR27IDzxddN4wML17spxEAmw-tVkH2-fazaQOESnmvA_zwFmGlwEDuQPbXbYfWNdim1VNde2R0d2gym6hsJvmxbE2GZ4OX-P_XzzCtcEKldAMpR198NGpgTT_yoON1OxL_-LTX_6At8b9KbiyDGeOvq-LcU3-7vFMJRiW4q2M5nydofzPPEcZf7FekekbynV27iqBw1KpGi5jeQf0yMNZlIt4TTPl8XHcF2UjiqI4OptZJgcpxJEL9WwsIPiyBSzFUXKP1pOnI"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Coach Mike</h4>
+<p class="text-xs text-slate-500">Head Coach</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-primary">
+<span class="material-symbols-outlined text-sm filled-icon">call</span>
+</button>
+<button class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-primary">
+<span class="material-symbols-outlined text-sm filled-icon">chat_bubble</span>
+</button>
+</div>
+</div>
+<!-- Carpool -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+<div class="size-12 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a friendly woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDon7Pgeue5cvycYpquoe0trp5oqfiBaT12VrKa1zBknT-rDOROkQ8uESlK6ZuUjOFxirMoscw97Id_vViidvUAkQtOuuJVvBBXKRMDKjIZghfNIlikI5wvv-3wJrzyOTaTRWepm642huTfGMxcUi_PU5G3KfR41bCUUoGKvn5GhCUOcMtvUmdAsD5n8Sl-GgxFZa3lAcM3FaGAlx7OedsfHZcuX6emKuWUbiFc-atzMiMOnbQcEGmwaMYfIQW3Y3sr0gocShFy3B8"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Sarah Jenkins</h4>
+<p class="text-xs text-slate-500">Carpool Buddy</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-primary">
+<span class="material-symbols-outlined text-sm filled-icon">directions_car</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-3 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-bold">Family</span>
+</a>
+<div class="relative -mt-10">
+<div class="absolute -inset-2 bg-primary/20 rounded-full blur-lg"></div>
+<a class="relative flex flex-col items-center justify-center size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 ring-4 ring-background-light dark:ring-background-dark" href="#">
+<span class="material-symbols-outlined filled-icon">sports_football</span>
+</a>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-primary whitespace-nowrap">Locker Room</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="text-[10px] font-bold">Chat</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

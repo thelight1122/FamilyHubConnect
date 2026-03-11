@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Family Matters - Family Hub Connect</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<header class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">Family Matters</h1>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-transparent text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<section class="px-4 py-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold tracking-tight">Family Meetings</h2>
+<button class="text-primary text-sm font-semibold">Schedule New</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">calendar_today</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-none mb-1">Weekly Family Sync</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Sunday, 5:00 PM • Living Room</p>
+</div>
+<button class="flex items-center justify-center rounded-lg h-8 px-3 bg-primary text-white text-xs font-bold">
+                            Agenda
+                        </button>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="text-slate-400 flex items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-700 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">history</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-slate-600 dark:text-slate-300 text-base font-medium leading-none mb-1">Vacation Planning</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Last Thursday • 4 participants</p>
+</div>
+<button class="flex items-center justify-center rounded-lg h-8 px-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold">
+                            Minutes
+                        </button>
+</div>
+</div>
+</section>
+<section class="px-4 py-4">
+<h2 class="text-xl font-bold tracking-tight mb-4">Family Polls</h2>
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 p-4 rounded-2xl">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-xl">ballot</span>
+<p class="text-slate-900 dark:text-white font-bold text-base leading-tight">What's for dinner tonight?</p>
+</div>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 group hover:border-primary">
+<span class="text-sm font-medium">Homemade Pizza</span>
+<span class="text-xs text-slate-400 group-hover:text-primary">42%</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-primary/20 border border-primary">
+<span class="text-sm font-bold text-primary">Taco Tuesday!</span>
+<span class="text-xs font-bold text-primary">58%</span>
+</button>
+</div>
+<p class="text-[10px] text-slate-400 mt-3 text-center">Poll ends in 2 hours • 5 votes cast</p>
+</div>
+</section>
+<section class="px-4 py-4">
+<h2 class="text-xl font-bold tracking-tight mb-4">Shout-Outs Board</h2>
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex-shrink-0 w-48 bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-xl border border-yellow-100 dark:border-yellow-900/30 rotate-1">
+<div class="text-yellow-600 dark:text-yellow-400 mb-2">
+<span class="material-symbols-outlined text-lg">format_quote</span>
+</div>
+<p class="text-slate-800 dark:text-slate-200 text-sm italic mb-3">"Thanks for helping me with math today, Leo! You're the best."</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="Sarah avatar" class="w-full h-full object-cover" data-alt="Profile picture of a smiling young girl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvrx2LutOFH8lbzqBtcHQQRzy7AhH4heo34TeMdKgOy9NfpEqJsZS5EKagac9GOQZcBSvfQ9ay0zGuw1LLTZZe2dIh8YENh-dihZDtgj-6yn7f-X9QCMrLaQifzah619cAcU1F0M4FvOdaAHtO7KEIT9Irk4LYDbdoCJA8n02e0A0bQBkrntuJ96NtXPHLXqJjFDEJx7N8MzXFnBQHewdtzADa3zp28rW6AU5yTvF2J8s0ClPXQ6cpnlkmmqo4OtZRKuOwSsJz3lk"/>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">— Sarah</span>
+</div>
+</div>
+<div class="flex-shrink-0 w-48 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30 -rotate-1">
+<div class="text-blue-600 dark:text-blue-400 mb-2">
+<span class="material-symbols-outlined text-lg">volunteer_activism</span>
+</div>
+<p class="text-slate-800 dark:text-slate-200 text-sm italic mb-3">"Dad, that dinner was amazing. Chef level 100!"</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="Leo avatar" class="w-full h-full object-cover" data-alt="Profile picture of a teenage boy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIKK2CjYcIW5MQPYHMPfr2PVviUAQCG-f_QXufI1mJbIHIDCNcIJ6EqYMr3NCUZ1AxuM2XOeLsG9Fhzx6n5txUSG4Ejj6f6Wsv759ma7oL42LqP2XbckR1lkVAkvvRG_wb__ij1KgtFlqfRU8M-65Fu_0eCwFrlfOZtNMGoKaKxs4_J_sdrx75zlweO54a5DDZ3iJPVFU1Eu_OiDV5OZ-k3zrplQUsL4fwc8dz4hkY0oIQOhoZMyVwXTKfC9tHuvGxi2dA-gqleas"/>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">— Leo</span>
+</div>
+</div>
+</div>
+</section>
+<section class="px-4 py-4 mb-20">
+<div class="bg-slate-900 dark:bg-slate-800 rounded-2xl p-5 text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">gavel</span>
+</div>
+<h2 class="text-lg font-bold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined">menu_book</span>
+                        Family Constitution
+                    </h2>
+<p class="text-slate-300 text-sm mb-4 leading-relaxed">Our core values: Respect, Growth, Adventure, and Honesty.</p>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2 px-4 rounded-lg w-full transition-colors">
+                        View Full Document
+                    </button>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm px-4 pb-6 pt-3">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">group</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Connect</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Calendar</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Settings</p>
+</a>
+</nav>
+</div>
+</body></html>

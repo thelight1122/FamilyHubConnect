@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                        "accent-green": "#4ade80",
+                        "accent-orange": "#fb923c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3">
+<div class="flex items-center justify-between max-w-md mx-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold">Leo's Wallet</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">emoji_events</span>
+</button>
+</div>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full pb-24">
+<!-- Balance Card -->
+<section class="p-6 text-center">
+<div class="relative inline-block mb-4">
+<div class="w-32 h-32 rounded-full border-4 border-primary p-1">
+<div class="w-full h-full rounded-full bg-center bg-cover" data-alt="Avatar portrait of a smiling young boy" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_Yc74Z4NWgPAnW4RJYgIX191rrTN2V8hdmLXENYRpMUCIgMQ3SBBKAfugkKELYz--UZ5xT1A1zVr-Ywiev2FWNGLsh-8qIrT0BByTsjWY0lwbvrHKe51mWQnvJEAd1voMN8kyrLVqv9HFfHPiwZ0D4r07wTYdFHxdZVHgrVMwrRtgGWwPyKskRp03DcnZ4DW_VjaeOMfKCAJyoBJ8ynrDOKouHc0dTNgxEX6ltGAKoh3nJAGb7IhZfarg9VjVjNQZ9Zs-Tv_ltfw");'></div>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-accent-green text-white p-2 rounded-full shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">verified</span>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-extrabold text-primary tracking-tight">$45.50</p>
+<p class="text-slate-500 dark:text-slate-400 font-medium">Current Balance</p>
+<div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold mt-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>Keep it up, Champ!</span>
+</div>
+</div>
+</section>
+<!-- Countdown Section -->
+<section class="mx-4 mb-6 p-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Next Payout</h3>
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<div class="flex gap-2">
+<div class="flex-1 bg-background-light dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xl font-bold">02</p>
+<p class="text-[10px] text-slate-500 uppercase">Days</p>
+</div>
+<div class="flex-1 bg-background-light dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xl font-bold">14</p>
+<p class="text-[10px] text-slate-500 uppercase">Hrs</p>
+</div>
+<div class="flex-1 bg-background-light dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xl font-bold">32</p>
+<p class="text-[10px] text-slate-500 uppercase">Min</p>
+</div>
+<div class="flex-1 bg-background-light dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xl font-bold">10</p>
+<p class="text-[10px] text-slate-500 uppercase">Sec</p>
+</div>
+</div>
+<p class="text-center text-xs text-slate-500 mt-3 italic">Allowance arrives Saturday at 8:00 AM 🚀</p>
+</section>
+<!-- Savings Goal -->
+<section class="mx-4 mb-6 p-5 bg-gradient-to-br from-primary to-blue-600 rounded-xl text-white shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-blue-100 text-sm font-medium">Active Savings Goal</p>
+<h3 class="text-xl font-bold">New Mountain Bike</h3>
+</div>
+<span class="material-symbols-outlined text-4xl opacity-50">pedal_bike</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-bold">
+<span>$120.00 / $250.00</span>
+<span>48%</span>
+</div>
+<div class="w-full bg-white/20 rounded-full h-3">
+<div class="bg-white h-3 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" style="width: 48%"></div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-bold transition-colors">
+                    View Details
+                </button>
+</div>
+<!-- Decorative circle -->
+<div class="absolute -bottom-12 -right-12 w-32 h-32 bg-white/10 rounded-full"></div>
+</section>
+<!-- Quick Actions -->
+<section class="grid grid-cols-2 gap-4 mx-4 mb-6">
+<button class="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 gap-2 hover:border-primary transition-colors group">
+<div class="w-12 h-12 rounded-full bg-accent-orange/10 flex items-center justify-center text-accent-orange group-hover:bg-accent-orange group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">request_quote</span>
+</div>
+<span class="font-bold text-sm">Request Funds</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 gap-2 hover:border-primary transition-colors group">
+<div class="w-12 h-12 rounded-full bg-accent-green/10 flex items-center justify-center text-accent-green group-hover:bg-accent-green group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">savings</span>
+</div>
+<span class="font-bold text-sm">Save More</span>
+</button>
+</section>
+<!-- Recent Transactions -->
+<section class="mx-4">
+<div class="flex justify-between items-center mb-4 px-1">
+<h3 class="font-bold text-lg">Recent Transactions</h3>
+<button class="text-primary text-sm font-bold">See All</button>
+</div>
+<div class="space-y-3">
+<!-- Transaction 1 -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="w-10 h-10 rounded-full bg-accent-green/10 text-accent-green flex items-center justify-center">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="flex-1">
+<p class="font-bold">Weekly Allowance</p>
+<p class="text-xs text-slate-500">Yesterday, 8:00 AM</p>
+</div>
+<p class="font-bold text-accent-green">+$5.00</p>
+</div>
+<!-- Transaction 2 -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined">icecream</span>
+</div>
+<div class="flex-1">
+<p class="font-bold">Ice Cream Treat</p>
+<p class="text-xs text-slate-500">Aug 14, 2:30 PM</p>
+</div>
+<p class="font-bold text-slate-900 dark:text-slate-100">-$2.00</p>
+</div>
+<!-- Transaction 3 -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+<div class="flex-1">
+<p class="font-bold">Cleaning Room Bonus</p>
+<p class="text-xs text-slate-500">Aug 12, 11:00 AM</p>
+</div>
+<p class="font-bold text-accent-green">+$3.50</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center max-w-md mx-auto z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_balance_wallet</span>
+<span class="text-[10px] font-bold">Wallet</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-[10px] font-bold">Tasks</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Family</span>
+</a>
+</nav>
+</body></html>

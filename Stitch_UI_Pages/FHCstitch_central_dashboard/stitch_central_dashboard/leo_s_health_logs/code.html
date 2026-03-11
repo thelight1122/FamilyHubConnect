@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leo's Health Logs - Family Care Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<a class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 ml-2">Leo's Health Logs</h2>
+<button class="text-slate-600 dark:text-slate-400 p-2">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Profile Header Section -->
+<div class="flex p-4 @container">
+<div class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
+<div class="flex gap-4 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 ring-4 ring-primary/10" data-alt="Portrait of a young boy named Leo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDa5zxrqqwTj31VU2KY24dz48oODGdUE00S4bwE9CFiUtLITQvAIFwDZw1afw_t7t7L_aetixV7CRz1gH2dFcOTX_uXUan5hdlrJnot3YTNu-j9JkKlI8Rqp0SEXJbc-5JYevK3rgXCdBrOEGDdmtFJ1vNRNABXOpG9WtvlvwEOLNQgQCeMIaq1n8ljYbCFB3o8qE-UF_62O6r8U10bf5NQZ0zOHPa_F87-yIP45aZtUA5xJzpZ07iLxsQhDvq6_iu8w2e19-NHAL4");'>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight tracking-tight">Leo</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Last updated: Today, 10:30 AM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Log New Event Action Card -->
+<div class="px-4 py-2 @container">
+<div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 p-5 @[480px]:flex-row @[480px]:items-center">
+<div class="flex flex-col gap-1">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">Log New Event</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Record symptoms, fever, or injuries</p>
+</div>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm mr-1">add</span>
+<span class="truncate">Add Log</span>
+</button>
+</div>
+</div>
+<!-- Medication Tracker Section -->
+<div class="px-4 pt-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Medication Tracker</h3>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="space-y-3">
+<!-- Med Item 1 -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">pill</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-slate-100 font-bold text-sm">Amoxicillin</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">5ml • Twice daily</p>
+</div>
+<div class="text-right">
+<p class="text-primary font-bold text-xs uppercase tracking-wider">Next Dose</p>
+<p class="text-slate-900 dark:text-slate-100 font-semibold text-sm">8:00 PM</p>
+</div>
+</div>
+<!-- Med Item 2 -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 text-orange-500">
+<span class="material-symbols-outlined">medication</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-slate-100 font-bold text-sm">Children's Tylenol</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">As needed for fever</p>
+</div>
+<div class="text-right">
+<p class="text-slate-400 dark:text-slate-500 font-bold text-xs uppercase tracking-wider">Last Taken</p>
+<p class="text-slate-900 dark:text-slate-100 font-semibold text-sm">10:15 AM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Chronological History -->
+<div class="px-4 pt-8">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight mb-4">Recent History</h3>
+<div class="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-slate-100 dark:before:bg-slate-800">
+<!-- History Event 1 -->
+<div class="relative flex gap-4">
+<div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-background-dark border-2 border-primary z-10">
+<span class="material-symbols-outlined text-primary text-xl">thermometer</span>
+</div>
+<div class="flex flex-col gap-1 pb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase">Today • 10:15 AM</p>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Fever Logged</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Temperature: 101.2°F. Administered Tylenol. Leo is resting.</p>
+</div>
+</div>
+<!-- History Event 2 -->
+<div class="relative flex gap-4">
+<div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-background-dark border-2 border-orange-400 z-10">
+<span class="material-symbols-outlined text-orange-400 text-xl">healing</span>
+</div>
+<div class="flex flex-col gap-1 pb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase">Yesterday • 4:30 PM</p>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Minor Injury</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Scraped knee while playing in the yard. Cleaned and bandaged.</p>
+</div>
+</div>
+<!-- History Event 3 -->
+<div class="relative flex gap-4">
+<div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-background-dark border-2 border-slate-300 z-10">
+<span class="material-symbols-outlined text-slate-400 text-xl">description</span>
+</div>
+<div class="flex flex-col gap-1 pb-6">
+<p class="text-xs font-semibold text-slate-400 uppercase">Aug 22 • 9:00 AM</p>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Pediatrician Visit</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Routine check-up. Amoxicillin prescribed for ear infection.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Medical Disclaimer -->
+<div class="px-4 py-8 mb-20">
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
+<div class="flex gap-2 items-start text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-lg">info</span>
+<p class="text-xs leading-relaxed">
+<strong>Disclaimer:</strong> This application is for personal tracking and informational purposes only. It is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 px-4 pb-3 pt-2 z-20">
+<div class="flex gap-2">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-xs font-medium leading-normal">Hub</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">history</span>
+<p class="text-xs font-medium leading-normal">Logs</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">pill</span>
+<p class="text-xs font-medium leading-normal">Medication</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-xs font-medium leading-normal">Profile</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

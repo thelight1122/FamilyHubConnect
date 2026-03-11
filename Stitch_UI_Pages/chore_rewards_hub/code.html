@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4c8ce6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Family Hub Connect - Chore Hub</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 flex items-center bg-white dark:bg-slate-900 p-4 border-b border-slate-200 dark:border-slate-800 justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">family_home</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Chore Hub</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border-2 border-primary">
+<img alt="Profile avatar" data-alt="User profile avatar close up photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7eSOEToX2xwbaKl1J-PAFq66DvLf24Y8HKlxOM26ICAId-F9oQbLVb7G0w1WKT-ex8GZXdkX5fazgxzPd5nA8_K0j3YA7z6k_knSZoAmJW8cUSv0slv2SlmgPv7loMNioo-aZzZWe74nQO78pA2dB_dCGKIZ6un5QHPyx4W-OGKqVRlcfZg5JOJCNfTEHy1vzARty3KAAdY4uJP1UdxbF8q9NX6QmcpVCJ8dK9YDm2bY5USADiFiLl6IxQu3A3EkTP-haY3tWquk"/>
+</div>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<!-- Points Overview -->
+<div class="p-4">
+<div class="bg-primary rounded-xl p-6 text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-primary-100 text-sm font-medium opacity-90">Total Points Balance</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-4xl font-extrabold tracking-tight">1,250</span>
+<span class="text-lg font-semibold opacity-80 uppercase tracking-widest text-xs">pts</span>
+</div>
+<div class="mt-4 flex items-center gap-2 bg-white/10 w-fit px-3 py-1 rounded-full text-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+15% from last week</span>
+</div>
+</div>
+<!-- Abstract decoration -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+</div>
+</div>
+<!-- Progress Tracker -->
+<section class="px-4 py-2">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 flex items-center gap-5">
+<div class="relative flex items-center justify-center">
+<svg class="w-16 h-16 transform -rotate-90">
+<circle class="text-slate-100 dark:text-slate-800" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-primary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="61" stroke-width="6"></circle>
+</svg>
+<span class="absolute text-sm font-bold">65%</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100">Weekly Progress</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">6 of 10 chores completed</p>
+<div class="mt-2 text-primary text-xs font-semibold flex items-center gap-1">
+                            Keep it up! <span class="material-symbols-outlined text-xs">celebration</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Active Chores -->
+<section class="mt-6">
+<div class="px-4 mb-4 flex justify-between items-center">
+<h2 class="text-lg font-bold">Active Chores</h2>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="flex flex-col gap-3 px-4">
+<!-- Chore Card 1 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+<div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-blue-500">
+<span class="material-symbols-outlined">bedroom_parent</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Clean your room</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Due today, 6:00 PM</p>
+</div>
+<div class="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-bold">50 pts</div>
+</div>
+<div class="mt-4">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-white py-2 rounded-lg font-bold text-sm shadow-sm hover:bg-primary/90">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                                    Submit Photo
+                                </button>
+</div>
+</div>
+</div>
+<!-- Chore Card 2 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+<div class="bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-lg text-indigo-500">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Wash the car</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Weekend task</p>
+</div>
+<div class="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-bold">150 pts</div>
+</div>
+<div class="mt-4">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-white py-2 rounded-lg font-bold text-sm shadow-sm hover:bg-primary/90">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+                                    Submit Photo
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Rewards Shop -->
+<section class="mt-8 mb-4">
+<div class="px-4 mb-4 flex justify-between items-center">
+<h2 class="text-lg font-bold">Rewards Shop</h2>
+<span class="material-symbols-outlined text-primary cursor-pointer">shopping_bag</span>
+</div>
+<div class="flex overflow-x-auto gap-4 px-4 pb-4 no-scrollbar">
+<!-- Reward 1 -->
+<div class="min-w-[160px] bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-amber-50 dark:bg-amber-900/20 rounded-full flex items-center justify-center text-amber-500 mb-3">
+<span class="material-symbols-outlined text-3xl">on_device_training</span>
+</div>
+<h4 class="font-bold text-sm leading-tight">Extra 30m Screen Time</h4>
+<div class="mt-3 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="text-xs font-bold">200 pts</span>
+</div>
+</div>
+<!-- Reward 2 -->
+<div class="min-w-[160px] bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-purple-50 dark:bg-purple-900/20 rounded-full flex items-center justify-center text-purple-500 mb-3">
+<span class="material-symbols-outlined text-3xl">movie</span>
+</div>
+<h4 class="font-bold text-sm leading-tight">Pick Movie Night</h4>
+<div class="mt-3 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="text-xs font-bold">500 pts</span>
+</div>
+</div>
+<!-- Reward 3 - Mystery -->
+<div class="min-w-[160px] bg-gradient-to-br from-primary to-blue-600 p-4 rounded-xl flex flex-col items-center text-center text-white">
+<div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-3xl">redeem</span>
+</div>
+<h4 class="font-bold text-sm leading-tight">Mystery Box</h4>
+<div class="mt-3 bg-white/20 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="text-xs font-bold">??? pts</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-4 pt-2 flex items-center">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">task_alt</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Chores</p>
+</a>
+<div class="flex-1 flex justify-center -mt-8">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">redeem</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Rewards</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Profile</p>
+</a>
+</nav>
+</div>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>
