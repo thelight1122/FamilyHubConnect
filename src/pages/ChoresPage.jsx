@@ -1,40 +1,79 @@
 import { useState, useRef } from 'react';
-import { tasks, rewards } from '../data/mockData';
 import Toast from '../components/Toast';
 import useToast from '../hooks/useToast';
 
+// TODO: fetch tasks from /api/tasks
+const TASKS = [
+  { id: 0, label: 'Make your bed', points: 10, icon: 'bed', iconBg: 'bg-blue-100', iconColor: 'text-blue-600', verify: true },
+  { id: 1, label: 'Take out the trash', points: 25, icon: 'recycling', iconBg: 'bg-green-100', iconColor: 'text-green-600', verify: true },
+  { id: 2, label: 'Read for 20 mins', points: 15, icon: 'auto_stories', iconBg: 'bg-purple-100', iconColor: 'text-purple-600', verify: false },
+];
+
+// TODO: fetch rewards from /api/rewards
+const REWARDS = [
+  {
+    id: 0,
+    label: '30m Screen Time',
+    points: 100,
+    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAMej0Wdsz3Xzgku3ZBCTZirLNz9e1rYuhgJ1pcPlWAbEpHrV9cKmrQDZFJZeM1g3ZBnmkfBX9h-YVIV4o38DMjzxxf1TvqwX-Hpk7rB3fVPCqnhlC6MSPk8iNWi8QFkYK3bjC1wdC-ngc-fSmttHCfaeXB6oONaq-yMGxCHxaPBb8cqkVVpd5DR-z8t83G-JKNTZv2BRBEseRjm1xWEzTFbV-poi4zKbWIBmue_NwZ0prtcNeKHN_I3Rgjk_fGLo-BZI4B1N6FcGg',
+    badge: 'POPULAR',
+    canRedeem: true,
+  },
+  {
+    id: 1,
+    label: 'Trip to the Zoo',
+    points: 500,
+    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSJI7-HJfJse6Sn4NflsNcXTYDmipvAlMZi32pfJMe9x1lmmqUkIjwdWBIXnln2p-Ck5kPeHhnvReERjIN0kn7c6ZzDRKmzLAHvOfLIt9SiBrjUzCb5Xm3nYuE41GTJHTobq4ohL-e3rABeDkha5SIMBVOIRZRE3PNpDUGKdBmAY21aGmJzh7AMZ4MJaeQltp5zzvd-oO-I6h3-McH64d1ad3tj6BFpf3BfzkMT-K8uHNQyPgp437Jc9y3FHBZDjdi3-rczISXvLM',
+    badge: null,
+    canRedeem: false,
+  },
+  {
+    id: 2,
+    label: 'Ice Cream Date',
+    points: 250,
+    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB6gXHkOzN6WHGK6wbMTLyGcBKWKYy_3S1Oz2khRp5-cepRmYWDp49zO6yRk1FRe0KerZBHH9DeC_c5jDAZSTvlfAlTnmRQ076inuVZ_tPThLpNeZhsLvQfohpcy0wh5RSfWPLDWkv853mEljSYhewKvNlO9IjkFMKlwj9ubHqw5oVdvQprspyCCtwb34BOTnmij4zQyPOxaRRZuQx9OxMo3Qb9069B-GtL4ZH1ji6rmdrt-su73ByBcEOiy80zxCylDLE-IhKm-FQ',
+    badge: null,
+    canRedeem: true,
+  },
+  {
+    id: 3,
+    label: 'New Toy Set',
+    points: 1000,
+    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDlRUOinb7Ek7TUWRb0zQAIe1ahCjhSPo5jWIkyDmLUYIkECl7tmMFqjNHQ7kS5pxVk9Q6RQt_KvyCGMmPPCto_ls5xEcHMHTsBbongEb30A9YJpVxQ4CNtr0KqUuFF31OhfF40es0779NRiGj8V-8huHTfwvtRl0_VtZ_DEqmkcURXlk414Y-72gLVeJaIwYG61ppo9b7JxM7bJkJINAeSpMKZSs3uI4Da-4u1DX-IMWd5MrlTzd3jMNCtdz9BdF_dIlU-NA5qu6E',
+    badge: null,
+    canRedeem: false,
+  },
+];
+
 export default function ChoresPage() {
   const [activeTab, setActiveTab] = useState('tasks');
-  const [completedIds, setCompletedIds] = useState([3]);
+  const [completedIds, setCompletedIds] = useState([]);
   const [verifyingId, setVerifyingId] = useState(null);
-  const [toast, showToast] = useToast();
   const fileInputRef = useRef(null);
+  const [toast, showToast] = useToast();
 
-  const toggleTask = (id) => {
+  const toggleTask = (idx) => {
     setCompletedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(idx) ? prev.filter((id) => id !== idx) : [...prev, idx]
     );
   };
 
-  const handleVerifyClick = (taskId) => {
-    setVerifyingId(taskId);
-    fileInputRef.current?.click();
+  const handleVerifyClick = (idx) => {
+    setVerifyingId(idx);
+    fileInputRef.current.click();
   };
 
-  const handleFileSelected = (e) => {
-    if (e.target.files?.length > 0 && verifyingId != null) {
-      setCompletedIds((prev) => [...new Set([...prev, verifyingId])]);
-      showToast('✓ Photo submitted — task verified!');
+  const handleFileSelected = () => {
+    if (verifyingId !== null) {
+      setCompletedIds((prev) => (prev.includes(verifyingId) ? prev : [...prev, verifyingId]));
+      showToast('Photo submitted — task verified!');
+      setVerifyingId(null);
     }
-    setVerifyingId(null);
-    e.target.value = '';
   };
 
-  const handleRedeem = (reward) => {
-    if (450 >= reward.points) {
-      showToast(`🎉 Redeemed: ${reward.title}!`);
-    }
-  };
+  const completedCount = completedIds.length;
+  const totalTasks = TASKS.length;
+  const progressPct = totalTasks > 0 ? Math.round((completedCount / totalTasks) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-background-light pb-24">
@@ -42,33 +81,88 @@ export default function ChoresPage() {
 
       {/* Hidden file input for photo verify */}
       <input
-        ref={fileInputRef}
         type="file"
         accept="image/*"
-        capture="environment"
+        ref={fileInputRef}
         className="hidden"
         onChange={handleFileSelected}
       />
 
       {/* Header */}
-      <div className="bg-white px-4 pt-6 pb-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-slate-900">My Tasks &amp; Rewards</h1>
+      <header className="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md border-b border-primary/10">
+        <div className="flex items-center p-4 justify-between max-w-md mx-auto">
+          <div className="flex size-12 shrink-0 items-center">
+            <div
+              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary"
+              style={{
+                backgroundImage:
+                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0ngvLToV6V4frOIHVhOWxIvGrGEDqpvYfTCuxkiYvd7doL4cOsA87hDyMv4pMXlOsXbqOLV_aqbbpIex2QIa9_goJV6vdXuxRFRp-oSw8yUvVHE2jPd3hoEkaN7wdnWe-YAAU-eswd1xp1pj7NS6f3IPSgbeMzFgQGZoma2ikgdv4aRKpgJYh1e4oGt7HM4dJ090kAsI_jMiXIGq7pRx4bpvgEOqp38jSpiNPKZCaAJkcML6SpZEZQq-jVeEG2Xjel62csLX-YXg")',
+              }}
+            />
+          </div>
+          <h1 className="text-slate-900 text-lg font-bold leading-tight tracking-tight flex-1 text-center">
+            Leo's Dashboard
+          </h1>
+          <div className="flex w-12 items-center justify-end">
+            <button className="flex items-center justify-center rounded-xl h-10 w-10 bg-primary/10 text-primary">
+              <span className="material-symbols-outlined">notifications</span>
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5">
-          <span className="material-symbols-outlined text-amber-400 text-base">star</span>
-          <span className="text-sm font-bold text-amber-700">450 pts</span>
-        </div>
-      </div>
+      </header>
 
-      {/* Tab switcher */}
-      <div className="px-4 pt-4">
-        <div className="flex gap-2 bg-slate-100 p-1 rounded-xl">
+      <main className="max-w-md mx-auto px-4">
+        {/* Hero */}
+        <div className="py-6">
+          <div className="flex gap-4 items-center">
+            <div className="bg-primary/20 rounded-2xl p-4 flex items-center justify-center">
+              <span className="material-symbols-outlined text-primary text-5xl">rocket_launch</span>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-slate-900 text-2xl font-bold leading-tight">Great job, Leo!</p>
+              <p className="text-slate-600 text-base">You're almost at your weekly goal.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Point Balance Card */}
+        <div className="mb-6">
+          <div className="flex flex-row items-center justify-between gap-2 rounded-2xl p-6 bg-primary text-white shadow-lg shadow-primary/20">
+            <div>
+              <p className="text-white/80 text-sm font-medium uppercase tracking-wider">Current Balance</p>
+              <p className="text-4xl font-bold">
+                450 <span className="text-xl font-normal">pts</span>
+              </p>
+            </div>
+            <div className="bg-white/20 p-3 rounded-full">
+              <span className="material-symbols-outlined text-4xl text-white">stars</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-slate-700">Today's Progress</span>
+            <span className="text-primary text-sm font-bold">
+              {completedCount}/{totalTasks} Done
+            </span>
+          </div>
+          <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-300"
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="flex bg-slate-100 rounded-2xl p-1 mb-6">
           <button
             onClick={() => setActiveTab('tasks')}
-            className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-colors ${
+            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-colors ${
               activeTab === 'tasks'
-                ? 'bg-white text-slate-900 shadow-sm'
+                ? 'bg-white text-primary shadow-sm'
                 : 'text-slate-500 hover:text-slate-700'
             }`}
           >
@@ -76,140 +170,134 @@ export default function ChoresPage() {
           </button>
           <button
             onClick={() => setActiveTab('rewards')}
-            className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-colors ${
+            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-colors ${
               activeTab === 'rewards'
-                ? 'bg-white text-slate-900 shadow-sm'
+                ? 'bg-white text-primary shadow-sm'
                 : 'text-slate-500 hover:text-slate-700'
             }`}
           >
             Rewards Store
           </button>
         </div>
-      </div>
 
-      <div className="px-4 pt-4 space-y-3">
-        {/* Tasks tab */}
+        {/* Tasks Tab */}
         {activeTab === 'tasks' && (
-          <>
-            {/* Progress summary */}
-            <div className="bg-white rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-slate-700">
-                  {completedIds.length} of {tasks.length} completed
-                </span>
-                <span className="text-sm font-bold text-primary">
-                  {Math.round((completedIds.length / tasks.length) * 100)}%
-                </span>
-              </div>
-              <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-primary rounded-full transition-all duration-300"
-                  style={{ width: `${(completedIds.length / tasks.length) * 100}%` }}
-                />
-              </div>
+          <section className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-slate-900 text-xl font-bold">My Tasks for Today</h2>
             </div>
-
-            {/* Task cards */}
-            {tasks.map((task) => {
-              const isDone = completedIds.includes(task.id);
-              return (
-                <div
-                  key={task.id}
-                  className={`bg-white rounded-2xl p-4 border transition-colors ${
-                    isDone ? 'border-green-100' : 'border-slate-100'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    {/* Checkbox */}
-                    <button
-                      onClick={() => toggleTask(task.id)}
-                      className={`mt-0.5 w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
+            <div className="space-y-3">
+              {TASKS.map((task) => {
+                const isDone = completedIds.includes(task.id);
+                return (
+                  <div
+                    key={task.id}
+                    className={`p-4 rounded-2xl flex items-center gap-4 border transition-all ${
+                      isDone
+                        ? 'bg-slate-100 opacity-75 border-transparent'
+                        : 'bg-white border-slate-200'
+                    }`}
+                  >
+                    <div
+                      className={`size-12 rounded-xl flex items-center justify-center ${
                         isDone
-                          ? 'bg-green-500 border-green-500'
-                          : 'border-slate-300 hover:border-primary'
+                          ? 'bg-slate-200 text-slate-500'
+                          : `${task.iconBg} ${task.iconColor}`
                       }`}
                     >
-                      {isDone && (
-                        <span className="material-symbols-outlined text-white text-sm leading-none">check</span>
-                      )}
-                    </button>
+                      <span className="material-symbols-outlined text-3xl">{task.icon}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        className={`font-bold ${
+                          isDone ? 'text-slate-400 line-through' : 'text-slate-800'
+                        }`}
+                      >
+                        {task.label}
+                      </h3>
+                      <p className="text-sm text-slate-500">
+                        {isDone ? 'Completed!' : `Earn ${task.points} points`}
+                      </p>
+                    </div>
+                    {isDone ? (
+                      <div className="text-primary">
+                        <span className="material-symbols-outlined text-3xl">check_circle</span>
+                      </div>
+                    ) : task.verify ? (
+                      <button
+                        onClick={() => handleVerifyClick(task.id)}
+                        className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"
+                      >
+                        <span className="material-symbols-outlined text-sm">photo_camera</span>
+                        Verify
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => toggleTask(task.id)}
+                        className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold"
+                      >
+                        Done
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p
-                          className={`text-sm font-semibold ${
-                            isDone ? 'line-through text-slate-400' : 'text-slate-800'
-                          }`}
+        {/* Rewards Tab */}
+        {activeTab === 'rewards' && (
+          <section className="mb-10">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-slate-900 text-xl font-bold">Rewards Store</h2>
+              <button className="text-primary text-sm font-bold">See All</button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {REWARDS.map((reward) => (
+                <div
+                  key={reward.id}
+                  className="bg-white rounded-2xl overflow-hidden border border-slate-200 flex flex-col"
+                >
+                  <div className="h-32 bg-slate-200 relative overflow-hidden">
+                    <img
+                      src={reward.img}
+                      alt={reward.label}
+                      className="w-full h-full object-cover"
+                    />
+                    {reward.badge && (
+                      <div className="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full">
+                        {reward.badge}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-3 flex flex-col flex-1">
+                    <h4 className="font-bold text-sm text-slate-800">{reward.label}</h4>
+                    <div className="mt-auto flex items-center justify-between pt-2">
+                      <span className="text-primary font-bold text-sm">{reward.points} pts</span>
+                      {reward.canRedeem ? (
+                        <button
+                          onClick={() => showToast(`${reward.label} redeemed!`)}
+                          className="bg-primary/10 text-primary p-1 rounded-lg"
                         >
-                          {task.title}
-                        </p>
-                        <span className="text-xs font-bold bg-amber-50 text-amber-600 border border-amber-200 rounded-full px-2 py-0.5">
-                          +{task.points} pts
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 mt-1.5">
-                        <span className="text-xs text-slate-400 font-medium">Due: {task.due}</span>
-                        {task.requiresPhoto && !isDone && (
-                          <button
-                            onClick={() => handleVerifyClick(task.id)}
-                            className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
-                          >
-                            <span className="material-symbols-outlined text-sm leading-none">photo_camera</span>
-                            Verify 📷
-                          </button>
-                        )}
-                      </div>
+                          <span className="material-symbols-outlined text-lg">shopping_basket</span>
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="bg-slate-100 text-slate-400 p-1 rounded-lg cursor-not-allowed"
+                        >
+                          <span className="material-symbols-outlined text-lg">lock</span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </>
-        )}
-
-        {/* Rewards tab */}
-        {activeTab === 'rewards' && (
-          <>
-            <div className="bg-amber-50 border border-amber-100 rounded-2xl p-3 flex items-center gap-2">
-              <span className="material-symbols-outlined text-amber-500 text-lg">star</span>
-              <p className="text-sm text-amber-800 font-medium">
-                You have <span className="font-bold">450 pts</span> to spend in the store!
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {rewards.map((reward) => (
-                <div
-                  key={reward.id}
-                  className="bg-white rounded-2xl p-4 border border-slate-100 flex flex-col items-center text-center gap-2"
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-primary text-2xl">{reward.icon}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-slate-900 leading-tight">{reward.title}</p>
-                    <p className="text-xs text-slate-500 font-medium mt-0.5">{reward.subtitle}</p>
-                  </div>
-                  <span className="text-xs font-bold bg-amber-50 text-amber-600 border border-amber-200 rounded-full px-2.5 py-0.5">
-                    {reward.points} pts
-                  </span>
-                  <button
-                    onClick={() => handleRedeem(reward)}
-                    className={`w-full py-2 rounded-xl text-xs font-bold transition-colors ${
-                      450 >= reward.points
-                        ? 'bg-primary text-white hover:bg-primary-dark'
-                        : 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                    }`}
-                    disabled={450 < reward.points}
-                  >
-                    Redeem
-                  </button>
-                </div>
               ))}
             </div>
-          </>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   );
 }

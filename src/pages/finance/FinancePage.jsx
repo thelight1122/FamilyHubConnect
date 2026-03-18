@@ -1,95 +1,194 @@
 import { useNavigate } from 'react-router-dom';
-import { financeTools, maxWalletBalance, totalFamilySavings, walletMembers } from '../../data/selectors';
-import { finances } from '../../data/mockData';
+import { paths } from '../../config/paths';
 
 export default function FinancePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background-light pb-24">
-      <div className="bg-white px-4 pt-6 pb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">Finance Hub</h1>
-        <button className="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-full flex items-center gap-1.5 hover:bg-amber-100 transition-colors">
-          <span className="material-symbols-outlined text-amber-500 text-base">lightbulb</span>
-          <span className="text-xs font-semibold text-amber-700">AI Tip</span>
-        </button>
-      </div>
+    <div className="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-white shadow-xl overflow-x-hidden">
+      {/* Header */}
+      <header className="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100">
+        <div className="text-primary flex size-12 shrink-0 items-center justify-start">
+          <span className="material-symbols-outlined text-3xl">account_balance_wallet</span>
+        </div>
+        <h2 className="text-slate-900 text-lg font-bold leading-tight tracking-tight flex-1 text-center">
+          Family Finance
+        </h2>
+        <div className="flex w-12 items-center justify-end">
+          <button className="flex items-center justify-center rounded-full h-10 w-10 bg-slate-50 text-slate-600">
+            <span className="material-symbols-outlined">notifications</span>
+          </button>
+        </div>
+      </header>
 
-      <div className="px-4 pt-4 space-y-4">
-        <div className="bg-primary text-white rounded-2xl p-5">
-          <p className="text-sm font-medium opacity-80 mb-1">Total Family Savings</p>
-          <p className="text-4xl font-bold tracking-tight mb-1">${totalFamilySavings.toLocaleString()}</p>
-          <div className="flex items-center gap-1.5 mt-2">
-            <span className="text-xs font-semibold bg-white/20 rounded-full px-2.5 py-0.5">Up $1,240 this month</span>
+      {/* Main Dashboard Content */}
+      <main className="flex-1 overflow-y-auto pb-24">
+        {/* Total Savings Card */}
+        {/* TODO: fetch from /api/finance */}
+        <div className="p-4">
+          <div className="flex flex-col gap-2 rounded-xl p-6 bg-primary text-white shadow-lg shadow-primary/20">
+            <div className="flex justify-between items-start">
+              <p className="opacity-90 text-sm font-medium">Total Family Savings</p>
+              <span className="material-symbols-outlined opacity-80">trending_up</span>
+            </div>
+            <p className="text-3xl font-bold leading-tight tracking-tight">$24,580.00</p>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold">+2.4% this month</span>
+            </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 flex items-start gap-3 border border-amber-100">
-          <span className="material-symbols-outlined text-amber-500 text-2xl mt-0.5 shrink-0">lightbulb</span>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Try setting up automated savings goals for each family member to build financial discipline.
-          </p>
+        {/* Financial Tip of the Day (AI Powered) */}
+        <div className="px-4 pb-4">
+          <div className="flex gap-4 rounded-xl p-4 bg-primary/10 border border-primary/20 items-center">
+            <div className="bg-primary/20 p-2 rounded-lg text-primary">
+              <span className="material-symbols-outlined">lightbulb_circle</span>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-primary uppercase tracking-wider">AI Financial Tip</p>
+              <p className="text-sm text-slate-700 leading-snug">
+                Setting aside just $5/week for Sarah&apos;s goal could reach the target 2 months earlier!
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4">
-          <h3 className="text-base font-bold text-slate-900 mb-3">Finance Tools</h3>
+        {/* Quick Links / Action Grid */}
+        <div className="px-4 py-2">
+          <h3 className="text-slate-900 text-base font-bold mb-3">Finance Tools</h3>
           <div className="grid grid-cols-2 gap-3">
-            {financeTools.map((tool) => (
-              <button
-                key={tool.label}
-                onClick={() => tool.path && navigate(tool.path)}
-                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-colors"
-              >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${tool.color}`}>
-                  <span className="material-symbols-outlined text-2xl">{tool.icon}</span>
-                </div>
-                <span className="text-sm font-semibold text-slate-700">{tool.label}</span>
-              </button>
-            ))}
+            <button
+              className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 gap-2"
+              onClick={() => {/* no-op */}}
+            >
+              <span className="material-symbols-outlined text-primary">payments</span>
+              <span className="text-sm font-semibold">Allowance</span>
+            </button>
+            <button
+              className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 gap-2"
+              onClick={() => {/* no-op */}}
+            >
+              <span className="material-symbols-outlined text-primary">target</span>
+              <span className="text-sm font-semibold">Savings Goals</span>
+            </button>
+            <button
+              className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 gap-2"
+              onClick={() => navigate(paths.financeLoan)}
+            >
+              <span className="material-symbols-outlined text-primary">account_balance</span>
+              <span className="text-sm font-semibold">Family Bank</span>
+            </button>
+            <button
+              className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 gap-2"
+              onClick={() => navigate(paths.financeMarket)}
+            >
+              <span className="material-symbols-outlined text-primary">monitoring</span>
+              <span className="text-sm font-semibold">Market Simulator</span>
+            </button>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4">
-          <h3 className="text-base font-bold text-slate-900 mb-3">Member Wallets</h3>
-          <div className="space-y-3">
-            {walletMembers.map((member) => (
-              <div key={member.id} className="flex items-center gap-3">
-                <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-800">{member.name}</p>
-                  <div className="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
-                    <div
-                      className="h-full bg-primary rounded-full"
-                      style={{ width: `${Math.min(100, (member.wallet / maxWalletBalance) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-                <p className="text-sm font-bold text-slate-900 tabular-nums">${member.wallet.toLocaleString()}</p>
+        {/* Member Wallets */}
+        <div className="pt-6">
+          <div className="flex items-center justify-between px-4 pb-2">
+            <h3 className="text-slate-900 text-lg font-bold tracking-tight">Member Wallets</h3>
+            <button className="text-primary text-sm font-semibold">View All</button>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4">
+            {/* Dad */}
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+              <div className="size-16 rounded-full bg-slate-100 overflow-hidden border-2 border-primary/20">
+                <img
+                  className="w-full h-full object-cover"
+                  alt="Portrait of a smiling middle-aged man"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCHzAmckYooADZpKaH2UZzfS-q1we1IVKibAswbz2GMCsNkWOCwbFb85p5lZftGD2LGCIl29-GJpZt44noQOh9vBAbfzmv4zUaKL_HcppnWgZk8Vk5x6R0AM7re32czMSN1pcMhC-Enm6b2KfeRNpIzPC98jtFW-KnnNfRo8suf35W582jxWC6ZRSCZ3COV4I3qeCYkkJHneMKMpdmS-Qfz1hi3s9qqmX89lqrFrCO05b22THacaBuBsJnB7ydFmMKrclCY37_nZM"
+                />
               </div>
-            ))}
+              <div className="text-center">
+                <p className="text-slate-900 text-sm font-bold">Dad</p>
+                <p className="text-primary text-xs font-bold">$8,400</p>
+              </div>
+            </div>
+            {/* Mom */}
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+              <div className="size-16 rounded-full bg-slate-100 overflow-hidden border-2 border-primary/20">
+                <img
+                  className="w-full h-full object-cover"
+                  alt="Portrait of a smiling middle-aged woman"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOBhu7iQP2P4p7ec1T3_FHqy2ZLpWBOssiNxlREpjvjkJV-_y-JDuUm7UQ0NQvkgNh8tQbXIPIoTWMZ9cQqLWRqGdngCgcfLhjmgNM-MtB5jjUAnFRT7jJoPQrPyQhj3Z3uKmajgQGLynYgXfNnHWWsBaT4L7CQKbXn5clnMouEGAo5FLjciiKmmImz7OX8UvSFEsdIxAxLDFQRXhDV8S5ZmilkXDfeTW_vSogo5OqNLr8DoRa38LxA4VBuPSROQp84XpTHFm70KM"
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-slate-900 text-sm font-bold">Mom</p>
+                <p className="text-primary text-xs font-bold">$12,200</p>
+              </div>
+            </div>
+            {/* Leo */}
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+              <div className="size-16 rounded-full bg-slate-100 overflow-hidden border-2 border-primary/20">
+                <img
+                  className="w-full h-full object-cover"
+                  alt="Portrait of a young teenage boy"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtkM0Kz8TVPiuRxqDjNn33-crPQUMT3MkHVNxNXGTEuym3T1rpaZ12iCWtjA6xOer7eW1SGYP-xp4wmd09AHMyX6F_Zjta6d2wogH7HUdNLYdl3D6l9r9Ho2xr35rvUx4IuhDmtjgIme18QsfsA56SJYelHH_6h5B2xpAf76l8V3uAWCuqrZvikExrstN_Z3W7Ho6zueJpVqkKQet4Muw15unKvs_gE6Cu0eak-IOKitFMBNHw6ezgpvGqNaNBvEFFXQ_drOM49iM"
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-slate-900 text-sm font-bold">Leo</p>
+                <p className="text-primary text-xs font-bold">$450</p>
+              </div>
+            </div>
+            {/* Sarah */}
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+              <div className="size-16 rounded-full bg-slate-100 overflow-hidden border-2 border-primary/20">
+                <img
+                  className="w-full h-full object-cover"
+                  alt="Portrait of a young teenage girl"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1h1WK3gY4N6biYRHC-pOhef4d_ZeFFOLS6ZzmjSlMCSGDVSleiHSHvGtQjHqk63VRbTAhP3JVKs-M0521O1GrpN20vLEW2Svhz6ehvlcfBSz_TtU0vYu0PzfxVyG9Pw9TjK6AfzVulenKO5QY3j8cuKaebNE2yK5wxzW6ijIzD_cFU9SFbg3-PZ5zNaaIU0AYvubIAFPUG1-oWbwmvggDtM6kBNtD2Ul_sla0TMvZRy7sfOeSu8NtbParRs0lQzGk1IYuwF9Pkz0"
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-slate-900 text-sm font-bold">Sarah</p>
+                <p className="text-primary text-xs font-bold">$530</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4">
-          <h3 className="text-base font-bold text-slate-900 mb-3">Recent Activity</h3>
+        {/* Recent Transactions Mini-List */}
+        {/* TODO: fetch from /api/finance */}
+        <div className="px-4 py-4">
+          <div className="flex items-center justify-between pb-3">
+            <h3 className="text-slate-900 text-base font-bold">Recent Activity</h3>
+            <button className="text-slate-500 text-xs">See History</button>
+          </div>
           <div className="space-y-3">
-            {finances.recentActivity.map((item) => (
-              <div key={item.id} className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-slate-500 text-[18px]">{item.icon}</span>
+            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-100 text-green-600 rounded-full">
+                  <span className="material-symbols-outlined text-sm">add</span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 truncate">{item.label}</p>
-                  <p className="text-xs text-slate-400 font-medium">{item.date}</p>
+                <div>
+                  <p className="text-sm font-bold">Allowance Added</p>
+                  <p className="text-xs text-slate-500">Leo &bull; Yesterday</p>
                 </div>
-                <p className={`text-sm font-bold tabular-nums ${item.amount > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                  {item.amount > 0 ? '+' : '-'}${Math.abs(item.amount).toFixed(2)}
-                </p>
               </div>
-            ))}
+              <p className="text-sm font-bold text-green-600">+$20.00</p>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 text-blue-600 rounded-full">
+                  <span className="material-symbols-outlined text-sm">savings</span>
+                </div>
+                <div>
+                  <p className="text-sm font-bold">Goal Progress</p>
+                  <p className="text-xs text-slate-500">Sarah &bull; 2 days ago</p>
+                </div>
+              </div>
+              <p className="text-sm font-bold text-primary">+$15.00</p>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

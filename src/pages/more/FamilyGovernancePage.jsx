@@ -1,48 +1,47 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { governance } from '../../data/mockData';
+import { paths } from '../../config/paths';
+import BackHeader from '../../components/BackHeader';
 
-const TABS = ['Resolution', 'Jury Pool', 'Archive', 'Rule Book'];
+const TABS = [
+  { key: 'resolution', label: 'Resolution' },
+  { key: 'jury', label: 'Jury Pool' },
+  { key: 'archive', label: 'Archive' },
+  { key: 'rulebook', label: 'Rule Book' },
+];
 
 export default function FamilyGovernancePage() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('Resolution');
+  const [activeTab, setActiveTab] = useState('resolution');
+
+  {/* TODO: fetch governance data from /api/governance */}
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
-      {/* Header */}
-      <div className="sticky top-0 z-50 flex items-center bg-white p-4 border-b border-slate-200 justify-between">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#4c8ce6]/10 text-[#4c8ce6]">
-          <span className="material-symbols-outlined">gavel</span>
-        </div>
-        <h2 className="text-slate-900 text-lg font-bold leading-tight flex-1 text-center">Family Governance</h2>
-        <div className="size-10 flex items-center justify-center">
-          <span className="material-symbols-outlined text-slate-500">notifications</span>
-        </div>
-      </div>
+    <div className="flex flex-col min-h-screen bg-background-light">
+      <BackHeader title="Family Governance" backTo={paths.more} />
 
       {/* Tab Nav */}
-      <div className="bg-white sticky top-[73px] z-40">
+      <nav className="bg-white sticky top-[57px] z-40">
         <div className="flex border-b border-slate-200 px-4 gap-6 overflow-x-auto">
           {TABS.map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
               className={`flex items-center border-b-[3px] pb-3 pt-4 whitespace-nowrap text-sm transition-colors ${
-                activeTab === tab
-                  ? 'border-[#4c8ce6] text-[#4c8ce6] font-bold'
+                activeTab === tab.key
+                  ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-slate-500 font-medium'
               }`}
             >
-              {tab}
+              {tab.label}
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
       <div className="flex-1 pb-8">
         {/* Resolution Tab */}
-        {activeTab === 'Resolution' && (
+        {activeTab === 'resolution' && (
           <section className="px-4 pt-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold tracking-tight">Active Mediation</h3>
@@ -62,12 +61,12 @@ export default function FamilyGovernancePage() {
               <div className="p-5">
                 <h4 className="text-lg font-bold mb-1">Request a Family Hearing</h4>
                 <p className="text-slate-600 text-sm mb-4 leading-relaxed">
-                  Formally present a conflict for mediation. This ensures a neutral platform where everyone
-                  is heard and a fair resolution is reached.
+                  Formally present a conflict for mediation. This ensures a neutral platform where
+                  everyone is heard and a fair resolution is reached.
                 </p>
                 <button
-                  onClick={() => navigate('/more/appeal')}
-                  className="w-full bg-[#4c8ce6] hover:bg-[#3a7bd5] text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                  onClick={() => navigate(paths.moreAppeal)}
+                  className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">add_circle</span>
                   <span>New Resolution Request</span>
@@ -78,35 +77,31 @@ export default function FamilyGovernancePage() {
         )}
 
         {/* Jury Pool Tab */}
-        {activeTab === 'Jury Pool' && (
+        {activeTab === 'jury' && (
           <section className="px-4 pt-6">
             <h3 className="text-xl font-bold tracking-tight mb-4">The Jury Pool</h3>
             <div className="grid grid-cols-1 gap-3">
-              {governance.juryPool.map((member) => (
-                <div
-                  key={member.id}
-                  className={`flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 ${
-                    !member.active ? 'opacity-60' : ''
-                  }`}
-                >
-                  <div
-                    className={`size-12 rounded-full flex items-center justify-center ${
-                      member.active
-                        ? 'bg-[#4c8ce6]/20 text-[#4c8ce6]'
-                        : 'bg-slate-200 text-slate-500'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined">person</span>
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-bold">{member.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{member.period}</p>
-                  </div>
-                  {member.active && <div className="size-2 rounded-full bg-emerald-500" />}
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200">
+                <div className="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined">person</span>
                 </div>
-              ))}
+                <div className="flex-1">
+                  <p className="font-bold">Mom (Sarah)</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Next Mediator (April 15-30)</p>
+                </div>
+                <div className="size-2 rounded-full bg-emerald-500" />
+              </div>
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 opacity-60">
+                <div className="size-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
+                  <span className="material-symbols-outlined">person</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-bold">Dad (Michael)</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Standby Mediator</p>
+                </div>
+              </div>
             </div>
-            <button className="mt-4 text-[#4c8ce6] text-sm font-semibold flex items-center gap-1">
+            <button className="mt-4 text-primary text-sm font-semibold flex items-center gap-1">
               <span>View full rotation schedule</span>
               <span className="material-symbols-outlined text-sm">chevron_right</span>
             </button>
@@ -114,38 +109,43 @@ export default function FamilyGovernancePage() {
         )}
 
         {/* Archive Tab */}
-        {activeTab === 'Archive' && (
+        {activeTab === 'archive' && (
           <section className="px-4 pt-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold tracking-tight">Court Archive</h3>
-              <button className="text-sm text-[#4c8ce6] font-semibold">See All</button>
+              <button className="text-sm text-primary font-semibold">See All</button>
             </div>
             <div className="flex flex-col gap-4">
-              {governance.archive.map((item) => (
-                <div
-                  key={item.id}
-                  className={`bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 ${
-                    item.highlight ? 'border-l-[#4c8ce6]' : 'border-l-slate-300'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
-                      Ruling: {item.date}
-                    </span>
-                    {item.highlight && (
-                      <span className="material-symbols-outlined text-slate-300">history_edu</span>
-                    )}
-                  </div>
-                  <p className="font-bold text-slate-800 mb-1">{item.title}</p>
-                  <p className="text-sm text-slate-600 italic">"{item.resolution}"</p>
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-primary">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
+                    Ruling: April 02, 2024
+                  </span>
+                  <span className="material-symbols-outlined text-slate-300">history_edu</span>
                 </div>
-              ))}
+                <p className="font-bold text-slate-800 mb-1">The "Dirty Dishes" Dispute</p>
+                <p className="text-sm text-slate-600 italic">
+                  "Agreed resolution: Leo will handle kitchen duty for 3 extra days; the group chat
+                  remains for reminders only."
+                </p>
+              </div>
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-slate-300">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
+                    Ruling: March 18, 2024
+                  </span>
+                </div>
+                <p className="font-bold text-slate-800 mb-1">Screen Time Extension</p>
+                <p className="text-sm text-slate-600 italic">
+                  "Resolution: Homework must be verified before 7 PM to unlock bonus hour."
+                </p>
+              </div>
             </div>
           </section>
         )}
 
         {/* Rule Book Tab */}
-        {activeTab === 'Rule Book' && (
+        {activeTab === 'rulebook' && (
           <section className="px-4 pt-6">
             <div className="bg-slate-900 text-white p-6 rounded-2xl relative overflow-hidden">
               <div className="absolute right-[-20px] top-[-20px] opacity-10">
@@ -167,7 +167,7 @@ export default function FamilyGovernancePage() {
                 </span>
               </div>
               <button
-                onClick={() => navigate('/more/constitution')}
+                onClick={() => navigate(paths.moreConstitution)}
                 className="mt-6 w-full bg-white text-slate-900 font-bold py-2 rounded-lg text-sm relative z-10"
               >
                 Open Rule Book

@@ -1,98 +1,99 @@
 import { useNavigate } from 'react-router-dom';
+import { paths } from '../../config/paths';
+import BackHeader from '../../components/BackHeader';
 
 export default function LoanConfirmationPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-dvh bg-[#f6f7f8] max-w-md mx-auto flex flex-col">
-      {/* Top Success Section */}
-      <div className="flex flex-col items-center pt-16 pb-8 px-4">
-        {/* Success Circle */}
-        <div className="size-32 bg-green-100 rounded-full flex items-center justify-center mb-4">
-          <span className="material-symbols-outlined text-green-500 text-6xl">check_circle</span>
+    <div className="max-w-md mx-auto bg-white min-h-screen flex flex-col shadow-xl font-display text-slate-900">
+      <BackHeader title="Loan Submitted" backTo={paths.financeLoan} />
+
+      <div className="flex-1 overflow-y-auto pb-8">
+        {/* Hero Image */}
+        <div className="px-4 py-3">
+          <div
+            className="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden bg-primary/10 rounded-xl min-h-[200px] border border-primary/20"
+            style={{
+              backgroundImage:
+                'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkrxyZDUdttyvQzJT7iar7YwBS8NhHyDA9BfmUMa-sQa8nRRo3Oh0WwwTQ1i3bApWTYDSsfC4-KXqiDXm6HofZorAAWIJu_Tcn6Iu9HaG8pfYwXjNvSdhRqhzP7JeQkKn3X1njSFoIDzGn61ZTuA7JiDu8AVRsUiNp_XRXciv_ogNU-uAVJeVoTSOIe230OGw7Hg5V0FIL5K4YeCtI2tgGvPesd81qBpXCOQMoGoNPMFIxg8eXikzd7iy2X8C0pIe2VCO7gyMGBR0")',
+            }}
+            role="img"
+            aria-label="A cool modern mountain bike in a forest setting"
+          />
         </div>
 
-        {/* Confetti Row */}
-        <div className="flex gap-2 text-3xl mb-4">
-          <span>🎉</span>
-          <span>🎊</span>
-          <span>✨</span>
-          <span>🎉</span>
+        {/* Amount Display */}
+        <div className="text-center px-4 pt-4">
+          <span className="text-primary font-semibold text-sm uppercase tracking-widest">Total Approved</span>
+          <h1 className="text-slate-900 tracking-tight text-[48px] font-bold leading-tight pb-2">$200.00</h1>
         </div>
 
-        <h1 className="text-3xl font-black text-slate-900 mb-1">Loan Approved!</h1>
-        <p className="text-slate-500 text-base">Congratulations, Leo!</p>
-      </div>
-
-      {/* Approved Amount Card */}
-      <div className="bg-white rounded-2xl p-5 mx-4 shadow-sm border border-green-100 mb-4">
-        <div className="flex flex-col items-center text-center">
-          <p className="text-4xl font-black text-green-600 mb-1">$200.00</p>
-          <p className="text-lg font-semibold text-slate-700 mb-3">Mountain Bike 🚲</p>
-          <p className="text-sm text-slate-500 italic">
-            Your loan has been approved by the Thompson Family Bank!
+        {/* Personalized Message */}
+        <div className="px-6 text-center mb-8">
+          <h3 className="text-slate-900 text-[22px] font-bold leading-tight tracking-tight pb-2">Great news, Leo!</h3>
+          <p className="text-slate-600 text-base font-normal leading-relaxed">
+            Your loan for the new mountain bike has been approved and is ready to use.
           </p>
         </div>
-      </div>
 
-      {/* Loan Terms Card */}
-      <div className="bg-slate-50 rounded-2xl mx-4 p-4 mb-4 border border-slate-200">
-        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3">Loan Terms</h3>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-            <div>
-              <p className="text-sm font-medium text-slate-700">Interest Rate</p>
-              <p className="text-sm text-slate-500">0%</p>
+        {/* Terms Summary Card */}
+        <div className="mx-4 bg-primary/5 rounded-xl p-6 border border-primary/10 mb-6">
+          <h4 className="text-primary font-bold text-sm mb-4 flex items-center gap-2">
+            <span className="material-symbols-outlined text-sm">info</span>
+            LOAN TERMS
+          </h4>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 text-sm">Interest Rate</span>
+              <span className="text-slate-900 font-semibold text-sm">0% (Family Rate)</span>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-            <div>
-              <p className="text-sm font-medium text-slate-700">Payment</p>
-              <p className="text-sm text-slate-500">$10/week from allowance</p>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 text-sm">Repayment Method</span>
+              <span className="text-slate-900 font-semibold text-sm">Allowance Deduction</span>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-            <div>
-              <p className="text-sm font-medium text-slate-700">Target Payoff</p>
-              <p className="text-sm text-slate-500">October 15</p>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 text-sm">Target Completion</span>
+              <span className="text-slate-900 font-semibold text-sm">Oct 15, 2026</span>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Next Steps */}
-      <div className="mx-4 mb-6">
-        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3">Next Steps</h3>
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 p-4 border-b border-slate-50">
-            <div className="flex size-8 shrink-0 items-center justify-center bg-green-100 rounded-full">
-              <span className="text-sm font-bold text-green-600">1</span>
+        {/* Next Steps */}
+        <div className="px-6 mb-8">
+          <h4 className="text-slate-900 font-bold text-lg mb-4">Next Steps</h4>
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="size-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
+              </div>
+              <div>
+                <p className="text-slate-900 font-semibold text-sm">Funds Transferred</p>
+                <p className="text-slate-500 text-sm">The $200.00 has been added to your Digital Wallet.</p>
+              </div>
             </div>
-            <p className="text-sm text-slate-700 flex-1">Funds added to your wallet</p>
-            <span className="material-symbols-outlined text-green-500">check_circle</span>
-          </div>
-          <div className="flex items-center gap-3 p-4">
-            <div className="flex size-8 shrink-0 items-center justify-center bg-green-100 rounded-full">
-              <span className="text-sm font-bold text-green-600">2</span>
+            <div className="flex gap-4">
+              <div className="size-8 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-sm">calendar_today</span>
+              </div>
+              <div>
+                <p className="text-slate-900 font-semibold text-sm">Scheduled Repayment</p>
+                <p className="text-slate-500 text-sm">First deduction starts this Friday from your weekly allowance.</p>
+              </div>
             </div>
-            <p className="text-sm text-slate-700 flex-1">Automatic $10/week deduction from allowance</p>
-            <span className="material-symbols-outlined text-green-500">check_circle</span>
           </div>
         </div>
-      </div>
 
-      {/* Back to Family Bank Button */}
-      <div className="mx-4 mt-auto mb-8">
-        <button
-          onClick={() => navigate('/finance')}
-          className="w-full bg-[#4c8ce6] text-white font-bold py-4 rounded-2xl hover:bg-[#3b7bd4] transition-colors text-base"
-        >
-          Back to Family Bank
-        </button>
+        {/* Action Button */}
+        <div className="px-4 mt-auto">
+          <button
+            onClick={() => navigate(paths.finance)}
+            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+          >
+            Back to Finance
+            <span className="material-symbols-outlined">home</span>
+          </button>
+        </div>
       </div>
     </div>
   );

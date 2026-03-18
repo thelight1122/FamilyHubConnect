@@ -1,187 +1,193 @@
-import { useState } from 'react';
+import { paths } from '../../config/paths';
 import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
-import { creatorStudio } from '../../data/mockData';
 
-const CREATE_TYPES = [
-  { id: 'photo', label: 'Photo Story', icon: 'photo_camera', gradient: 'from-pink-400 to-rose-500' },
-  { id: 'voice', label: 'Voice Memo', icon: 'mic', gradient: 'from-emerald-400 to-emerald-600' },
-  { id: 'poll', label: 'Family Poll', icon: 'poll', gradient: 'from-violet-400 to-violet-600' },
-];
-
-const TYPE_BADGE_COLORS = {
-  'Photo Story': 'bg-pink-100 text-pink-600',
-  'Family Poll': 'bg-violet-100 text-violet-600',
-  'Voice Memo': 'bg-emerald-100 text-emerald-600',
-};
+// TODO: fetch creations from /api/creator
 
 export default function CreatorStudioPage() {
-  const [showCreate, setShowCreate] = useState(false);
   const [toast, showToast] = useToast();
 
-  const { stats, creations } = creatorStudio;
-
-  const handleCreate = (type) => {
-    setShowCreate(false);
-    showToast(`${type.label} creator coming soon!`);
-  };
-
   return (
-    <div className="min-h-dvh bg-[#f6f7f8] relative">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
       <Toast message={toast} />
-      <BackHeader title="Creator's Studio" backTo="/more" />
+      <BackHeader title="Creator Studio" backTo={paths.more} />
 
-      <div className="pb-28">
-        {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-3 px-4 mt-4">
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
-            <span className="material-symbols-outlined text-[#4c8ce6] text-2xl">edit</span>
-            <p className="text-lg font-black text-slate-900">{stats.posts}</p>
-            <p className="text-xs text-slate-500">Posts</p>
-          </div>
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
-            <span className="material-symbols-outlined text-blue-500 text-2xl">visibility</span>
-            <p className="text-lg font-black text-slate-900">{stats.views}</p>
-            <p className="text-xs text-slate-500">Views</p>
-          </div>
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 flex flex-col items-center gap-1">
-            <span className="material-symbols-outlined text-rose-500 text-2xl">favorite</span>
-            <p className="text-lg font-black text-slate-900">{stats.likes}</p>
-            <p className="text-xs text-slate-500">Likes</p>
-          </div>
-        </div>
-
-        {/* Create New */}
-        <div className="px-4 mt-6">
-          <h3 className="text-base font-bold text-slate-800 mb-3">Create New</h3>
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
-            {CREATE_TYPES.map((type) => (
-              <div
-                key={type.id}
-                className={`shrink-0 w-40 bg-gradient-to-br ${type.gradient} rounded-2xl p-4 flex flex-col gap-3`}
-              >
-                <span className="material-symbols-outlined text-white text-4xl">{type.icon}</span>
-                <p className="text-white font-bold text-sm">{type.label}</p>
-                <button
-                  onClick={() => handleCreate(type)}
-                  className="mt-auto bg-white/20 text-white text-xs font-semibold py-1.5 px-3 rounded-lg hover:bg-white/30 transition-colors self-start"
-                >
-                  Create →
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Your Creations */}
-        <div className="px-4 mt-6">
-          <h3 className="text-base font-bold text-slate-800 mb-3">Your Creations</h3>
-          <div className="space-y-3">
-            {creations.map((creation) => (
-              <div
-                key={creation.id}
-                className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center gap-3"
-              >
-                <div
-                  className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${
-                    creation.color === 'pink'
-                      ? 'bg-pink-100'
-                      : creation.color === 'violet'
-                      ? 'bg-violet-100'
-                      : 'bg-emerald-100'
-                  }`}
-                >
-                  <span
-                    className={`material-symbols-outlined text-2xl ${
-                      creation.color === 'pink'
-                        ? 'text-pink-500'
-                        : creation.color === 'violet'
-                        ? 'text-violet-500'
-                        : 'text-emerald-500'
-                    }`}
-                  >
-                    {creation.icon}
-                  </span>
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span
-                      className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                        TYPE_BADGE_COLORS[creation.type] || 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {creation.type}
-                    </span>
-                  </div>
-                  <p className="text-sm font-semibold text-slate-800 truncate">{creation.title}</p>
-                  <p className="text-xs text-slate-400">{creation.date}</p>
-                </div>
-
-                <div className="shrink-0 text-right">
-                  {creation.likes != null && (
-                    <div className="flex items-center gap-1 text-rose-500">
-                      <span className="material-symbols-outlined text-sm">favorite</span>
-                      <span className="text-xs font-semibold">{creation.likes}</span>
-                    </div>
-                  )}
-                  {creation.responses != null && (
-                    <div className="flex items-center gap-1 text-violet-500">
-                      <span className="material-symbols-outlined text-sm">people</span>
-                      <span className="text-xs font-semibold">{creation.responses}</span>
-                    </div>
-                  )}
-                  {creation.duration != null && (
-                    <div className="flex items-center gap-1 text-emerald-500">
-                      <span className="material-symbols-outlined text-sm">schedule</span>
-                      <span className="text-xs font-semibold">{creation.duration}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* FAB */}
-      <button
-        onClick={() => setShowCreate(true)}
-        className="fixed bottom-20 right-4 bg-[#4c8ce6] rounded-full w-14 h-14 shadow-xl flex items-center justify-center hover:bg-[#3b7bd4] transition-colors z-30"
-      >
-        <span className="material-symbols-outlined text-white text-3xl">add</span>
-      </button>
-
-      {/* Create Modal */}
-      {showCreate && (
+      {/* Hero Section */}
+      <section className="px-4 pt-6 pb-2">
         <div
-          className="fixed inset-0 z-40 flex items-end justify-center"
-          onClick={() => setShowCreate(false)}
+          className="rounded-2xl p-6 text-white shadow-lg shadow-primary/20"
+          style={{ background: 'linear-gradient(135deg, #4c8ce6 0%, #a78bfa 100%)' }}
         >
-          <div className="absolute inset-0 bg-black/40" />
-          <div
-            className="relative bg-white w-full max-w-md rounded-t-3xl p-6 pb-10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-5" />
-            <h3 className="text-lg font-black text-slate-900 mb-4 text-center">Create New Content</h3>
-            <div className="space-y-3">
-              {CREATE_TYPES.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => handleCreate(type)}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r ${type.gradient} text-left`}
-                >
-                  <span className="material-symbols-outlined text-white text-3xl">{type.icon}</span>
-                  <p className="text-white font-bold text-base">{type.label}</p>
-                  <span className="material-symbols-outlined text-white/70 ml-auto">chevron_right</span>
-                </button>
-              ))}
+          <h2 className="text-2xl font-extrabold mb-1">Unleash your imagination!</h2>
+          <p className="text-white/80 text-sm font-medium">
+            Pick a tool and start creating something amazing today.
+          </p>
+        </div>
+      </section>
+
+      {/* Creative Tools Grid */}
+      <main className="flex-1">
+        <h2 className="text-slate-900 text-xl font-bold px-4 pb-3 pt-6">Creative Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+
+          {/* AI Avatar Maker */}
+          <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="aspect-[4/3] w-full bg-slate-100 relative">
+              <img
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB95janPJDrvtBmggv0IK7wQ56-w2s9SVG0x9q2e8-_jrCTKKeXbTNgX-3mly5kODOucklDaTZSxXsEAnlEsq1bO5PCxftRev7bfxKRy0GFlnls_uWHHQrHq7ks2o75ysUsglcCCTAXer9toyx-f-vKDBNAdu2LHwjFfNc7Z_2wFq-U3K78985r0BOQ0RW0McaYbM3N-SAEqErcXYKOU_38FI9cQ2suQ3uz8yu5ZJ8qqU9JZkz8SEfPodyUwL4m6WtBkv6ti5hJado"
+                alt="A colorful stylized digital 3D avatar of a smiling young person"
+              />
+              <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg text-[10px] font-bold text-primary uppercase border border-primary/20">
+                Popular
+              </div>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-primary text-xl">face</span>
+                <h3 className="font-bold text-slate-900">AI Avatar Maker</h3>
+              </div>
+              <p className="text-sm text-slate-500 mb-4 line-clamp-1">
+                Transform yourself into a hero or a toon!
+              </p>
+              <button
+                onClick={() => showToast('Creator tools coming soon!')}
+                className="w-full py-2.5 rounded-xl bg-primary/10 text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all"
+              >
+                Launch Maker
+              </button>
+            </div>
+          </div>
+
+          {/* Magic Story Generator */}
+          <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="aspect-[4/3] w-full bg-indigo-50 flex items-center justify-center p-6">
+              <div className="relative w-full h-full rounded-xl overflow-hidden shadow-inner bg-white flex flex-col p-4 border border-indigo-100">
+                <div className="h-2 w-1/2 bg-indigo-100 rounded mb-2"></div>
+                <div className="h-2 w-3/4 bg-indigo-50 rounded mb-2"></div>
+                <div className="h-2 w-2/3 bg-indigo-50 rounded mb-4"></div>
+                <div className="mt-auto flex justify-center">
+                  <span className="material-symbols-outlined text-5xl text-indigo-400">auto_stories</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-indigo-500 text-xl">auto_fix_high</span>
+                <h3 className="font-bold text-slate-900">Magic Story Generator</h3>
+              </div>
+              <p className="text-sm text-slate-500 mb-4 line-clamp-1">Co-write epic tales with AI.</p>
+              <button
+                onClick={() => showToast('Creator tools coming soon!')}
+                className="w-full py-2.5 rounded-xl bg-primary text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all"
+              >
+                <span className="material-symbols-outlined text-sm">add</span>
+                Create a New Story
+              </button>
+            </div>
+          </div>
+
+          {/* AI Mad Libs */}
+          <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="aspect-[4/3] w-full bg-orange-50 flex items-center justify-center overflow-hidden">
+              <div className="flex flex-wrap gap-2 px-8">
+                <div className="px-3 py-1 bg-orange-200 text-orange-700 rounded-full text-xs font-bold rotate-[-5deg]">Noun</div>
+                <div className="px-3 py-1 bg-pink-200 text-pink-700 rounded-full text-xs font-bold rotate-[3deg]">Adjective</div>
+                <div className="px-3 py-1 bg-blue-200 text-blue-700 rounded-full text-xs font-bold rotate-[-2deg]">Verb</div>
+                <div className="px-3 py-1 bg-green-200 text-green-700 rounded-full text-xs font-bold rotate-[6deg]">Place</div>
+              </div>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-orange-500 text-xl">mood</span>
+                <h3 className="font-bold text-slate-900">AI Mad Libs</h3>
+              </div>
+              <p className="text-sm text-slate-500 mb-4 line-clamp-1">Hilarious AI-powered word games.</p>
+              <button
+                onClick={() => showToast('Creator tools coming soon!')}
+                className="w-full py-2.5 rounded-xl bg-orange-100 text-orange-600 font-bold text-sm hover:bg-orange-500 hover:text-white transition-all"
+              >
+                Play Now
+              </button>
+            </div>
+          </div>
+
+          {/* Digital Drawing Board */}
+          <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="aspect-[4/3] w-full bg-slate-100 relative">
+              <img
+                className="h-full w-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC40KGN40P_4-tvKaaOmbsNK-rKAx8QSDJktYVBNCgHd2K8KOheB4URhFb7UmUBvtLXO6npeUY55Z405qn48OY6pZkzn1lTm3oSoU6PK09iyisRgtWQIzlmHaQbDxLLQj5ALFMiAcjP3iqd7Ovbrwa4C1SbsGdBaZbRtmYbKM3KwybFEC8aKzgbtJYzgvNWkUo8HBa-9HKyGHTjrqPz0Wq4KFkmkjfZP2oIt_kvDI_bjV-0kKN2RRk_h0IWVOTwgRpgosorHR4wms0"
+                alt="A bright, colorful abstract digital painting with brush strokes"
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+              <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg text-[10px] font-bold text-slate-600 uppercase border border-slate-200">
+                Recent Doodle
+              </div>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-emerald-500 text-xl">brush</span>
+                <h3 className="font-bold text-slate-900">Digital Drawing Board</h3>
+              </div>
+              <p className="text-sm text-slate-500 mb-4 line-clamp-1">
+                Sketch, paint, and animate with AI help.
+              </p>
+              <button
+                onClick={() => showToast('Creator tools coming soon!')}
+                className="w-full py-2.5 rounded-xl bg-emerald-100 text-emerald-600 font-bold text-sm hover:bg-emerald-500 hover:text-white transition-all"
+              >
+                Open Canvas
+              </button>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Recently Created */}
+        <section className="px-4 py-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-slate-900 text-lg font-bold">Your Latest Masterpieces</h2>
+            <button
+              onClick={() => showToast('Creator tools coming soon!')}
+              className="text-primary text-xs font-bold uppercase tracking-wider"
+            >
+              See Gallery
+            </button>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4">
+            <div className="flex-shrink-0 w-32 h-32 rounded-xl bg-slate-200 overflow-hidden relative border-2 border-white shadow-sm">
+              <img
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTKe4tG89GcrsQn016cbIulgH4yGHsgcvteDK-gOxRoa1R9t97dtUXeUsD8cK7Pm3mEBDcQYTeiH7v38x10qXV2pHENldoA1YNmZ49Myl6nF6g7jendR0TqpSfy16djKU_-T9Af2cawLF4CEQvtqeyp4kDpvOPjjNNLlupkWmGEAiTN5xJ8f5Jw5_KSrEvcbW6l-XsKgxRE4nMxXVqYl_mTJ8Q4MffWGIKlyTO3PHqaYGJjgf_pX73kjL9eKzn1RVBsQwxDKeRYZM"
+                alt="Abstract colorful child's artwork showing a sun and clouds"
+              />
+            </div>
+            <div className="flex-shrink-0 w-32 h-32 rounded-xl bg-slate-200 overflow-hidden relative border-2 border-white shadow-sm">
+              <img
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyWHgtsQqm5b5e7mz_YLjhFSX46GYHPRQQUmomOPK-kD1iJ01ICi0ZsP9flDSeLZjRz_0h8bPJOjwT1vzkqclhDjFGphcgsnqXKDBntoTEY81Ff1tCQdDsAFe8Ic7MjV0sdV31_8Ct8b0zYpEU428QHczqTwCXg8FXcWe4UVuYZjqcfYo4OxDndsxpsdoBoFC-Y41Ks2li_9IIYZ7tNnHTDQHWcqEqyx2GPEF_F2hfTWA2vkMfTmcE2-LPt6ZQOsbB1nNVBws8r-0"
+                alt="Digital art of a neon cosmic space nebula"
+              />
+            </div>
+            <div className="flex-shrink-0 w-32 h-32 rounded-xl bg-slate-200 overflow-hidden relative border-2 border-white shadow-sm">
+              <img
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjwaylqYFUqZo4AOkyqXU8vd0PBc28Cg7GP3yZfo7Z4reidPJoOOakcNFBfIT1D5F8ItsSsJ07tq1mc50D9C6iDWQWu3YruRNqmUcLHdCvxzruSRfjclOU_eR4V98y3WE9fbjzMm34L5SW8QpP2MZ6yzB_4dNjkMLmC-KZzVAsjOTlasB6lbfuUHB5O3xUpjLa2nd14KXM5JJQ1G6i5yNdGg5KDlOx02P5pq73rP9q8d3BudLIgu1nxrJRyFtOce6OgWMOmwQE0SQ"
+                alt="Vibrant multi-colored liquid marble texture"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* FAB */}
+      <button
+        onClick={() => showToast('Creator tools coming soon!')}
+        className="fixed bottom-20 right-4 bg-primary rounded-full w-14 h-14 shadow-xl flex items-center justify-center hover:bg-primary/90 transition-colors z-30"
+      >
+        <span className="material-symbols-outlined text-white text-3xl">add</span>
+      </button>
     </div>
   );
 }

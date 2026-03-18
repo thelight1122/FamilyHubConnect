@@ -1,192 +1,250 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { pendingInvites } from '../../data/mockData';
+import { paths } from '../../config/paths';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
+
+// TODO: fetch invite link from /api/invite/link
+const INVITE_LINK = 'familyhub.app/join/xK92mP7';
+
+const INITIAL_PENDING_INVITES = [
+  { id: 1, name: 'sarah.smith@email.com', sentAgo: '2 hours ago', role: 'Adult' },
+  { id: 2, name: 'Leo (Tablet)',           sentAgo: '1 day ago',   role: 'Child' },
+];
+
+const TABS = [
+  { id: 'link',  label: 'Link',    icon: 'link'     },
+  { id: 'email', label: 'Email',   icon: 'mail'     },
+  { id: 'qr',    label: 'QR Code', icon: 'qr_code_2' },
+];
 
 export default function InviteFamilyPage() {
   const navigate = useNavigate();
+  const { toast, showToast } = useToast();
+
+  const [activeTab, setActiveTab] = useState('link');
+  const [emailInput, setEmailInput] = useState('');
   const [selectedRole, setSelectedRole] = useState('adult');
-  const [inviteMethod, setInviteMethod] = useState('link');
-  const [email, setEmail] = useState('');
-  const [showToast, setShowToast] = useState(false);
-  const [invites, setInvites] = useState(pendingInvites);
+  const [pendingInvites, setPendingInvites] = useState(INITIAL_PENDING_INVITES);
 
-  const handleSendInvite = () => {
-    if (email.trim()) {
-      setShowToast(true);
-      setEmail('');
-      setTimeout(() => setShowToast(false), 3000);
+  function handleCopyLink() {
+    navigator.clipboard.writeText(`https://${INVITE_LINK}`).catch(() => {});
+    showToast('Link copied to clipboard!');
+  }
+
+  function handleSendInvite() {
+    if (!emailInput.trim()) {
+      showToast('Please enter an email address.');
+      return;
     }
-  };
+    // TODO: POST email invite to /api/invite/email
+    showToast('Invite sent!');
+    setEmailInput('');
+  }
 
-  const handleCancelInvite = (id) => {
-    setInvites((prev) => prev.filter((inv) => inv.id !== id));
-  };
+  function handleCancelInvite(id) {
+    setPendingInvites(prev => prev.filter(i => i.id !== id));
+  }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-dvh relative">
-      {/* Toast */}
-      {showToast && (
-        <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-green-500 text-white text-sm font-semibold px-4 py-3 flex items-center gap-2">
-          <span>✓ Invite sent successfully!</span>
-        </div>
-      )}
+    <div className="relative flex min-h-screen w-full max-w-md mx-auto flex-col bg-white shadow-2xl overflow-x-hidden">
+      {toast && <Toast message={toast.message} type={toast.type} />}
 
       {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center bg-white border-b border-slate-100 px-4 py-3">
+      <header className="flex items-center bg-white p-4 sticky top-0 z-10 border-b border-slate-100">
         <button
           onClick={() => navigate(-1)}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 text-slate-600"
+          className="text-slate-900 flex size-10 shrink-0 items-center justify-center hover:bg-slate-100 rounded-full transition-colors"
+          aria-label="Go back"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h2 className="flex-1 text-center text-lg font-bold text-slate-900">
-          Invite Family Member
+        <h2 className="text-slate-900 text-lg font-bold leading-tight flex-1 ml-2">
+          Invite Family
         </h2>
-        <button className="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-600">
+        <button className="text-primary flex size-10 shrink-0 items-center justify-center hover:bg-primary/10 rounded-full transition-colors">
           <span className="material-symbols-outlined">help_outline</span>
         </button>
       </header>
 
-      <div className="px-4 pt-5 pb-24">
-        {/* Who are you inviting? */}
-        <section className="mb-6">
-          <h3 className="text-base font-bold text-slate-800 mb-3">Who are you inviting?</h3>
+      <main className="flex-1 overflow-y-auto pb-36">
+        {/* Hero Section */}
+        <div className="px-4 pt-6 pb-4">
+          <h1 className="text-slate-900 text-2xl font-bold tracking-tight">
+            Invite Family Members
+          </h1>
+          <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+            Grow your digital home. Add members to share calendars, tasks, and photos securely.
+          </p>
+        </div>
+
+        {/* Role Selection */}
+        <div className="px-4 mb-6">
+          <h3 className="text-slate-900 text-sm font-bold uppercase tracking-wider mb-3">
+            Who are you inviting?
+          </h3>
           <div className="grid grid-cols-2 gap-3">
-            {/* Adult Card */}
             <button
               onClick={() => setSelectedRole('adult')}
-              className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all ${
+              className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
                 selectedRole === 'adult'
-                  ? 'border-[#4c8ce6] bg-[#4c8ce6]/5'
-                  : 'border-slate-200 bg-white'
+                  ? 'border-primary bg-primary/5 text-primary'
+                  : 'border-slate-100 bg-white text-slate-600 hover:border-primary/50'
               }`}
             >
-              <span
-                className={`material-symbols-outlined text-4xl ${
-                  selectedRole === 'adult' ? 'text-[#4c8ce6]' : 'text-slate-400'
-                }`}
-              >
-                person
-              </span>
-              <p
-                className={`text-sm font-semibold ${
-                  selectedRole === 'adult' ? 'text-[#4c8ce6]' : 'text-slate-600'
-                }`}
-              >
-                Adult / Parent
-              </p>
+              <span className="material-symbols-outlined text-3xl mb-1">person_add</span>
+              <span className="font-bold text-sm">Adult/Parent</span>
+              <span className="text-[10px] opacity-80">Full permissions</span>
             </button>
-
-            {/* Child Card */}
             <button
               onClick={() => setSelectedRole('child')}
-              className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all ${
+              className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
                 selectedRole === 'child'
-                  ? 'border-[#4c8ce6] bg-[#4c8ce6]/5'
-                  : 'border-slate-200 bg-white'
+                  ? 'border-primary bg-primary/5 text-primary'
+                  : 'border-slate-100 bg-white text-slate-600 hover:border-primary/50'
               }`}
             >
-              <span
-                className={`material-symbols-outlined text-4xl ${
-                  selectedRole === 'child' ? 'text-[#4c8ce6]' : 'text-slate-400'
-                }`}
-              >
-                child_care
-              </span>
-              <p
-                className={`text-sm font-semibold ${
-                  selectedRole === 'child' ? 'text-[#4c8ce6]' : 'text-slate-600'
-                }`}
-              >
-                Child
-              </p>
+              <span className="material-symbols-outlined text-3xl mb-1">child_care</span>
+              <span className="font-bold text-sm">Child</span>
+              <span className="text-[10px] opacity-80">Parental controls</span>
             </button>
           </div>
-        </section>
+        </div>
 
-        {/* Invite Method Tabs */}
-        <section className="mb-6">
-          <h3 className="text-base font-bold text-slate-800 mb-3">Invite Method</h3>
-          <div className="flex gap-2 mb-4">
-            {['link', 'email', 'qr'].map((method) => (
+        {/* Invitation Method */}
+        <section className="px-4 mb-8">
+          <h3 className="text-slate-900 text-sm font-bold uppercase tracking-wider mb-3">
+            Invitation Method
+          </h3>
+
+          {/* Tab Buttons */}
+          <div className="flex gap-1 bg-slate-100 rounded-xl p-1 mb-4">
+            {TABS.map(tab => (
               <button
-                key={method}
-                onClick={() => setInviteMethod(method)}
-                className={`flex-1 py-2 px-3 rounded-full text-sm font-semibold transition-all ${
-                  inviteMethod === method
-                    ? 'bg-[#4c8ce6] text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-white text-primary shadow-sm'
+                    : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
-                {method === 'link' ? 'Share Link' : method === 'email' ? 'Email' : 'QR Code'}
+                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>{tab.icon}</span>
+                {tab.label}
               </button>
             ))}
           </div>
 
-          {/* Share Link */}
-          {inviteMethod === 'link' && (
-            <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-              <p className="flex-1 text-sm text-slate-600 font-mono truncate">
-                fhc.app/join/abc123
-              </p>
-              <button className="flex items-center justify-center text-[#4c8ce6] hover:text-[#3b7bd4]">
-                <span className="material-symbols-outlined text-xl">copy_all</span>
+          {/* Tab: Link */}
+          {activeTab === 'link' && (
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                  <span className="material-symbols-outlined">link</span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-slate-900">Share Invite Link</p>
+                  <p className="text-xs text-slate-500 italic truncate">{INVITE_LINK}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleCopyLink}
+                className="ml-3 shrink-0 bg-primary text-white text-xs font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Copy
               </button>
             </div>
           )}
 
-          {/* Email */}
-          {inviteMethod === 'email' && (
-            <div className="space-y-3">
+          {/* Tab: Email */}
+          {activeTab === 'email' && (
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                  <span className="material-symbols-outlined">mail</span>
+                </div>
+                <p className="text-sm font-bold text-slate-900">Invite via Email</p>
+              </div>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email address"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4c8ce6] focus:border-transparent"
+                value={emailInput}
+                onChange={e => setEmailInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSendInvite()}
+                placeholder="Enter email address…"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
               />
               <button
                 onClick={handleSendInvite}
-                className="w-full bg-[#4c8ce6] text-white font-bold py-3 rounded-xl hover:bg-[#3b7bd4] transition-colors"
+                className="w-full py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90 transition-colors"
               >
                 Send Invite
               </button>
             </div>
           )}
 
-          {/* QR Code */}
-          {inviteMethod === 'qr' && (
-            <div className="flex flex-col items-center justify-center bg-slate-50 border border-slate-200 rounded-2xl p-10">
-              <span className="material-symbols-outlined text-slate-400" style={{ fontSize: '6rem' }}>
-                qr_code_2
-              </span>
-              <p className="text-sm text-slate-400 mt-2">Scan to join the family</p>
+          {/* Tab: QR */}
+          {activeTab === 'qr' && (
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                  <span className="material-symbols-outlined">qr_code_2</span>
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-900">Scan QR Code</p>
+                  <p className="text-xs text-slate-500">Quick in-person setup</p>
+                </div>
+              </div>
+              {/* QR Code Placeholder */}
+              <div className="flex flex-col items-center justify-center mx-auto w-48 h-48 rounded-xl border-2 border-dashed border-slate-300 bg-white gap-2">
+                <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '5rem' }}>
+                  qr_code_2
+                </span>
+                <span className="text-xs text-slate-400 font-medium">QR Code</span>
+              </div>
+              <p className="text-xs text-slate-500 text-center mt-3">
+                Have a family member scan this code to join instantly.
+              </p>
             </div>
           )}
         </section>
 
         {/* Pending Invites */}
-        <section className="mb-6">
-          <h3 className="text-base font-bold text-slate-800 mb-3">Pending Invites</h3>
-          {invites.length === 0 ? (
-            <p className="text-sm text-slate-400 text-center py-4">No pending invites</p>
+        <section className="px-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-slate-900 text-sm font-bold uppercase tracking-wider">
+              Pending Invites
+            </h3>
+            {pendingInvites.length > 0 && (
+              <span className="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">
+                {pendingInvites.length} Active
+              </span>
+            )}
+          </div>
+
+          {pendingInvites.length === 0 ? (
+            <p className="text-sm text-slate-400 text-center py-4">No pending invites.</p>
           ) : (
-            <div className="space-y-3">
-              {invites.map((invite) => (
+            <div className="space-y-2">
+              {pendingInvites.map(invite => (
                 <div
                   key={invite.id}
-                  className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                  className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-100"
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-slate-700 truncate">{invite.email}</p>
-                    <p className="text-xs text-slate-400">Sent {invite.sent}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="size-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                      <span className="material-symbols-outlined">person</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">{invite.name}</p>
+                      <p className="text-[10px] text-slate-500 flex items-center gap-1">
+                        <span className="size-1.5 rounded-full bg-orange-400 inline-block" />
+                        Sent {invite.sentAgo} &bull; {invite.role}
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-xs bg-blue-50 text-[#4c8ce6] px-2 py-0.5 rounded-full font-medium shrink-0">
-                    {invite.role}
-                  </span>
                   <button
                     onClick={() => handleCancelInvite(invite.id)}
-                    className="text-xs text-red-400 font-semibold hover:text-red-600 shrink-0"
+                    className="text-xs font-semibold text-slate-400 hover:text-red-500 transition-colors"
                   >
                     Cancel
                   </button>
@@ -195,15 +253,21 @@ export default function InviteFamilyPage() {
             </div>
           )}
         </section>
-      </div>
+      </main>
 
-      {/* Done Button */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-100 px-4 py-4">
+      {/* Bottom Action Buttons */}
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-slate-100 px-4 py-4">
         <button
-          onClick={() => navigate('/dashboard')}
-          className="w-full bg-[#4c8ce6] text-white font-bold py-4 rounded-2xl hover:bg-[#3b7bd4] transition-colors text-base"
+          onClick={() => navigate(paths.dashboard)}
+          className="w-full py-4 rounded-xl bg-primary text-white font-bold text-base hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
         >
-          Done
+          Done — Go to Dashboard
+        </button>
+        <button
+          onClick={() => navigate(paths.dashboard)}
+          className="w-full mt-2 py-2 text-sm text-slate-400 font-medium hover:text-slate-600 transition-colors"
+        >
+          Skip for now
         </button>
       </div>
     </div>
