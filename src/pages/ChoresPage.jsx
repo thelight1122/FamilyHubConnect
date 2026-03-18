@@ -2,48 +2,11 @@ import { useState, useRef } from 'react';
 import Toast from '../components/Toast';
 import useToast from '../hooks/useToast';
 
-// TODO: fetch tasks from /api/tasks
-const TASKS = [
-  { id: 0, label: 'Make your bed', points: 10, icon: 'bed', iconBg: 'bg-blue-100', iconColor: 'text-blue-600', verify: true },
-  { id: 1, label: 'Take out the trash', points: 25, icon: 'recycling', iconBg: 'bg-green-100', iconColor: 'text-green-600', verify: true },
-  { id: 2, label: 'Read for 20 mins', points: 15, icon: 'auto_stories', iconBg: 'bg-purple-100', iconColor: 'text-purple-600', verify: false },
-];
+// TODO: fetch from /api/chores/tasks
+const TASKS = [];
 
-// TODO: fetch rewards from /api/rewards
-const REWARDS = [
-  {
-    id: 0,
-    label: '30m Screen Time',
-    points: 100,
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAMej0Wdsz3Xzgku3ZBCTZirLNz9e1rYuhgJ1pcPlWAbEpHrV9cKmrQDZFJZeM1g3ZBnmkfBX9h-YVIV4o38DMjzxxf1TvqwX-Hpk7rB3fVPCqnhlC6MSPk8iNWi8QFkYK3bjC1wdC-ngc-fSmttHCfaeXB6oONaq-yMGxCHxaPBb8cqkVVpd5DR-z8t83G-JKNTZv2BRBEseRjm1xWEzTFbV-poi4zKbWIBmue_NwZ0prtcNeKHN_I3Rgjk_fGLo-BZI4B1N6FcGg',
-    badge: 'POPULAR',
-    canRedeem: true,
-  },
-  {
-    id: 1,
-    label: 'Trip to the Zoo',
-    points: 500,
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSJI7-HJfJse6Sn4NflsNcXTYDmipvAlMZi32pfJMe9x1lmmqUkIjwdWBIXnln2p-Ck5kPeHhnvReERjIN0kn7c6ZzDRKmzLAHvOfLIt9SiBrjUzCb5Xm3nYuE41GTJHTobq4ohL-e3rABeDkha5SIMBVOIRZRE3PNpDUGKdBmAY21aGmJzh7AMZ4MJaeQltp5zzvd-oO-I6h3-McH64d1ad3tj6BFpf3BfzkMT-K8uHNQyPgp437Jc9y3FHBZDjdi3-rczISXvLM',
-    badge: null,
-    canRedeem: false,
-  },
-  {
-    id: 2,
-    label: 'Ice Cream Date',
-    points: 250,
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB6gXHkOzN6WHGK6wbMTLyGcBKWKYy_3S1Oz2khRp5-cepRmYWDp49zO6yRk1FRe0KerZBHH9DeC_c5jDAZSTvlfAlTnmRQ076inuVZ_tPThLpNeZhsLvQfohpcy0wh5RSfWPLDWkv853mEljSYhewKvNlO9IjkFMKlwj9ubHqw5oVdvQprspyCCtwb34BOTnmij4zQyPOxaRRZuQx9OxMo3Qb9069B-GtL4ZH1ji6rmdrt-su73ByBcEOiy80zxCylDLE-IhKm-FQ',
-    badge: null,
-    canRedeem: true,
-  },
-  {
-    id: 3,
-    label: 'New Toy Set',
-    points: 1000,
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDlRUOinb7Ek7TUWRb0zQAIe1ahCjhSPo5jWIkyDmLUYIkECl7tmMFqjNHQ7kS5pxVk9Q6RQt_KvyCGMmPPCto_ls5xEcHMHTsBbongEb30A9YJpVxQ4CNtr0KqUuFF31OhfF40es0779NRiGj8V-8huHTfwvtRl0_VtZ_DEqmkcURXlk414Y-72gLVeJaIwYG61ppo9b7JxM7bJkJINAeSpMKZSs3uI4Da-4u1DX-IMWd5MrlTzd3jMNCtdz9BdF_dIlU-NA5qu6E',
-    badge: null,
-    canRedeem: false,
-  },
-];
+// TODO: fetch from /api/chores/rewards
+const REWARDS = [];
 
 export default function ChoresPage() {
   const [activeTab, setActiveTab] = useState('tasks');
@@ -186,6 +149,12 @@ export default function ChoresPage() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-slate-900 text-xl font-bold">My Tasks for Today</h2>
             </div>
+            {TASKS.length === 0 && (
+              <div className="text-center py-10 text-slate-400">
+                <span className="material-symbols-outlined text-4xl mb-2 block">task_alt</span>
+                <p className="text-sm font-medium">No tasks yet. Check back soon!</p>
+              </div>
+            )}
             <div className="space-y-3">
               {TASKS.map((task) => {
                 const isDone = completedIds.includes(task.id);
@@ -253,6 +222,12 @@ export default function ChoresPage() {
               <h2 className="text-slate-900 text-xl font-bold">Rewards Store</h2>
               <button className="text-primary text-sm font-bold">See All</button>
             </div>
+            {REWARDS.length === 0 && (
+              <div className="text-center py-10 text-slate-400">
+                <span className="material-symbols-outlined text-4xl mb-2 block">redeem</span>
+                <p className="text-sm font-medium">No rewards yet. Keep earning points!</p>
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-4">
               {REWARDS.map((reward) => (
                 <div

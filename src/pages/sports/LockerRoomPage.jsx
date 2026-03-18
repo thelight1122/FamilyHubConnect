@@ -4,77 +4,14 @@ import { paths } from '../../config/paths';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
-// TODO: fetch teams from /api/sports/teams
-const TEAMS = [
-  {
-    id: 0,
-    name: "Leo's Soccer",
-    fullName: "Leo's Soccer - Tigers FC",
-    league: 'U10 Regional League • Spring Season',
-    rank: '3rd',
-    record: '4-1-0',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCbXUEHKF84ekcjfKN-giHAd_A0orABvNzOxKP3SKFqH23mjKaY4nfZzcOBwxZ-Z7QRqW5M2McT5BcRFpEK24p-4QeDuQzf6XTDoPmmvRrTOhjat-SO8NdDZ1j-4wKM3O1V8RJtWFPOsf5lV3O-aCocA9a5wtAVJ8XBYF7PG5z6_yZGjsjg_aL3MMQWHpg5cl-qzvaL6EjmzITLdtUXMZ6_t1-MWGykI5JE5HEOzc2MTyNqGylQ8gslCa-X74Zam2Q_71hrPA4Y1wI',
-  },
-  {
-    id: 1,
-    name: "Maya's Ballet",
-    fullName: "Maya's Ballet - Studio B",
-    league: 'Junior Division • Spring Season',
-    rank: '1st',
-    record: '5-0-0',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7UMMPz5c8Mn8F5es_lKw965A1CQDy_5TjE2JNTxvmd-chLvGfkqG16plCDTLrCRkhAjWedOt70rjK0LzIyIMUVmfJISqN0xfbmf4wdVMy1T5r_jM4ouTB0ADHB3F-5mEZmeUJ0m5ynEwa21XJFpuZWVfE2LUBXYjFF9argapbjp_xrNhQ4rGHv9L-_hpQ4Rv6agGaqI0K8nntV6M8PRSHDpnnXRqXV2-NIoOiWAlDIDIj9ITPNvuZYknRSVHWoTT2YmjCdmeBHA',
-  },
-];
-
-const CHECKLIST_ITEMS = [
-  { id: 0, label: 'Team Jersey (Home)', packed: true },
-  { id: 1, label: 'Shin Guards', packed: true },
-  { id: 2, label: 'Soccer Cleats', packed: true },
-  { id: 3, label: 'Water Bottle (32oz)', packed: false, critical: true },
-  { id: 4, label: 'Snack for Post-Game', packed: false },
-];
-
-const SCHEDULE = [
-  {
-    id: 0,
-    day: 'Sat',
-    date: '14',
-    type: 'Game Day',
-    title: 'Tigers vs. Hawks',
-    location: 'Westside Park, Field 4',
-    time: '9:00 AM',
-    badge: { label: 'Confirmed', cls: 'bg-green-100 text-green-700' },
-    isGame: true,
-  },
-  {
-    id: 1,
-    day: 'Tue',
-    date: '17',
-    type: 'Practice',
-    title: 'Midweek Drills',
-    location: 'Community Center',
-    time: '5:30 PM',
-    badge: null,
-    isGame: false,
-  },
-];
-
-const CONTACTS = [
-  {
-    id: 0,
-    name: 'Coach Mike',
-    role: 'Head Coach',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYECR27IDzxddN4wML17spxEAmw-tVkH2-fazaQOESnmvA_zwFmGlwEDuQPbXbYfWNdim1VNde2R0d2gym6hsJvmxbE2GZ4OX-P_XzzCtcEKldAMpR198NGpgTT_yoON1OxL_-LTX_6At8b9KbiyDGeOvq-LcU3-7vFMJRiW4q2M5nydofzPPEcZf7FekekbynV27iqBw1KpGi5jeQf0yMNZlIt4TTPl8XHcF2UjiqI4OptZJgcpxJEL9WwsIPiyBSzFUXKP1pOnI',
-    showCall: true,
-  },
-  {
-    id: 1,
-    name: 'Sarah Jenkins',
-    role: 'Carpool Buddy',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDon7Pgeue5cvycYpquoe0trp5oqfiBaT12VrKa1zBknT-rDOROkQ8uESlK6ZuUjOFxirMoscw97Id_vViidvUAkQtOuuJVvBBXKRMDKjIZghfNIlikI5wvv-3wJrzyOTaTRWepm642huTfGMxcUi_PU5G3KfR41bCUUoGKvn5GhCUOcMtvUmdAsD5n8Sl-GgxFZa3lAcM3FaGAlx7OedsfHZcuX6emKuWUbiFc-atzMiMOnbQcEGmwaMYfIQW3Y3sr0gocShFy3B8',
-    showCall: false,
-  },
-];
+// TODO: fetch from /api/sports/teams
+const TEAMS = [];
+// TODO: fetch from /api/sports/checklist
+const CHECKLIST_ITEMS = [];
+// TODO: fetch from /api/sports/schedule
+const SCHEDULE = [];
+// TODO: fetch from /api/sports/contacts
+const CONTACTS = [];
 
 export default function LockerRoomPage() {
   const navigate = useNavigate();
@@ -82,7 +19,7 @@ export default function LockerRoomPage() {
   const [checklist, setChecklist] = useState(CHECKLIST_ITEMS);
   const [toast, showToast] = useToast();
 
-  const team = TEAMS[activeTeam];
+  const team = TEAMS[activeTeam] ?? null;
 
   const toggleChecklist = (id) => {
     setChecklist((prev) =>
@@ -150,7 +87,7 @@ export default function LockerRoomPage() {
         </section>
 
         {/* Active Team Card */}
-        {activeTeam === 0 && (
+        {team ? (
           <section className="relative overflow-hidden rounded-xl bg-primary/10 border border-primary/20 p-5">
             <div className="relative z-10">
               <div className="flex items-center gap-2 mb-1">
@@ -175,32 +112,10 @@ export default function LockerRoomPage() {
               sports_soccer
             </span>
           </section>
-        )}
-
-        {activeTeam === 1 && (
-          <section className="relative overflow-hidden rounded-xl bg-primary/10 border border-primary/20 p-5">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Active Team
-                </span>
-              </div>
-              <h2 className="text-2xl font-extrabold text-slate-900">{team.fullName}</h2>
-              <p className="text-slate-600 text-sm mt-1">{team.league}</p>
-              <div className="flex gap-4 mt-4">
-                <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
-                  <span className="material-symbols-outlined text-primary text-sm">emoji_events</span>
-                  <span className="text-sm font-semibold">Rank: {team.rank}</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
-                  <span className="material-symbols-outlined text-primary text-sm">leaderboard</span>
-                  <span className="text-sm font-semibold">{team.record}</span>
-                </div>
-              </div>
-            </div>
-            <span className="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl text-primary/10 -rotate-12 select-none">
-              sports
-            </span>
+        ) : (
+          <section className="text-center py-10 text-slate-400 rounded-xl bg-slate-50 border border-slate-100">
+            <span className="material-symbols-outlined text-4xl mb-2 block">sports_soccer</span>
+            <p className="text-sm font-medium">No teams yet. Add your first team!</p>
           </section>
         )}
 
@@ -213,6 +128,9 @@ export default function LockerRoomPage() {
             </h3>
             <button className="text-primary text-sm font-bold">View Full</button>
           </div>
+          {SCHEDULE.length === 0 && (
+            <p className="text-sm text-slate-400 text-center py-4">No upcoming events.</p>
+          )}
           <div className="space-y-3">
             {SCHEDULE.map((evt) => (
               <div

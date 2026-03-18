@@ -24,7 +24,9 @@
       "Bash(wmic process:*)",
       "Bash(powershell -Command \"Get-Process -Id 24608 | Select-Object -ExpandProperty Path\")",
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 5173 | Select-Object LocalPort,State,@{n=''''Proc'''';e={\\(\\(Get-Process -Id $_OwningProcess\\).MainModule.FileName\\)}}\")",
-      "Bash(curl -si http://localhost:5173/)"
+      "Bash(curl -si http://localhost:5173/)",
+      "Bash(npm install:*)",
+      "Bash(npx playwright:*)"
     ]
   }
 }

@@ -28,7 +28,7 @@ FamilyHubConnect brings together every aspect of family life — chores, finance
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+
 | Framework | React 19.2 |
 | Router | React Router DOM 7.13 |
 | Build tool | Vite 7.3 |
@@ -62,7 +62,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 The app uses mock authentication — any password is accepted.
 
 | Field | Value |
-|-------|-------|
+
 | Email | `david@thompson.family` |
 | Password | *(any value)* |
 
@@ -71,7 +71,7 @@ The app uses mock authentication — any password is accepted.
 ## Available Scripts
 
 | Script | Description |
-|--------|-------------|
+
 | `npm run dev` | Start Vite dev server with HMR on port 5173 |
 | `npm run build` | Production build to `dist/` |
 | `npm run preview` | Preview the production build locally |
@@ -81,7 +81,6 @@ The app uses mock authentication — any password is accepted.
 
 ## Project Structure
 
-```
 src/
 ├── components/         # Shared UI components
 │   ├── AppLayout.jsx       # Root layout with bottom nav + page transitions
@@ -113,13 +112,13 @@ src/
     ├── sports/             # LockerRoomPage, TeamChatPage
     ├── more/               # MorePage + 10 sub-pages
     └── onboarding/         # InviteFamilyPage, OnboardingValuesPage, OnboardingRulesPage
-```
 
 ---
 
 ## Architecture Notes
 
 ### Circular Dependency Fix
+
 Route path constants (`paths`) live in `src/config/paths.js` — separate from `src/config/routes.jsx`. This prevents a temporal dead zone (TDZ) error that occurs when page components import `paths` from `routes.jsx` while `routes.jsx` is still importing those same page components. `routes.jsx` re-exports `paths` for convenience:
 
 ```js
@@ -128,10 +127,13 @@ export { paths } from './paths';
 ```
 
 ### Authentication
+
 Auth state is managed by `AuthContext` and stored in `localStorage`. `ProtectedRoute` reads the context and redirects unauthenticated users to `/login`. The current implementation uses mock auth — replace `AuthContext.jsx` with a real auth provider for production.
 
 ### Mobile-First Layout
+
 All pages are constrained to `max-w-md` (~428px) and centred on wider screens. The bottom navigation is `fixed` with a `z-50` stacking context. Page transitions use a CSS `page-fade-in` keyframe animation keyed by `pathname` in `AppLayout`.
 
 ### Data Layer
+
 All data lives in `src/data/mockData.js`. Computed values (sorted members, filtered lists, derived totals) are in `src/data/selectors.js`. Replace these with API calls or a state management library when connecting a real backend.

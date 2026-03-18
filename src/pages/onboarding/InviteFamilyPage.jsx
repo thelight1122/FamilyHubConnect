@@ -4,13 +4,11 @@ import { paths } from '../../config/paths';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
-// TODO: fetch invite link from /api/invite/link
-const INVITE_LINK = 'familyhub.app/join/xK92mP7';
+// TODO: fetch from /api/invite/link
+const INVITE_LINK = '';
 
-const INITIAL_PENDING_INVITES = [
-  { id: 1, name: 'sarah.smith@email.com', sentAgo: '2 hours ago', role: 'Adult' },
-  { id: 2, name: 'Leo (Tablet)',           sentAgo: '1 day ago',   role: 'Child' },
-];
+// TODO: fetch from /api/invites/pending
+const INITIAL_PENDING_INVITES = [];
 
 const TABS = [
   { id: 'link',  label: 'Link',    icon: 'link'     },
@@ -144,7 +142,7 @@ export default function InviteFamilyPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-slate-900">Share Invite Link</p>
-                  <p className="text-xs text-slate-500 italic truncate">{INVITE_LINK}</p>
+                  <p className="text-xs text-slate-500 italic truncate">{INVITE_LINK || 'Generating link…'}</p>
                 </div>
               </div>
               <button

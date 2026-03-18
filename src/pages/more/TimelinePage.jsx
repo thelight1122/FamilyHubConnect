@@ -2,58 +2,10 @@ import { useState } from 'react';
 import { paths } from '../../config/paths';
 import BackHeader from '../../components/BackHeader';
 
-{/* TODO: fetch timeline from /api/timeline */}
-
 const FILTERS = ['All', 'Achievements', 'Memories', 'Journal'];
 
-const TIMELINE_ENTRIES = [
-  {
-    id: 1,
-    type: 'Achievements',
-    month: 'June 2024',
-    date: 'June 28',
-    icon: 'emoji_events',
-    title: 'Academic Achievement',
-    body: "Leo got an A+ in his final math project! We are so proud of his hard work this semester.",
-    sharedBy: 'Maria',
-    sharedByAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCaASiyoKULliUB-Mh8B6gJMRA3dZEA5QUBvQw6AdBw-CNf8QQTT5a58tgKHEqTlWTeLYbBJ7nzG2naAL8VM1GhHovv5qHWLnSe8zkwk4IDhkGHuCQWt-iwDVhUVEi9MTw174Ti_CQzD7Bj49rAbCSJASel65hEvu6Bl4msw1F33T3Un9H9Q4BXIWewiJ17rLfOJCGZgO3zzrFg4Ix6usqUOtbIMUMU75sFCVpbhfkNvZgyPQTjxcZeZ5aw29WPgg9Pe2Orzjrv-tQ',
-    cardStyle: 'achievement',
-  },
-  {
-    id: 2,
-    type: 'Memories',
-    month: 'June 2024',
-    date: 'June 20',
-    icon: 'image',
-    title: 'Beach Day at the Coast',
-    body: 'The weather was perfect and the kids loved building sandcastles all afternoon.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB9D8qWSMP2mIO0LjqIwemJZuEDpIsup8-qsV_6PzbkpLmIjJg8zzJm3o9QurBvGax24yvYLyEaSYz7xGG7wT-P4VWK8FCFITkDumbNpMnxxqS3K7upNh5X1dTLw7qG2r1PapGmlh_MzzipsLgu1FoQZHzq1TQtGIWpXTqGfRToDe9gOlRJNF32DQ_tQuxffuAInwHkSlpVYZEH009ry7rtrDKtoi2UjSAkv3QT0UROsDSAQrkZtG2f6l0Hch168vVRLO60mJ6Pj2g',
-    sharedBy: 'Sarah & 3 others',
-    likes: 24,
-    comments: 5,
-    cardStyle: 'photo',
-  },
-  {
-    id: 3,
-    type: 'Journal',
-    month: 'June 2024',
-    date: 'June 10, 2024',
-    icon: 'edit_note',
-    quote: '"Today we sat in the garden for three hours just talking. No phones, no distractions. It reminded me why these small moments are the most important ones."',
-    author: 'David',
-    cardStyle: 'journal',
-  },
-  {
-    id: 4,
-    type: 'Achievements',
-    month: 'May 2024',
-    date: 'May 15',
-    icon: 'auto_awesome',
-    title: 'Established June 2024',
-    body: 'Family Hub account created',
-    cardStyle: 'milestone',
-  },
-];
+// TODO: fetch from /api/timeline
+const TIMELINE_ENTRIES = [];
 
 function MonthDivider({ month }) {
   return (

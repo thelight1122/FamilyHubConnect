@@ -4,10 +4,8 @@ import BackHeader from '../../components/BackHeader';
 
 {/* TODO: fetch pet data from /api/pets */}
 
-const WALKS = [
-  { label: 'Morning Stroll', detail: '25 min • 1.8 km' },
-  { label: 'Afternoon Play', detail: '40 min • 2.4 km' },
-];
+// TODO: fetch from /api/pets/walks
+const WALKS = [];
 
 export default function PetHubPage() {
   const [walkDone, setWalkDone] = useState(WALKS.map(() => false));
@@ -108,6 +106,9 @@ export default function PetHubPage() {
               <span className="material-symbols-outlined text-primary text-3xl">directions_walk</span>
             </div>
             <div className="p-4 space-y-4">
+              {WALKS.length === 0 && (
+                <p className="text-sm text-slate-400 text-center py-2">No walks recorded yet.</p>
+              )}
               {WALKS.map((walk, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-primary flex-shrink-0" />

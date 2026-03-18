@@ -6,66 +6,11 @@ import useToast from '../../hooks/useToast';
 
 // TODO: connect to real-time chat API
 
-const ONLINE_AVATARS = [
-  {
-    id: 0,
-    alt: "Coach Dave",
-    style: 'background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLLWcTmIbuwgDOyk4_y5L7k3VWam2UpwQbZ5r5XqlBdDXNI7LBEn9xergosfxdydxJ46FE3gpr0MKkWnDjEmNYLEaACki4qm2G1jWrazix_YDkp9wxARRWbmp9g70eOeTCbr9TPfwR6Gkv6KSCVgQ4AfvcSWbypPbEFb3I8_JXvU3U-r_ntjjBuwDTg1w1d6W4tvuHxu9xpBRsKvfDwoIs-yl2Om-E0vSYH8YYn2USpRcGnjbvsORy15SnBdwA_HVxb3MdKeiVfNI")',
-    border: 'border-primary',
-  },
-  {
-    id: 1,
-    alt: "Sarah's Mom",
-    style: 'background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAdBnai83BD3iCTD4_zN9ef2ciqYTW4qWYhRbqKYOGXFZqc6NXMZAfJbkeBHZVWcYpH6ujsxqqYwz0mDaxxlDX1vjrW-UbL269pE-3mSO12B2WMAGTGUAkRY7j-Jcd_JzqfG7U0xRL0BLyIi0VjYT5k-6mZfB5GPyrkQEfSbiHh0WIAzhj-4iNIDurMB0Dc4gBDqJXnZ5yPDsai0HRDE_jDSLWE4pNzpwfn3X8CaTg31NcmyNeul0jxAtXEyxwi6ZdryaeGlzIBfxE")',
-    border: 'border-transparent',
-  },
-  {
-    id: 2,
-    alt: "Leo's Dad",
-    style: 'background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9u66aInloUA2LydiGAjb2eSG-ZceRskmLGlqT_uhe_PhUbA7GuJJKNind8XSUO2_NMmSvZecekL77aG2rH9bkupJqTtkaWW-520RpUJ5Tyc32Qvksg85O2BNCq6UHBPonKOGRSQf2pFT_UUPHuJ97hpbX4xN9Vif51ZqiJYxDGl1o1bCgldh4e6R8uKh_x2P4V1XFTF4V5wuMO6bXp6LuzOTv4uwpLVRUfHbFJ-MLxcNtEgiHajPxc109T2XbEveRb-Zxvtt8LVw")',
-    border: 'border-transparent',
-  },
-  {
-    id: 3,
-    alt: 'Team Manager',
-    style: 'background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtcWNOje0yfMmwE9Jm-G9lEnj6e-JlMM9jukNkgQGcDxXJR-xJSVzJl-PHKHqAB8NwHz-tF_xcjoH6c7siZ2JXLdyoibBsPy6avtkDkMvEqJHPUw4idPSjnayEUbmvIXmsvCXqy7vnnPjCgUYOecvbb73BvDANyYlRsMJZ9CanTmEXOMi0EqD3XthdpLcggnh-MUHZKhd88WTyKj-jTPzUcj50l6dMoo7OoaWZJrXoOpRuwaa7dsvhLGFfuSzZQ0VLEf02eMScPwM")',
-    border: 'border-transparent',
-  },
-];
+// TODO: fetch online members from /api/sports/chat/online
+const ONLINE_AVATARS = [];
 
-const INITIAL_MESSAGES = [
-  {
-    id: 1,
-    sender: 'Coach Dave',
-    text: "Hey team, don't forget orange slices for Saturday's game! Also, we'll be wearing the away kits (white jerseys).",
-    time: '10:24 AM',
-    isMe: false,
-    avatarUrl:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCmGqhGcitYyRzh3edEpuGnkRDeJZIvNLIZTXs3Tccl9VAdq5yd5KMS-aS4MaD4ilDcx8qZn9ZSMtATEcLa8sFRp23Iai5x1bjLAulmd_rPWKExl-YdAquL6fi5toh9h4E22gTFZ2vthym1Apv7jlKljXXqzqMr1IRdnRXZ95uUQpacg3RRjAHopXEROZDr4blDdchqpSBgjp9-Psn4lt3L81IE_d_rcmbNIxn9WF6OCczyTUk00WtJAPpBQj09IQrls4NmF9ZY90Y',
-  },
-  {
-    id: 2,
-    sender: "Sarah's Dad (You)",
-    text: "Got it Coach. I'll bring the cooler too. Just checked the weather, looks like a clear day!",
-    time: '10:31 AM',
-    isMe: true,
-    avatarUrl: null,
-  },
-  {
-    id: 3,
-    sender: "Sarah's Mom",
-    text: "Here's the field map for the away game for anyone who hasn't been there yet!",
-    time: '11:05 AM',
-    isMe: false,
-    avatarUrl:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuClj_9PC5WQ3OD7S5JNqx5pBKxHCt98UBY7j7ASLVHOt8L99wNsgIcsGixcw3wxM__le36cCSjEm1ABkWhvQmdB9NdGcyEURlQK-nJzPTFz1zqWfc4JRDc3GG51-phdk_fUq1wpvsrw8k6gBUMbPTixxpAWf89Faw2krHutOzwpLD3gbs5XlDwkh9yOkGoS_weK7vWsf11hV9O1agfOoui1Kee1nMzFkbjfhmYkQZXt6Q27znoYMqLlA2Y9upn1qW1CMb2MceGMMUw',
-    attachment: {
-      imgUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuC3kWmwHn51vXiwLcpGiSzRCfJOIXX6I3lI6OlxGCqxWNlSB9m88Brl_XE8UykBGJEBFacVN1qic8zrcSH_8fPxd1u4ZfMZM01Vh_w1erB7KT3Y7CIae8svuG6_mgOv6kTYbDJ69slf3t0gK1HpIAr1Ew9rBVPVEfFeAaGxNLdD646O0nhyQJS2WfAHH_Ats3MaRs7z_-VcgwWx0LqBP_RIA-V551wWqJIOhulnOdqkI9qfD0IrI0qosY0WqbuzBTojbA8wREfZP0k',
-      filename: 'park_layout_v2.png',
-    },
-  },
-];
+// TODO: fetch from /api/sports/chat/messages
+const INITIAL_MESSAGES = [];
 
 export default function TeamChatPage() {
   const [message, setMessage] = useState('');
@@ -156,6 +101,9 @@ export default function TeamChatPage() {
             </span>
           </div>
 
+          {messages.length === 0 && (
+            <p className="text-center text-sm text-slate-400 py-6">No messages yet — be the first!</p>
+          )}
           {messages.map((msg) => (
             <div key={msg.id}>
               {msg.isMe ? (

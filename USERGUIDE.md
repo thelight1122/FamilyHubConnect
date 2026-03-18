@@ -47,7 +47,7 @@ New family? Tap **Create Account** to begin the onboarding flow and set up your 
 At the bottom of the screen you'll always see the **navigation bar** with five tabs:
 
 | Tab | What it does |
-|-----|-------------|
+
 | **Home** | Your personal dashboard |
 | **Finance** | Family money, savings, and tools |
 | **Chores** | Your tasks and rewards store |
@@ -74,6 +74,7 @@ The Dashboard is your personalised home base. Everything important for the day i
 ### Notifications
 
 Tap the **bell icon** in the top-right corner to see recent alerts:
+
 - Pending appeals waiting for review
 - Chores that family members have completed
 - Practice or event schedule changes
@@ -89,6 +90,7 @@ Tap the **Chores** tab at the bottom to open your tasks and rewards.
 ### My Tasks
 
 This is your to-do list for the day. Each task shows:
+
 - The task name and due date
 - How many points you'll earn for completing it
 - A circle checkbox on the left
@@ -96,6 +98,7 @@ This is your to-do list for the day. Each task shows:
 **To complete a task:** Tap the circle on the left. It turns green and the task name gets a strikethrough. Your completion count and progress bar update immediately.
 
 **Tasks that need a photo:** Some tasks have a camera icon and a **"Verify 📷"** button. This means you need to take a photo as proof.
+
 1. Tap **Verify 📷**.
 2. Your device's camera opens.
 3. Take a photo of the completed task.
@@ -106,6 +109,7 @@ This is your to-do list for the day. Each task shows:
 Tap **Rewards Store** at the top to switch tabs.
 
 Here you can spend your points on rewards like:
+
 - Extra Screen Time
 - Movie Night
 - Pizza Night
@@ -119,7 +123,7 @@ Each reward shows how many points it costs. When you have enough points, the **R
 
 Tap **Finance** at the bottom to see the family's financial picture.
 
-### What You'll See
+ What You'll See
 
 - **Family Savings Card** — The total amount saved by everyone, plus how much it's grown this month
 - **AI Tip** — A helpful financial tip for the family
@@ -136,6 +140,7 @@ Scroll down to see everyone's current wallet balance shown as a bar. The longer 
 ### Recent Activity
 
 The transaction list at the bottom shows money coming in and going out:
+
 - **Green +$** amounts — money earned or deposited
 - **Red -$** amounts — money spent or withdrawn
 
@@ -148,6 +153,7 @@ The Market Simulator lets you practice investing without using real money — gr
 ### Reading Your Portfolio
 
 At the top you'll see:
+
 - Your current portfolio value (e.g., $3,420.50)
 - Today's change (e.g., +2.4%)
 - A 7-day chart showing how your portfolio has moved over the past week — peaks mean the value went up, dips mean it went down
@@ -155,6 +161,7 @@ At the top you'll see:
 ### Buying and Selling Stocks
 
 Three companies are listed below the chart:
+
 - Each shows the current price and today's change percentage
 - Tap **Buy** to add shares to your portfolio (uses virtual money)
 - Tap **Sell** to sell shares you own
@@ -170,6 +177,7 @@ The Family Bank lets children request loans from the family with 0% interest (no
 ### Viewing Active Loans
 
 Your current loans are shown with:
+
 - What the loan is for (e.g., Mountain Bike)
 - The total amount borrowed
 - How much you've paid back so far
@@ -237,6 +245,7 @@ Go to **More → Health Logs** to view and manage a family member's health recor
 ### Health Profile
 
 At the top you'll see the member's profile card:
+
 - Name and age
 - Blood type
 - Known allergies
@@ -290,6 +299,7 @@ Tap **Done** again to toggle it back to **Pending** if you need to undo it.
 ### Upcoming Vet Visit
 
 At the bottom, the next vet appointment is shown in a card with:
+
 - The calendar date (month and day number)
 - Appointment type (e.g., Annual Check-up)
 - Clinic name and time
@@ -306,7 +316,7 @@ Go to **More → Family Timeline** to explore your family's shared memory board.
 Entries are organised by month, newest first. Each entry has a coloured dot and card:
 
 | Dot Colour | Entry Type | What it Shows |
-|-----------|-----------|---------------|
+
 | Amber | Achievement | A star icon, bold title, and a description of the accomplishment |
 | Blue | Memory | An image or photo placeholder with like and comment counts |
 | Rose | Journal | An italic quote with the author's name and date |
@@ -315,6 +325,7 @@ Entries are organised by month, newest first. Each entry has a coloured dot and 
 ### Filtering
 
 Tap a filter pill at the top to show only certain types:
+
 - **All** — everything
 - **Achievements** — accomplishments and victories
 - **Memories** — photos and shared moments
@@ -348,15 +359,19 @@ Go to **More → Family Governance** to access the family's dispute resolution a
 The page is divided into four tabs — tap any tab name to switch:
 
 ### Resolution
+
 This is where active mediations happen. Tap **New Resolution Request** to formally raise a dispute or concern. This takes you to the appeal form (see Section 14).
 
 ### Jury Pool
+
 Shows which family members are currently assigned as mediators and when their term runs. The active mediator has a green dot next to their name.
 
 ### Archive
+
 A history of past rulings — useful for seeing how similar situations were handled before. Each entry shows the case ID, parties involved, outcome, and date.
 
 ### Rule Book
+
 A link directly to the Family Constitution for reference during governance discussions.
 
 ---
@@ -384,6 +399,7 @@ Go to **More → Submit Appeal** (or tap **New Resolution Request** in Family Go
 ### After Submitting
 
 The form is replaced by a success screen:
+
 - "Appeal Submitted!" confirmation
 - A checklist of what happens next (parent reviews → decision within 24 hours → you receive a notification)
 - A **Back to More** button to return to the main menu
@@ -411,6 +427,7 @@ Scroll down to see three decision buttons:
 - **Open Negotiation** (blue) — You'd like to discuss the situation further before deciding
 
 **Before your decision is finalised**, a confirmation popup appears showing:
+
 - The type of decision you're making
 - The child's name who will be notified
 - A **Cancel** button (if you tapped the wrong one) and a **Confirm** button
@@ -426,6 +443,7 @@ Go to **More → Family Court** to see an overview of all active and past conseq
 ### Summary Stats
 
 Three numbers at the top give you a quick overview:
+
 - **Active Measures** — How many consequences are currently running
 - **Weekly Resolution** — Percentage of issues resolved this week
 - **Trend** — Whether things are improving compared to last week
@@ -433,6 +451,7 @@ Three numbers at the top give you a quick overview:
 ### Active Consequences
 
 Each active consequence shows:
+
 - A category icon (screen time, chores, etc.)
 - The consequence title and what rule was violated
 - A status badge: **In Progress** or **Completed**
@@ -458,6 +477,7 @@ Three numbers at the top show: total posts created, total views across all posts
 ### Creating Something New
 
 Tap any card in the **Create New** section:
+
 - **Photo Story** — Tell a story with photos and captions
 - **Voice Memo** — Record a short audio message for the family
 - **Family Poll** — Ask the family to vote on something
@@ -477,18 +497,21 @@ Go to **More → Invite Family** (or find it on the More page) to add new member
 Three ways to invite:
 
 ### Share Link
+
 1. Tap the **Share Link** tab
 2. Tap **Copy Link**
 3. Paste the link into a message app, email, or anywhere else and send it to your family member
 4. They open the link and follow the setup steps
 
 ### Email
+
 1. Tap the **Email** tab
 2. Type the person's email address
 3. Tap **Send Invite**
 4. They'll receive an email with a join link
 
 ### QR Code
+
 1. Tap the **QR Code** tab
 2. Show the QR code on your screen to the person you want to invite
 3. They scan it with their phone's camera
@@ -503,28 +526,35 @@ Below the invite options, you'll see a list of people who have been invited but 
 ## 19. Tips & Tricks
 
 ### Red Badges on the Nav Bar
+
 Small red circles on the **Sports** and **More** tabs mean something needs your attention — like an unread team chat message or a pending appeal to review. The number inside the badge tells you how many items are waiting.
 
 ### Earning Points
+
 You earn points by completing chores. Check the point value on each task before you start — tasks worth more points are usually bigger jobs! Photo-verified tasks are worth points too.
 
 ### Spending Points Wisely
+
 Before redeeming a reward, check the **Rewards Store** to see everything available and plan which rewards to save up for. Bigger rewards like Movie Night or Pizza Night cost more points but are worth the wait!
 
 ### The Points/Rewards Cycle
+
 1. Complete chores → earn points
 2. Accumulate enough points
 3. Redeem points in the Rewards Store
 4. New chores reset daily — there's always a fresh chance to earn
 
 ### Appeal Tips (for Children)
+
 - Be honest and specific in your reason — vague answers are less likely to succeed
 - Suggest a realistic alternative consequence, not just "nothing"
 - Attaching evidence (like a photo or explanation) makes your appeal stronger
 - The What I've Learned section shows maturity and responsibility
 
 ### Keeping the Pet Schedule on Track
+
 The Pet Hub updates walk statuses in real time — mark walks as Done as soon as they're completed so everyone in the family can see the dog has been walked and doesn't need another trip out.
 
 ### Using the Timeline as a Family Scrapbook
+
 Encourage everyone in the family to add entries — achievements (big and small), fun memories, and journal reflections. Over time, the Timeline becomes a treasured record of your family's story.
