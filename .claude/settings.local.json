@@ -14,7 +14,19 @@
       "Bash(npm create vite@latest fhc-app -- --template react)",
       "mcp__Desktop_Commander__read_multiple_files",
       "Bash(wc -l \"H:\\\\FamilyHubConnect\\\\src\\\\pages\\\\more\"/*.jsx)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(dir \"H:\\\\FamilyHubConnect\\\\Stitch_UI_Pages\")",
+      "Bash(npm run:*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":5173\")",
+      "Bash(wmic process:*)",
+      "Bash(powershell -Command \"Get-Process -Id 24608 | Select-Object -ExpandProperty Path\")",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 5173 | Select-Object LocalPort,State,@{n=''''Proc'''';e={\\(\\(Get-Process -Id $_OwningProcess\\).MainModule.FileName\\)}}\")",
+      "Bash(curl -si http://localhost:5173/)",
+      "Bash(npm install:*)",
+      "Bash(npx playwright:*)"
     ]
   }
 }
