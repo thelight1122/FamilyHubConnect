@@ -21,4 +21,6 @@ export const paths = {
   moreCreator: '/more/creator',
   moreGovernance: '/more/governance',
   moreCourt: '/more/court',
+  moreAppealNegotiation: '/more/appeal/negotiation',
+  moreAppealResolution: '/more/appeal/resolution',
 };

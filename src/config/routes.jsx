@@ -23,6 +23,8 @@ import AppealReviewPage from '../pages/more/AppealReviewPage';
 import CreatorStudioPage from '../pages/more/CreatorStudioPage';
 import FamilyGovernancePage from '../pages/more/FamilyGovernancePage';
 import FamilyCourtPage from '../pages/more/FamilyCourtPage';
+import NegotiationPage from '../pages/more/NegotiationPage';
+import ResolutionConfirmedPage from '../pages/more/ResolutionConfirmedPage';
 import InviteFamilyPage from '../pages/onboarding/InviteFamilyPage';
 import OnboardingRulesPage from '../pages/onboarding/OnboardingRulesPage';
 import OnboardingValuesPage from '../pages/onboarding/OnboardingValuesPage';
@@ -62,6 +64,8 @@ export const protectedRoutes = [
   { path: paths.moreCreator, element: <CreatorStudioPage /> },
   { path: paths.moreGovernance, element: <FamilyGovernancePage /> },
   { path: paths.moreCourt, element: <FamilyCourtPage /> },
+  { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },
+  { path: paths.moreAppealResolution, element: <ResolutionConfirmedPage /> },
 ];
 
 export const protectedLayoutRoute = {

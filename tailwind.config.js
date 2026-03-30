@@ -8,6 +8,9 @@ export default {
         'primary-dark': '#3a7bd5',
         'background-light': '#f6f7f8',
         'background-dark': '#111821',
+        success: '#4ade80',
+        warning: '#fbbf24',
+        accent: '#8b5cf6',
       },
       fontFamily: {
         display: ['Plus Jakarta Sans', 'sans-serif'],
