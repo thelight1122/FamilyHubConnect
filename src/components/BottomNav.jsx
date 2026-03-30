@@ -1,14 +1,13 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { bottomNavTabs } from '../config/routes';
 
-export default function BottomNav() {
+export default function BottomNav({ tabs = [] }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 px-2 pb-6 pt-2 z-50">
       <div className="flex justify-around items-center w-full">
-        {bottomNavTabs.map((tab) => {
+        {tabs.map((tab) => {
           const active = pathname.startsWith(tab.match) || (pathname === '/' && tab.match === '/dashboard');
           return (
             <button

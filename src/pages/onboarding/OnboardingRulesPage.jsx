@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../context/useAuth';
 
 const PRESET_RULES = [
   { id: 1, text: 'No phones at dinner', icon: 'no_sim' },
@@ -11,7 +10,6 @@ const PRESET_RULES = [
 
 export default function OnboardingRulesPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [checked, setChecked] = useState([1, 2]);
   const [customRule, setCustomRule] = useState('');
   const [rules, setRules] = useState(PRESET_RULES);
@@ -29,11 +27,6 @@ export default function OnboardingRulesPage() {
       setChecked((prev) => [...prev, newRule.id]);
       setCustomRule('');
     }
-  };
-
-  const handleFinish = () => {
-    login();
-    navigate('/dashboard');
   };
 
   return (

@@ -263,7 +263,7 @@ function ChildWalletView({ navigate }) {
           <button className="text-primary text-[11px] font-bold uppercase tracking-wider hover:underline">See All</button>
         </div>
         <div className="space-y-3">
-          {finances.recentActivity.slice(0,3).map((item, index) => {
+          {finances.recentActivity.slice(0,3).map((item) => {
             const isPositive = item.amount > 0;
             return (
               <div key={item.id} className="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">

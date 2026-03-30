@@ -48,7 +48,7 @@ export default function FamilyCourtPage() {
       showToast('Consequence updated');
     } else {
       const newConsequence = {
-        id: Date.now(),
+        id: `consequence-${localConsequences.length + 1}`,
         title: formData.title,
         violation: formData.violation,
         status: 'in_progress',

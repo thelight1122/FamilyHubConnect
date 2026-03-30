@@ -1,0 +1,17 @@
+
+UU src/pages/ChoresPage.jsx
+UU src/pages/DashboardPage.jsx
+UU src/pages/finance/FinancePage.jsx
+UU src/pages/finance/LoanConfirmationPage.jsx
+UU src/pages/finance/LoanPage.jsx
+UU src/pages/finance/MarketPage.jsx
+UU src/pages/more/AppealPage.jsx
+UU src/pages/more/AppealReviewPage.jsx
+UU src/pages/more/ConstitutionPage.jsx
+UU src/pages/more/CreatorStudioPage.jsx
+UU src/pages/more/FamilyCourtPage.jsx
+UU src/pages/more/FamilyGovernancePage.jsx
+UU src/pages/onboarding/InviteFamilyPage.jsx
+UU src/pages/onboarding/OnboardingRulesPage.jsx
+UU src/pages/onboarding/OnboardingValuesPage.jsx
+
