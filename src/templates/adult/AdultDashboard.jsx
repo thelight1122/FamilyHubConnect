@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/routes';
-import { currentMember, dashboardQuickActions } from '../../data/selectors';
+import { dashboardQuickActions } from '../../data/selectors';
+import useAuth from '../../context/useAuth';
 
 const MOCK_NOTIFICATIONS = [
   { id: 1, icon: 'gavel', color: 'text-primary', bg: 'bg-primary/10', text: 'Leo submitted a pitch — pending review.', ago: '2h ago' },
@@ -16,35 +17,39 @@ const MOCK_TIMELINE = [
 
 export default function AdultDashboard() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  // Fallback to avoid crash if loading/refreshing
+  const user = currentUser || { name: 'Admin', avatar: '' };
 
   const todayDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <div className="bg-surface-0 text-slate-900 min-h-screen flex flex-col font-display">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 pt-10 pb-4 shadow-sm sticky top-0 z-20">
+      <header className="glass-header px-6 pt-12 pb-4 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <div className="size-12 rounded-full border-2 border-primary overflow-hidden shadow-sm">
               <img
                 className="w-full h-full object-cover"
-                alt={currentMember.name}
-                src={currentMember.avatar || 'https://i.pravatar.cc/150'}
+                alt={user.name}
+                src={user.avatar || 'https://i.pravatar.cc/150'}
               />
             </div>
             <div>
-              <p className="text-primary font-bold text-[10px] uppercase tracking-wider">Family Command</p>
-              <h1 className="text-xl font-black leading-tight">Good Morning, {currentMember.name}!</h1>
-              <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">{todayDate}</p>
+              <p className="text-primary font-bold text-[10px] uppercase tracking-widest leading-none mb-1">HQ Command</p>
+              <h1 className="text-xl font-black leading-tight text-slate-900">Hi, {user.name}</h1>
+              <p className="text-slate-500 text-[11px] font-bold">{todayDate}</p>
             </div>
           </div>
           <button 
             onClick={() => setShowNotifications(true)}
-            className="relative p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"
+            className="relative p-3 rounded-2xl bg-white shadow-atmospheric text-slate-600 hover:text-primary transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined font-light">notifications</span>
-            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-800" />
+            <span className="material-symbols-outlined text-[22px] font-light">notifications</span>
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white shadow-sm" />
           </button>
         </div>
       </header>
@@ -53,37 +58,39 @@ export default function AdultDashboard() {
         
         {/* Priority Actions */}
         <section>
-          <h2 className="font-bold text-lg mb-4 px-1">Review & Manage</h2>
+          <div className="flex items-center justify-between mb-4 px-1">
+            <h2 className="font-extrabold text-slate-900 tracking-tight">Review & Manage</h2>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div 
               onClick={() => navigate(paths.finance)}
-              className="bg-gradient-to-br from-rose-500 to-orange-500 p-5 rounded-2xl text-white shadow-md shadow-orange-500/20 relative overflow-hidden cursor-pointer active:scale-95 transition-all"
+              className="bg-gradient-to-br from-rose-500 to-rose-600 p-5 rounded-[2rem] text-white shadow-lifted shadow-rose-500/20 relative overflow-hidden cursor-pointer active:scale-95 transition-all"
             >
               <div className="relative z-10">
-                <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-sm">assignment_late</span>
+                <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-md">
+                  <span className="material-symbols-outlined text-sm filled-icon">gavel</span>
                 </div>
-                <h3 className="text-lg font-black leading-tight">2 Pitches<br/>Pending</h3>
-                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">Tap to Review</p>
+                <h3 className="text-lg font-black leading-tight">2 Pitches<br/>to Review</h3>
+                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">Tap to Resolve</p>
               </div>
-              <div className="absolute -bottom-4 -right-4 opacity-10 blur-[2px]">
-                <span className="material-symbols-outlined text-8xl">clinical_notes</span>
+              <div className="absolute -bottom-6 -right-6 opacity-20 blur-[1px]">
+                <span className="material-symbols-outlined text-9xl">reviews</span>
               </div>
             </div>
 
             <div 
               onClick={() => navigate(paths.finance)}
-              className="bg-gradient-to-br from-blue-600 to-indigo-600 p-5 rounded-2xl text-white shadow-md shadow-indigo-500/20 relative overflow-hidden cursor-pointer active:scale-95 transition-all"
+              className="bg-gradient-to-br from-indigo-600 to-blue-700 p-5 rounded-[2rem] text-white shadow-lifted shadow-indigo-500/20 relative overflow-hidden cursor-pointer active:scale-95 transition-all"
             >
               <div className="relative z-10">
-                <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-sm">account_balance</span>
+                <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-md">
+                  <span className="material-symbols-outlined text-sm filled-icon">account_balance</span>
                 </div>
                 <h3 className="text-lg font-black leading-tight">Family<br/>Vault</h3>
-                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">$1,250 Available</p>
+                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">$1,250 Shared</p>
               </div>
-              <div className="absolute -bottom-4 -right-4 opacity-10 blur-[2px]">
-                <span className="material-symbols-outlined text-8xl">account_balance_wallet</span>
+              <div className="absolute -bottom-6 -right-6 opacity-20 blur-[1px]">
+                <span className="material-symbols-outlined text-9xl">account_balance_wallet</span>
               </div>
             </div>
           </div>
@@ -92,21 +99,21 @@ export default function AdultDashboard() {
         {/* Family Timeline */}
         <section>
           <div className="flex items-center justify-between mb-4 px-1">
-            <h2 className="font-bold text-lg">Family Activity</h2>
-            <button className="text-primary text-[11px] font-bold uppercase tracking-wider hover:underline">View All</button>
+            <h2 className="font-extrabold text-slate-900 tracking-tight">Family Activity</h2>
+            <button className="text-primary text-[11px] font-black uppercase tracking-widest hover:underline">View All</button>
           </div>
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-            <div className="relative border-l-2 border-slate-100 dark:border-slate-800 ml-3 space-y-6">
+          <div className="bg-white rounded-[2rem] p-6 shadow-atmospheric">
+            <div className="relative border-l-2 border-slate-100 ml-3 space-y-7">
               {MOCK_TIMELINE.map((item) => (
                 <div key={item.id} className="relative pl-6">
-                  <div className={`absolute -left-[1.125rem] bg-white dark:bg-slate-900 p-1 rounded-full`}>
-                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color}`}>
-                      <span className="material-symbols-outlined text-[12px]">{item.icon}</span>
+                  <div className={`absolute -left-[1.125rem] bg-white p-1 rounded-full`}>
+                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color} shadow-sm`}>
+                      <span className="material-symbols-outlined text-[12px] filled-icon">{item.icon}</span>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[14px] text-slate-800 dark:text-slate-100 leading-snug">{item.title}</h4>
-                    <p className="text-[11px] font-medium text-slate-500 mt-1">{item.time}</p>
+                    <h4 className="font-bold text-[14px] text-slate-800 leading-snug">{item.title}</h4>
+                    <p className="text-[11px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{item.time}</p>
                   </div>
                 </div>
               ))}

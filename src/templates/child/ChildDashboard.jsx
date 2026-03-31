@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/routes';
-import { currentMember, dashboardQuickActions } from '../../data/selectors';
+import { dashboardQuickActions } from '../../data/selectors';
+import useAuth from '../../context/useAuth';
 
 const MOCK_NOTIFICATIONS = [
   { id: 1, icon: 'star', color: 'text-amber-500', bg: 'bg-amber-50', text: 'You earned 50 pts for "Clean Room"!', ago: '10m ago' },
@@ -16,35 +17,39 @@ const MOCK_TIMELINE = [
 
 export default function ChildDashboard() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  // Fallback
+  const user = currentUser || { name: 'Friend', avatar: '', allowance: 0, points: 0 };
 
   const todayDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <div className="bg-surface-0 text-slate-900 min-h-screen flex flex-col font-display">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 pt-10 pb-4 shadow-sm sticky top-0 z-20">
+      <header className="glass-header px-6 pt-12 pb-4 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <div className="size-12 rounded-full border-2 border-primary overflow-hidden shadow-sm">
               <img
                 className="w-full h-full object-cover"
-                alt={currentMember.name}
-                src={currentMember.avatar || 'https://i.pravatar.cc/150'}
+                alt={user.name}
+                src={user.avatar || 'https://i.pravatar.cc/150'}
               />
             </div>
             <div>
-              <p className="text-primary font-bold text-[10px] uppercase tracking-wider">My Hub</p>
-              <h1 className="text-xl font-black leading-tight">Good Morning, {currentMember.name}!</h1>
-              <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">{todayDate}</p>
+              <p className="text-primary font-bold text-[10px] uppercase tracking-widest leading-none mb-1">My Adventure</p>
+              <h1 className="text-xl font-black leading-tight text-slate-900">Hey, {user.name}!</h1>
+              <p className="text-slate-500 text-[11px] font-bold">{todayDate}</p>
             </div>
           </div>
           <button 
             onClick={() => setShowNotifications(true)}
-            className="relative p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"
+            className="relative p-3 rounded-2xl bg-white shadow-atmospheric text-slate-600 hover:text-primary transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined font-light">notifications</span>
-            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-800" />
+            <span className="material-symbols-outlined text-[2px] font-light">notifications</span>
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white shadow-sm" />
           </button>
         </div>
       </header>
@@ -79,7 +84,7 @@ export default function ChildDashboard() {
                   <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
                 </div>
                 <h3 className="text-lg font-black leading-tight">My<br/>Wallet</h3>
-                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">${currentMember.allowance || 0} / {currentMember.points} pts</p>
+                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">${user.allowance || 0} / {user.points || 0} pts</p>
               </div>
               <div className="absolute -bottom-4 -right-4 opacity-10 blur-[2px]">
                 <span className="material-symbols-outlined text-8xl">payments</span>
@@ -89,13 +94,13 @@ export default function ChildDashboard() {
         </section>
         
         {/* Chores Progress */}
-        <section className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-          <div className="flex items-center justify-between mb-4 relative z-10">
-            <h2 className="font-bold text-lg">My Chores</h2>
-            <span className="text-sm font-medium text-primary">2/4 Done</span>
+        <section className="bg-white p-6 rounded-[2.5rem] shadow-atmospheric relative overflow-hidden">
+          <div className="flex items-center justify-between mb-5 relative z-10">
+            <h2 className="font-extrabold text-lg tracking-tight">Today's Chores</h2>
+            <span className="text-xs font-black text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-widest">2/4 Done</span>
           </div>
-          <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full mb-6 relative z-10">
-            <div className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out" style={{ width: '50%' }}></div>
+          <div className="w-full bg-slate-100 h-3 rounded-full mb-8 relative z-10 overflow-hidden">
+            <div className="bg-primary h-full rounded-full shadow-[0_0_12px_rgba(244,63,94,0.4)] transition-all duration-1000 ease-out" style={{ width: '50%' }}></div>
           </div>
           <ul className="space-y-4 relative z-10">
             <li className="flex items-center gap-3">
@@ -124,21 +129,21 @@ export default function ChildDashboard() {
         {/* Family Timeline */}
         <section>
           <div className="flex items-center justify-between mb-4 px-1">
-            <h2 className="font-bold text-lg">Family Activity</h2>
-            <button className="text-primary text-[11px] font-bold uppercase tracking-wider hover:underline">View All</button>
+            <h2 className="font-extrabold text-slate-900 tracking-tight">Family Story</h2>
+            <button className="text-primary text-[11px] font-black uppercase tracking-widest hover:underline">See More</button>
           </div>
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-            <div className="relative border-l-2 border-slate-100 dark:border-slate-800 ml-3 space-y-6">
+          <div className="bg-white rounded-[2rem] p-6 shadow-atmospheric">
+            <div className="relative border-l-2 border-slate-100 ml-3 space-y-7">
               {MOCK_TIMELINE.map((item) => (
                 <div key={item.id} className="relative pl-6">
-                  <div className={`absolute -left-[1.125rem] bg-white dark:bg-slate-900 p-1 rounded-full`}>
-                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color}`}>
-                      <span className="material-symbols-outlined text-[12px]">{item.icon}</span>
+                  <div className={`absolute -left-[1.125rem] bg-white p-1 rounded-full`}>
+                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color} shadow-sm`}>
+                      <span className="material-symbols-outlined text-[12px] filled-icon font-bold">{item.icon}</span>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[14px] text-slate-800 dark:text-slate-100 leading-snug">{item.title}</h4>
-                    <p className="text-[11px] font-medium text-slate-500 mt-1">{item.time}</p>
+                    <h4 className="font-bold text-[14px] text-slate-800 leading-snug">{item.title}</h4>
+                    <p className="text-[11px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{item.time}</p>
                   </div>
                 </div>
               ))}

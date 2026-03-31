@@ -11,8 +11,12 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(role)) {
+    // If role is null (initial load/race condition), don't redirect yet
+    if (role === null) return null; 
+
     // Redirect unauthorized users gracefully to their allowed dashboard
-    return <Navigate to={paths.dashboard} replace />;
+    // Use a hard-coded check or redirect to login if role is invalid
+    return <Navigate to={role === 'adult' ? paths.adultDashboard : paths.childDashboard} replace />;
   }
 
   return children;

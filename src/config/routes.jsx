@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute';
-import AdultLayout from '../templates/adult/AdultLayout';
-import ChildLayout from '../templates/child/ChildLayout';
+import MainLayout from '../templates/main/MainLayout';
 import { paths } from './paths';
 export { paths } from './paths';
 
@@ -41,7 +40,6 @@ import FamilyCourtPage from '../pages/more/FamilyCourtPage';
 import NegotiationPage from '../pages/more/NegotiationPage';
 import ResolutionConfirmedPage from '../pages/more/ResolutionConfirmedPage';
 
-
 // Shared navigation definitions mapped for UI tabs
 export const childNavTabs = [
   { label: 'Home', icon: 'home', path: paths.childDashboard, match: paths.childDashboard },
@@ -66,58 +64,40 @@ export const publicRoutes = [
   { path: paths.onboardingRules, element: <OnboardingRulesPage /> },
 ];
 
-const sharedProtectedRoutes = [
-  { path: paths.finance, element: <FinancePage /> },
-  { path: paths.financeMarket, element: <MarketPage /> },
-  { path: paths.financeLoan, element: <LoanPage /> },
-  { path: paths.financeLoanConfirmation, element: <LoanConfirmationPage /> },
-  { path: paths.chores, element: <ChoresPage /> },
-  { path: paths.sports, element: <LockerRoomPage /> },
-  { path: paths.sportsChat, element: <TeamChatPage /> },
-  { path: paths.more, element: <MorePage /> },
-  { path: paths.moreConstitution, element: <ConstitutionPage /> },
-  { path: paths.moreTimeline, element: <TimelinePage /> },
-  { path: paths.morePets, element: <PetHubPage /> },
-  { path: paths.moreHealth, element: <HealthPage /> },
-  { path: paths.moreAppeal, element: <AppealPage /> },
-  { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },
-];
-
-export const childRoutes = [
-  { path: paths.childDashboard, element: <ChildDashboard /> },
-  ...sharedProtectedRoutes
-];
-
-export const adultRoutes = [
-  { path: paths.adultDashboard, element: <AdultDashboard /> },
-  // Maintenance (Placeholder)
-  { path: paths.adultMaintenance, element: <div className="p-4 safe-top">Maintenance Dashboard Coming Soon</div> },
-  
-  // Adult only modules
-  { path: paths.moreAppealReview, element: <AppealReviewPage /> },
-  { path: paths.moreCreator, element: <CreatorStudioPage /> },
-  { path: paths.moreGovernance, element: <FamilyGovernancePage /> },
-  { path: paths.moreCourt, element: <FamilyCourtPage /> },
-  { path: paths.moreAppealResolution, element: <ResolutionConfirmedPage /> },
-  ...sharedProtectedRoutes
-];
-
-export const childLayoutRoute = {
+export const mainLayoutRoute = {
   element: (
-    <ProtectedRoute allowedRoles={['child']}>
-      <ChildLayout />
+    <ProtectedRoute>
+      <MainLayout />
     </ProtectedRoute>
   ),
-  children: childRoutes,
-};
-
-export const adultLayoutRoute = {
-  element: (
-    <ProtectedRoute allowedRoles={['adult']}>
-      <AdultLayout />
-    </ProtectedRoute>
-  ),
-  children: adultRoutes,
+  children: [
+    { path: paths.childDashboard, element: <ProtectedRoute allowedRoles={['child']}><ChildDashboard /></ProtectedRoute> },
+    { path: paths.adultDashboard, element: <ProtectedRoute allowedRoles={['adult']}><AdultDashboard /></ProtectedRoute> },
+    { path: paths.adultMaintenance, element: <ProtectedRoute allowedRoles={['adult']}><div className="p-4 safe-top">Maintenance Dashboard Coming Soon</div></ProtectedRoute> },
+    
+    // Shared features
+    { path: paths.finance, element: <FinancePage /> },
+    { path: paths.financeMarket, element: <MarketPage /> },
+    { path: paths.financeLoan, element: <LoanPage /> },
+    { path: paths.financeLoanConfirmation, element: <LoanConfirmationPage /> },
+    { path: paths.chores, element: <ChoresPage /> },
+    { path: paths.sports, element: <LockerRoomPage /> },
+    { path: paths.sportsChat, element: <TeamChatPage /> },
+    { path: paths.more, element: <MorePage /> },
+    { path: paths.moreConstitution, element: <ConstitutionPage /> },
+    { path: paths.moreTimeline, element: <TimelinePage /> },
+    { path: paths.morePets, element: <PetHubPage /> },
+    { path: paths.moreHealth, element: <HealthPage /> },
+    { path: paths.moreAppeal, element: <AppealPage /> },
+    { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },
+    
+    // Role restricted adult modules
+    { path: paths.moreAppealReview, element: <ProtectedRoute allowedRoles={['adult']}><AppealReviewPage /></ProtectedRoute> },
+    { path: paths.moreCreator, element: <ProtectedRoute allowedRoles={['adult']}><CreatorStudioPage /></ProtectedRoute> },
+    { path: paths.moreGovernance, element: <ProtectedRoute allowedRoles={['adult']}><FamilyGovernancePage /></ProtectedRoute> },
+    { path: paths.moreCourt, element: <ProtectedRoute allowedRoles={['adult']}><FamilyCourtPage /></ProtectedRoute> },
+    { path: paths.moreAppealResolution, element: <ProtectedRoute allowedRoles={['adult']}><ResolutionConfirmedPage /></ProtectedRoute> },
+  ]
 };
 
 // Auto router based on user role 

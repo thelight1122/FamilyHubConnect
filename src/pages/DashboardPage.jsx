@@ -8,10 +8,13 @@ export default function DashboardPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (role === 'adult') {
-      navigate(paths.adultDashboard, { replace: true });
-    } else {
-      navigate(paths.childDashboard, { replace: true });
+    if (!role) return; // Wait for role to be available
+
+    const target = role === 'adult' ? paths.adultDashboard : paths.childDashboard;
+    
+    // Only navigate if we aren't already at the target to avoid loop triggers
+    if (window.location.pathname !== target) {
+      navigate(target, { replace: true });
     }
   }, [role, navigate]);
 

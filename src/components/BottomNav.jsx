@@ -5,7 +5,7 @@ export default function BottomNav({ tabs = [] }) {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 px-2 pb-6 pt-2 z-50">
+    <nav className="glass-nav max-w-md mx-auto px-4 pb-8 pt-3">
       <div className="flex justify-around items-center w-full">
         {tabs.map((tab) => {
           const active = pathname.startsWith(tab.match) || (pathname === '/' && tab.match === '/dashboard');
@@ -13,25 +13,23 @@ export default function BottomNav({ tabs = [] }) {
             <button
               key={tab.label}
               onClick={() => navigate(tab.path)}
-              className={`flex flex-col items-center gap-1 transition-colors relative ${
-                active ? 'text-primary' : 'text-slate-400 dark:text-slate-500 hover:text-primary'
+              className={`flex flex-col items-center gap-1.5 transition-all relative active:scale-90 ${
+                active ? 'text-primary' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
-              <span className="relative inline-flex">
-                <span className={`material-symbols-outlined text-[24px] ${active ? 'filled-icon' : ''}`}>{tab.icon}</span>
+              <div className={`relative flex items-center justify-center size-10 rounded-2xl transition-all ${active ? 'bg-primary/10 shadow-sm' : ''}`}>
+                <span className={`material-symbols-outlined text-[26px] ${active ? 'filled-icon' : 'font-light'}`}>{tab.icon}</span>
                 {tab.badge > 0 && (
-                  <span className="absolute -top-1 -right-1.5 min-w-[16px] h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center px-0.5 leading-none border-2 border-white dark:border-slate-900 shadow-sm">
                     {tab.badge}
                   </span>
                 )}
-              </span>
-              <span className="text-[10px] font-semibold tracking-wide">{tab.label}</span>
+              </div>
+              <span className={`text-[10px] font-bold tracking-wider uppercase ${active ? 'opacity-100' : 'opacity-40'}`}>{tab.label}</span>
             </button>
           );
         })}
       </div>
-      {/* Safe area spacer for mobile */}
-      <div className="h-2" />
     </nav>
   );
 }

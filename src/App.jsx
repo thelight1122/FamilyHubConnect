@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { fallbackRoutes, childLayoutRoute, adultLayoutRoute, publicRoutes, baseProtectedRoutes } from './config/routes';
+import { fallbackRoutes, mainLayoutRoute, publicRoutes, baseProtectedRoutes } from './config/routes';
 
 function App() {
   return (
@@ -14,14 +14,8 @@ function App() {
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
 
-        <Route element={adultLayoutRoute.element}>
-          {adultLayoutRoute.children.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Route>
-
-        <Route element={childLayoutRoute.element}>
-          {childLayoutRoute.children.map((route) => (
+        <Route element={mainLayoutRoute.element}>
+          {mainLayoutRoute.children.map((route) => (
             <Route key={route.path} path={route.path} element={route.element} />
           ))}
         </Route>

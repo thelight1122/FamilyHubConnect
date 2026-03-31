@@ -8,128 +8,126 @@ export default function LoginPage() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState('adult'); // 'adult' or 'child'
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login();
+    login(selectedRole);
     navigate(paths.dashboard);
   };
 
   return (
-    <div className="bg-background-light font-display text-slate-900 min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-[480px] w-full bg-white rounded-xl shadow-xl overflow-hidden">
-
-        {/* Header / Logo Section */}
-        <div className="pt-10 pb-6 px-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-5xl">home</span>
-            </div>
+    <div className="bg-mesh-gradient min-h-screen flex items-center justify-center p-6 font-display">
+      <div className="max-w-[440px] w-full animate-page-fade-in">
+        
+        {/* Logo / Branding */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center size-20 bg-white shadow-lifted rounded-[2rem] mb-6 transform hover:rotate-6 transition-transform">
+            <span className="material-symbols-outlined text-primary text-4xl filled-icon">family_home</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Family Hub</h1>
-          <p className="text-slate-500 mt-2 text-base">Connect and coordinate with your loved ones securely.</p>
+          <h1 className="text-4xl font-black tracking-tight text-slate-900 mb-2">Family Hub</h1>
+          <p className="text-slate-500 font-medium">Your family headquarters, simplified.</p>
         </div>
 
-        <div className="px-8 pb-10">
-          {/* Login Form */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 ml-1">Email Address</label>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
+        {/* glass-card Container */}
+        <div className="glass-card rounded-[2.5rem] p-8 shadow-lifted">
+          
+          {/* Role Selector Tabs */}
+          <div className="flex gap-3 mb-8 p-1.5 bg-slate-100/50 rounded-2xl">
+            <button
+              type="button"
+              onClick={() => setSelectedRole('adult')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
+                selectedRole === 'adult' 
+                  ? 'bg-white text-primary shadow-sm scale-[1.02]' 
+                  : 'text-slate-400 hover:text-slate-600'
+              }`}
+            >
+              <span className="material-symbols-outlined text-xl">shield_person</span>
+              <span>Adult</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedRole('child')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
+                selectedRole === 'child' 
+                  ? 'bg-white text-primary shadow-sm scale-[1.02]' 
+                  : 'text-slate-400 hover:text-slate-600'
+              }`}
+            >
+              <span className="material-symbols-outlined text-xl">face</span>
+              <span>Child</span>
+            </button>
+          </div>
+
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-1.5">
+              <label className="text-[13px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email</label>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors text-xl">mail</span>
                 <input
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 placeholder:text-slate-400 outline-none"
-                  placeholder="name@family.com"
+                  className="w-full pl-12 pr-4 py-4 bg-white/50 border border-slate-200/50 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all text-slate-900 placeholder:text-slate-300 outline-none font-medium"
+                  placeholder="Enter your email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between items-center px-1">
-                <label className="text-sm font-semibold text-slate-700">Password</label>
-                <button type="button" className="text-sm font-semibold text-primary hover:underline">Forgot password?</button>
+                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Password</label>
+                <button type="button" className="text-[11px] font-bold text-primary hover:underline uppercase tracking-wider">Forgot?</button>
               </div>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors text-xl">lock</span>
                 <input
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 placeholder:text-slate-400 outline-none"
+                  className="w-full pl-12 pr-4 py-4 bg-white/50 border border-slate-200/50 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all text-slate-900 placeholder:text-slate-300 outline-none font-medium"
                   placeholder="••••••••"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
             </div>
 
-            <div className="flex items-center px-1">
-              <input
-                className="w-4 h-4 text-primary bg-slate-50 border-slate-300 rounded focus:ring-primary"
-                id="remember"
-                type="checkbox"
-              />
-              <label className="ml-2 text-sm text-slate-600" htmlFor="remember">Keep me logged in</label>
-            </div>
-
             <button
-              className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-primary hover:bg-primary-dark text-white font-black py-5 rounded-2xl shadow-lifted shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2 mt-4"
               type="submit"
             >
-              Sign In
+              Sign In as {selectedRole === 'adult' ? 'Dad' : 'Leo'}
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </button>
           </form>
 
-          {/* Divider */}
+          {/* Social Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
+              <div className="w-full border-t border-slate-200/50"></div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-4 text-slate-500 font-medium">Or continue with</span>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em] font-black">
+              <span className="bg-white/0 px-4 text-slate-400">Or continue with</span>
             </div>
           </div>
 
-          {/* Social Logins */}
           <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
-              className="flex items-center justify-center gap-2 py-3 px-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
-            >
-              <img
-                alt="Google"
-                className="w-5 h-5"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpymxVOR8meoWuw417uCcTm72oNiYEQCPb0SbfGK3EJUOgRjEs6sDy5OSOmEvYyH3rGY83kQBvMUKr_cU-FONlwNEgqZG1pvaFsux15i8NGwSq4YL1soyvB53Gi0cIo6ocLHrvDblpWMOzf7tEid3JI_gQhTdoyaUzzPRbs5E5cFkErbfGKhlhfHNdHjWF8KJKrovsWbQMJCUVrF40dMCenzdcKGrqULplogdDs_Z8D-ronUvX_4r9HGPr5mwIWkcHn7N4BDE1jww"
-              />
-              <span className="text-sm font-semibold">Google</span>
+            <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
+              <img src="https://lh3.googleusercontent.com/COxitqSgS1P-B82DcEM8hS6S9p2SJniD9egUyzL2TV/+O+3X7" className="w-5 h-5 grayscale opacity-70" alt="" />
+              Google
             </button>
-            <button
-              type="button"
-              className="flex items-center justify-center gap-2 py-3 px-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
-            >
-              <span className="material-symbols-outlined text-xl">ios</span>
-              <span className="text-sm font-semibold">Apple</span>
-            </button>
-          </div>
-
-          {/* Create Account */}
-          <div className="mt-8 text-center">
-            <p className="text-slate-600 text-sm">New to Family Hub?</p>
-            <button
-              type="button"
-              onClick={() => navigate(paths.onboardingValues)}
-              className="mt-3 w-full py-3 px-4 border-2 border-primary/20 text-primary font-bold rounded-lg hover:bg-primary/5 transition-colors"
-            >
-              Create Family Account
+            <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
+              <span className="material-symbols-outlined text-xl">apple</span>
+              Apple
             </button>
           </div>
         </div>
 
-        {/* Illustration Footer (hidden on mobile) */}
-        <div className="hidden sm:block h-32 bg-primary/5 border-t border-slate-100">
-          <div className="w-full h-full bg-cover opacity-40 mix-blend-multiply"></div>
-        </div>
+        <p className="text-center mt-10 text-slate-500 font-medium text-sm">
+          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingValues)}>Start Hub</button>
+        </p>
       </div>
     </div>
   );
