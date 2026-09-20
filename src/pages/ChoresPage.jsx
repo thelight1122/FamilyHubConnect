@@ -6,7 +6,7 @@ import useToast from '../hooks/useToast';
 
 export default function ChoresPage() {
   const [activeTab, setActiveTab] = useState('tasks');
-  const [completedIds, setCompletedIds] = useState([3]);
+  const [completedIds, setCompletedIds] = useState([]);
   const [verifyingId, setVerifyingId] = useState(null);
   const [toast, showToast] = useToast();
   const fileInputRef = useRef(null);
@@ -91,7 +91,7 @@ export default function ChoresPage() {
                   : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
               }`}
             >
-              Store
+              Rewards Store
             </button>
           </div>
         </div>
@@ -131,7 +131,13 @@ export default function ChoresPage() {
               </div>
 
               <div className="space-y-3">
-                {tasks.map((task, idx) => {
+                {tasks.length === 0 ? (
+                  <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
+                    <span className="material-symbols-outlined text-3xl text-slate-300">checklist</span>
+                    <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No tasks yet</h3>
+                    <p className="mt-1 text-sm font-medium text-slate-500">New chores will appear here when the family adds them.</p>
+                  </div>
+                ) : tasks.map((task, idx) => {
                   const isDone = completedIds.includes(task.id);
                   // Assign some fun colors based on index to mimic the colorful mockup
                   const icons = ["bed", "recycling", "auto_stories", "pet_supplies"];
@@ -189,8 +195,16 @@ export default function ChoresPage() {
           <>
             {/* Rewards Store Tab */}
             <section className="py-6 mb-10">
-              <div className="grid grid-cols-2 gap-4">
-                {rewards.map((reward, i) => {
+              <h2 className="mb-4 text-xl font-bold">Rewards Store</h2>
+              {rewards.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
+                  <span className="material-symbols-outlined text-3xl text-slate-300">redeem</span>
+                  <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No rewards yet</h3>
+                  <p className="mt-1 text-sm font-medium text-slate-500">Reward choices will appear here when an adult adds them.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  {rewards.map((reward, i) => {
                   const canAfford = currentMember.points >= reward.points;
                   
                   // Add realistic placeholder images since the mockup had rich images
@@ -231,8 +245,9 @@ export default function ChoresPage() {
                       </div>
                     </div>
                   );
-                })}
-              </div>
+                  })}
+                </div>
+              )}
             </section>
           </>
         )}

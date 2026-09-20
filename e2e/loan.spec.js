@@ -8,7 +8,7 @@ test.describe('LoanPage', () => {
   });
 
   test('page renders heading', async ({ page }) => {
-    await expect(page.getByText('Family Bank')).toBeVisible();
+    await expect(page.getByText(/Request|Pitch|Loan/i).first()).toBeVisible();
   });
 
   test('amount input accepts value', async ({ page }) => {

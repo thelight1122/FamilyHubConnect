@@ -12,7 +12,7 @@ test.describe('TimelinePage', () => {
   });
 
   test('"All" filter is active by default', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'All' })).toHaveClass(/bg-primary/);
+    await expect(page.getByRole('button', { name: 'All', exact: true })).toHaveClass(/bg-primary/);
   });
 
   test('shows empty state for All filter when no entries', async ({ page }) => {

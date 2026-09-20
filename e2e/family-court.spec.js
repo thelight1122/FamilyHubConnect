@@ -7,36 +7,38 @@ test.describe('FamilyCourtPage', () => {
     await page.goto('/more/court');
   });
 
-  test('page renders Family Court heading', async ({ page }) => {
-    await expect(page.getByText('Family Court')).toBeVisible();
+  test('page renders Accountability heading', async ({ page }) => {
+    await expect(page.getByText('Accountability')).toBeVisible();
   });
 
-  test('Active Consequences section is visible', async ({ page }) => {
-    await expect(page.getByText('Active Consequences')).toBeVisible();
-    await expect(page.getByText('1-day screen time ban')).toBeVisible();
-    await expect(page.getByText('Extra Chore: Kitchen')).toBeVisible();
+  test('Active Reflections empty state is visible', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Active Reflections' })).toBeVisible();
+    await expect(page.getByText('No active reflections. The ledger is clear.')).toBeVisible();
   });
 
-  test('"Mark Done" button triggers toast and marks consequence complete', async ({ page }) => {
-    await page.getByRole('button', { name: /Mark Done/i }).click();
-    await expect(page.getByText('Consequence marked complete')).toBeVisible();
-    // The item that was pending should now show "Completed"
-    await expect(page.getByText('Just now')).toBeVisible();
+  test('new consequence requires required fields', async ({ page }) => {
+    await page.locator('button:has(span.material-symbols-outlined:text("add"))').click();
+    await page.getByRole('button', { name: /Record Reflection/i }).click();
+    await expect(page.getByText('Please fill all fields')).toBeVisible();
   });
 
-  test('completed consequence shows "Completed" status', async ({ page }) => {
-    await expect(page.getByText('Completed').first()).toBeVisible();
+  test('can add a local consequence', async ({ page }) => {
+    await page.locator('button:has(span.material-symbols-outlined:text("add"))').click();
+    await page.locator('input[placeholder*="Screen Time"]').fill('Reflection check-in');
+    await page.locator('input[placeholder*="Missed"]').fill('Missed family agreement');
+    await page.getByRole('button', { name: /Record Reflection/i }).click();
+    await expect(page.getByText('New reflection recorded')).toBeVisible();
+    await expect(page.getByText('Reflection check-in')).toBeVisible();
   });
 
-  test('completed consequence does not show "Mark Done" button', async ({ page }) => {
-    // The "No Gaming: Weekend" item has status completed — verify no second Mark Done button
-    // After clicking the first Mark Done (there's only 1 initially), count
-    const markDoneButtons = page.getByRole('button', { name: /Mark Done/i });
-    await expect(markDoneButtons).toHaveCount(1);
+  test('empty court has no Mark Done buttons', async ({ page }) => {
+    await expect(page.getByRole('button', { name: /Mark Done/i })).toHaveCount(0);
   });
 
-  test('Consequence History section is visible', async ({ page }) => {
-    await expect(page.getByText('Consequence History')).toBeVisible();
-    await expect(page.getByText('Earlier Bedtime (8PM)')).toBeVisible();
+  test('Reflection History section can load older history', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Reflection History' })).toBeVisible();
+    await page.getByRole('button', { name: /Load Older History/i }).click();
+    await expect(page.getByText('Loaded older history')).toBeVisible();
+    await expect(page.getByText('Loss of TV Privileges')).toBeVisible();
   });
 });

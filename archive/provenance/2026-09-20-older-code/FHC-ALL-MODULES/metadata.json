@@ -1,0 +1,8 @@
+{
+  "name": "Family Hub Connect- MAIN",
+  "description": "A central hub for families to organize, communicate, and connect, featuring modules for chores, rewards, calendars, and family governance.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "prompt": ""
+}

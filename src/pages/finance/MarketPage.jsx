@@ -220,7 +220,13 @@ export default function MarketPage() {
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Your Positions</h3>
           </div>
           <div className="divide-y divide-slate-50">
-            {localPortfolio.stocks.map((stock) => (
+            {localPortfolio.stocks.length === 0 ? (
+              <div className="p-6 text-center">
+                <span className="material-symbols-outlined text-3xl text-slate-300">monitoring</span>
+                <p className="mt-2 text-sm font-bold text-slate-600">No positions yet</p>
+                <p className="mt-1 text-xs font-medium text-slate-400">Market positions will appear here when the family adds them.</p>
+              </div>
+            ) : localPortfolio.stocks.map((stock) => (
               <div key={stock.id} className="flex items-center gap-3 px-4 py-4 hover:bg-slate-50/50 transition-colors" style={{ borderLeft: `4px solid ${stock.color}` }}>
                 <div className="flex-1 min-w-0">
                   <p className="text-base font-bold text-slate-900 truncate">{stock.name}</p>

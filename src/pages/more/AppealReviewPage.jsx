@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { appeal } from '../../data/mockData';
 
 const decisionConfig = {
-  approved: { bg: 'bg-emerald-500', text: 'Appeal Approved', icon: 'check_circle', label: 'Approve Appeal' },
-  denied: { bg: 'bg-red-500', text: 'Appeal Denied', icon: 'cancel', label: 'Deny Appeal' },
-  negotiate: { bg: 'bg-primary', text: 'Negotiation Opened', icon: 'forum', label: 'Open Negotiation' },
+  approved: { bg: 'bg-emerald-500', text: 'Reflection Approved', icon: 'check_circle', label: 'Approve Reflection' },
+  denied: { bg: 'bg-red-500', text: 'Reflection Returned', icon: 'cancel', label: 'Return Reflection' },
+  negotiate: { bg: 'bg-primary', text: 'Resolution Dialogue Opened', icon: 'forum', label: 'Open Resolution Dialogue' },
 };
 
 export default function AppealReviewPage() {
@@ -17,7 +17,7 @@ export default function AppealReviewPage() {
     caseId: appeal?.caseId ?? '12345',
     child: 'Leo',
     charge: appeal?.reason ?? 'Missed Curfew',
-    consequence: typeof appeal?.consequence === 'string' ? appeal.consequence : '1-day screen time ban',
+    consequence: typeof appeal?.consequence === 'string' ? appeal.consequence : 'Screen time reflection',
     childArgument: appeal?.childArgument ?? "I was helping a friend with homework and lost track of time. I didn't mean to be late, but it was really important for them to finish before tomorrow.",
     proposedAlternative: appeal?.proposedAlternative ?? 'Extra chore: Vacuuming the living room',
     evidenceCount: 1,
@@ -38,7 +38,7 @@ export default function AppealReviewPage() {
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
-        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Review Appeal</h2>
+        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Review Reflection</h2>
       </div>
 
       {decision && (
@@ -49,9 +49,9 @@ export default function AppealReviewPage() {
       )}
 
       <div className="flex-1 overflow-y-auto pb-24">
-        {/* Section 1: The Appeal */}
+        {/* Section 1: The Reflection */}
         <section className="bg-white dark:bg-slate-900 mt-2">
-          <h2 className="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">The Appeal</h2>
+          <h2 className="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">The Reflection</h2>
           
           <div className="flex items-center gap-4 px-4 min-h-[72px] py-2">
             <div 
@@ -68,7 +68,7 @@ export default function AppealReviewPage() {
           
           <div className="p-4 pt-2">
             <div className="flex justify-between gap-x-6 py-3 border-b border-slate-50 dark:border-slate-800">
-              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Original Consequence</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Original Reflection</p>
               <p className="text-sm font-bold leading-normal text-right">{appealData.consequence}</p>
             </div>
             <div className="flex justify-between gap-x-6 py-3">
@@ -78,9 +78,9 @@ export default function AppealReviewPage() {
           </div>
         </section>
 
-        {/* Section 2: Child's Argument */}
+        {/* Section 2: Child's Reflection */}
         <section className="bg-white dark:bg-slate-900 mt-2 p-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-primary">Child's Argument</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-primary">Child's Reflection</h3>
           <div className="bg-background-light dark:bg-background-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 relative">
             <span className="material-symbols-outlined absolute top-2 right-2 text-slate-200 dark:text-slate-700 text-4xl opacity-50">format_quote</span>
             <p className="text-slate-700 dark:text-slate-300 text-sm italic leading-relaxed relative z-10">
@@ -89,9 +89,9 @@ export default function AppealReviewPage() {
           </div>
         </section>
 
-        {/* Section 3: Proposed Alternative */}
+        {/* Section 3: Proposed Repair */}
         <section className="bg-white dark:bg-slate-900 mt-2 p-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-primary">Proposed Alternative</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-primary">Proposed Repair</h3>
           <div className="flex items-center gap-3 bg-primary/10 dark:bg-primary/20 p-4 rounded-xl border border-primary/20">
             <span className="material-symbols-outlined text-primary text-2xl">cleaning_services</span>
             <p className="text-primary font-bold text-sm tracking-tight">{appealData.proposedAlternative}</p>

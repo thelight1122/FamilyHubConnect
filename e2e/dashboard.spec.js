@@ -8,45 +8,45 @@ test.describe('DashboardPage', () => {
 
   test('bell icon click shows notification overlay', async ({ page }) => {
     await page.locator('button:has(span.material-symbols-outlined:text("notifications"))').first().click();
-    await expect(page.getByText('Notifications')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible();
   });
 
-  test('bell icon click again closes overlay', async ({ page }) => {
+  test('overlay backdrop closes notifications', async ({ page }) => {
     const bell = page.locator('button:has(span.material-symbols-outlined:text("notifications"))').first();
     await bell.click();
-    await expect(page.getByText('Notifications')).toBeVisible();
-    await bell.click();
-    await expect(page.getByText('Notifications')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible();
+    await page.locator('.fixed.inset-0 .absolute.inset-0').click({ position: { x: 10, y: 10 } });
+    await expect(page.getByRole('heading', { name: 'Notifications' })).not.toBeVisible();
   });
 
   test('overlay close button hides overlay', async ({ page }) => {
     await page.locator('button:has(span.material-symbols-outlined:text("notifications"))').first().click();
-    await expect(page.getByText('Notifications')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible();
     await page.locator('button:has(span.material-symbols-outlined:text("close"))').click();
-    await expect(page.getByText('Notifications')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Notifications' })).not.toBeVisible();
   });
 
   test('Finance quick action navigates to finance', async ({ page }) => {
-    await page.getByText('Finance').click();
+    await page.getByRole('button', { name: /account_balance_wallet Finance/i }).first().click();
     await page.waitForURL('**/finance');
     expect(page.url()).toContain('/finance');
   });
 
   test('Sports quick action navigates to sports', async ({ page }) => {
-    await page.getByText('Sports').click();
+    await page.getByRole('button', { name: /sports_soccer Sports/i }).first().click();
     await page.waitForURL('**/sports');
     expect(page.url()).toContain('/sports');
   });
 
   test('Pet Hub quick action navigates to pets', async ({ page }) => {
-    await page.getByText('Pet Hub').click();
+    await page.getByRole('button', { name: /pets Pet Hub/i }).click();
     await page.waitForURL('**/more/pets');
     expect(page.url()).toContain('/more/pets');
   });
 
-  test('Family Court quick action navigates to court', async ({ page }) => {
-    await page.getByText('Family Court').click();
-    await page.waitForURL('**/more/court');
-    expect(page.url()).toContain('/more/court');
+  test('Reflection quick action navigates to accountability', async ({ page }) => {
+    await page.getByRole('button', { name: /balance Reflection Request/i }).click();
+    await page.waitForURL('**/more/appeal');
+    expect(page.url()).toContain('/more/appeal');
   });
 });

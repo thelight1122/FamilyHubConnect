@@ -5,14 +5,20 @@ import useAuth from '../context/useAuth';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, mockAuthEnabled } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('adult'); // 'adult' or 'child'
+  const [authMessage, setAuthMessage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(selectedRole);
+    const didLogin = login(selectedRole);
+    if (!didLogin) {
+      setAuthMessage('Sign-in is not configured for this deployment yet.');
+      return;
+    }
+
     navigate(paths.dashboard);
   };
 
@@ -61,6 +67,17 @@ export default function LoginPage() {
           </div>
 
           <form className="space-y-5" onSubmit={handleSubmit}>
+            {!mockAuthEnabled && (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800" role="status">
+                Production authentication is not configured.
+              </div>
+            )}
+
+            {authMessage && (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800" role="alert">
+                {authMessage}
+              </div>
+            )}
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email</label>
               <div className="relative group">
@@ -79,7 +96,7 @@ export default function LoginPage() {
             <div className="space-y-1.5">
               <div className="flex justify-between items-center px-1">
                 <label className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Password</label>
-                <button type="button" className="text-[11px] font-bold text-primary hover:underline uppercase tracking-wider">Forgot?</button>
+                <button type="button" className="text-[11px] font-bold text-primary hover:underline uppercase tracking-wider">Forgot password?</button>
               </div>
               <div className="relative group">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary transition-colors text-xl">lock</span>
@@ -116,17 +133,17 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-4">
             <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
               <img src="https://lh3.googleusercontent.com/COxitqSgS1P-B82DcEM8hS6S9p2SJniD9egUyzL2TV/+O+3X7" className="w-5 h-5 grayscale opacity-70" alt="" />
-              Google
+              Continue with Google
             </button>
             <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
               <span className="material-symbols-outlined text-xl">apple</span>
-              Apple
+              Continue with Apple
             </button>
           </div>
         </div>
 
         <p className="text-center mt-10 text-slate-500 font-medium text-sm">
-          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingValues)}>Start Hub</button>
+          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingValues)}>Create Family Account</button>
         </p>
       </div>
     </div>

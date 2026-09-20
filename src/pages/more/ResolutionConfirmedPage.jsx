@@ -6,7 +6,7 @@ export default function ResolutionConfirmedPage() {
 
   const caseData = {
     child: "Leo",
-    summaryText: "Leo's 1-day screen time ban has been replaced with washing all dinner dishes tonight and a half-day ban starting after his project."
+    summaryText: "Leo's screen time reflection has been resolved with washing all dinner dishes tonight and a half-day screen adjustment starting after his project."
   };
 
   return (
@@ -39,7 +39,7 @@ export default function ResolutionConfirmedPage() {
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1573497491765-dccce02b29df?auto=format&fit=crop&q=80&w=800')" }}
             ></div>
             <div className="flex w-full flex-col gap-2 p-5">
-              <p className="text-primary text-xs font-bold uppercase tracking-wider">Final Decision Summary</p>
+              <p className="text-primary text-xs font-bold uppercase tracking-wider">Resolution Summary</p>
               <p className="text-slate-800 dark:text-slate-200 text-[15px] font-medium leading-relaxed">
                 {caseData.summaryText}
               </p>
@@ -66,7 +66,7 @@ export default function ResolutionConfirmedPage() {
                 <span className="material-symbols-outlined text-2xl">hourglass_top</span>
               </div>
               <div className="flex-1">
-                <p className="font-bold text-[15px]">Screen Time Adjustment</p>
+                <p className="font-bold text-[15px]">Screen Time Reflection</p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-0.5">Reduced to 4 hours total today</p>
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function ResolutionConfirmedPage() {
           onClick={() => navigate(paths.moreCourt)}
           className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3.5 rounded-xl transition-colors border border-transparent shadow-sm"
         >
-          View Consequences
+          View Reflections
         </button>
       </div>
     </div>

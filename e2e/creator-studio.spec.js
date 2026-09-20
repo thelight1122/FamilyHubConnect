@@ -8,37 +8,35 @@ test.describe('CreatorStudioPage', () => {
   });
 
   test('page renders Creator Studio heading', async ({ page }) => {
-    await expect(page.getByText('Creator Studio')).toBeVisible();
+    await expect(page.getByText("Creator's Studio")).toBeVisible();
   });
 
-  test('"Launch Maker" button shows "Creator tools coming soon!" toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Launch Maker/i }).click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
+  test('quick create opens photo story composer', async ({ page }) => {
+    await page.getByText('Photo Story').click();
+    await expect(page.getByRole('heading', { name: 'New Photo Story' })).toBeVisible();
   });
 
-  test('"Create a New Story" button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Create a New Story/i }).click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
+  test('photo story can be published locally', async ({ page }) => {
+    await page.getByText('Photo Story').click();
+    await page.locator('textarea[placeholder*="caption"]').fill('Backyard science day');
+    await page.getByRole('button', { name: /Publish to Family/i }).click();
+    await expect(page.getByText('Photo Story published successfully!')).toBeVisible();
+    await expect(page.getByText('Backyard science day')).toBeVisible();
   });
 
-  test('"Play Now" button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Play Now/i }).click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
+  test('family poll can add options', async ({ page }) => {
+    await page.getByText('Family Poll').click();
+    await page.getByRole('button', { name: /Add Option/i }).click();
+    await expect(page.locator('input[placeholder="Option 3"]')).toBeVisible();
   });
 
-  test('"Open Canvas" button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Open Canvas/i }).click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
+  test('voice memo requires recording before publish', async ({ page }) => {
+    await page.getByText('Voice Memo').click();
+    await expect(page.getByRole('button', { name: /Publish to Family/i })).toBeDisabled();
   });
 
-  test('"See Gallery" button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /See Gallery/i }).click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
-  });
-
-  test('FAB "+" button shows toast', async ({ page }) => {
-    // FAB is the fixed bottom-right add button
+  test('FAB opens create menu', async ({ page }) => {
     await page.locator('button.fixed').click();
-    await expect(page.getByText('Creator tools coming soon!')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'What do you want to create?' })).toBeVisible();
   });
 });

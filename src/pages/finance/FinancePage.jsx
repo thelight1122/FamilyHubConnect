@@ -3,6 +3,8 @@ import { currentMember } from '../../data/selectors';
 import { finances } from '../../data/mockData';
 import { paths } from '../../config/paths';
 import { useState } from 'react';
+import useToast from '../../hooks/useToast';
+import Toast from '../../components/Toast';
 
 export default function FinancePage() {
   const navigate = useNavigate();
@@ -10,9 +12,11 @@ export default function FinancePage() {
   // Temporary toggle to review both prototypes easily.
   // Real implementation would rely solely on `currentMember.role`
   const [isParentView, setIsParentView] = useState(currentMember.role === 'parent');
+  const [toast, showToast] = useToast();
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display flex flex-col pb-24">
+      <Toast message={toast} />
       {/* Dev Toggle (Prototype Only) */}
       <div className="bg-yellow-500/20 text-yellow-700 dark:text-yellow-500 p-2 text-xs flex justify-center gap-4 border-b border-yellow-500/30">
         <span className="font-bold">Prototype Toggle:</span>
@@ -32,7 +36,11 @@ export default function FinancePage() {
         </h2>
         <div className="flex w-10 items-center justify-end">
           {isParentView ? (
-            <button className="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-transparent transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
+            <button
+              onClick={() => showToast('Bank settings are not enabled for this local preview.')}
+              aria-label="Bank settings"
+              className="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-transparent transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
               <span className="material-symbols-outlined">settings</span>
             </button>
           ) : (
@@ -263,7 +271,12 @@ function ChildWalletView({ navigate }) {
           <button className="text-primary text-[11px] font-bold uppercase tracking-wider hover:underline">See All</button>
         </div>
         <div className="space-y-3">
-          {finances.recentActivity.slice(0,3).map((item) => {
+          {finances.recentActivity.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span className="material-symbols-outlined text-3xl text-slate-300">receipt_long</span>
+              <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No transactions yet</p>
+            </div>
+          ) : finances.recentActivity.slice(0,3).map((item) => {
             const isPositive = item.amount > 0;
             return (
               <div key={item.id} className="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">

@@ -1,0 +1,9 @@
+{
+  "description": "A family connectivity and communication app designed to manage chores, rewards, and enhance family organization with a focus on privacy and user-friendly design. This initial version outlines the core features and structure.",
+  "prompt": "",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "name": "Copy of Latest Good Family Hub Connect"
+}

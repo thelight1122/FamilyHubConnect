@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import AuthContext from './auth-context';
+import { runtimeConfig } from '../config/runtime';
 
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('fhc_logged_in') === 'true');
@@ -19,6 +20,10 @@ export function AuthProvider({ children }) {
   }, [isLoggedIn, role]);
 
   const login = (selectedRole = 'adult') => { 
+    if (!runtimeConfig.mockAuthEnabled) {
+      return false;
+    }
+
     // Set values in localStorage first for persistence on immediate redirect
     localStorage.setItem('fhc_logged_in', 'true'); 
     localStorage.setItem('fhc_user_role', selectedRole);
@@ -26,6 +31,7 @@ export function AuthProvider({ children }) {
     // Update local state
     setRole(selectedRole);
     setIsLoggedIn(true); 
+    return true;
   };
   
   const logout = () => { 
@@ -40,7 +46,8 @@ export function AuthProvider({ children }) {
     login, 
     logout, 
     currentUser, 
-    role
+    role,
+    mockAuthEnabled: runtimeConfig.mockAuthEnabled,
   }), [isLoggedIn, currentUser, role]);
 
   return (

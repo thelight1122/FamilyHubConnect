@@ -11,9 +11,9 @@ export default function AppealPage() {
   const [submitted, setSubmitted] = useState(false);
   const fileInputRef = useRef(null);
 
-  const consequence = {
-    label: 'Active Consequence',
-    title: typeof appeal?.consequence === 'string' ? appeal.consequence : '1-day screen time ban',
+  const reflectionContext = {
+    label: 'Active Reflection',
+    title: typeof appeal?.consequence === 'string' ? appeal.consequence : 'Screen time reflection',
     reason: appeal?.reason ?? 'Missing curfew by 15 mins',
   };
 
@@ -39,21 +39,21 @@ export default function AppealPage() {
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </div>
-          <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Submit Appeal</h2>
+          <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Submit Reflection</h2>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pb-24">
           <div className="w-20 h-20 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-4 border border-emerald-100 dark:border-emerald-800">
             <span className="material-symbols-outlined text-emerald-500 text-4xl">check_circle</span>
           </div>
-          <h2 className="text-xl font-bold mb-2">Appeal Submitted!</h2>
+          <h2 className="text-xl font-bold mb-2">Reflection Submitted!</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
-            Your appeal is pending parent review. You'll be notified once a decision is made.
+            Your reflection is pending adult review. You'll be notified once a resolution is recorded.
           </p>
           <div className="w-full bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800 p-4 text-left mb-6">
             <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-3">What happens next</p>
             <div className="space-y-3">
-              {['Parent reviews your case', 'Decision made within 24 hours', "You'll receive a notification"].map((step, i) => (
+              {['Adult reviews your reflection', 'Resolution recorded within 24 hours', "You'll receive a notification"].map((step, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-primary text-base">arrow_right_alt</span>
                   <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">{step}</p>
@@ -83,19 +83,19 @@ export default function AppealPage() {
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
-        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Submit Appeal</h2>
+        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Submit Reflection</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {/* Consequence Details Section */}
+        {/* Accountability Context Section */}
         <div className="px-4 pt-6 pb-4">
-          <h3 className="text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Consequence Details</h3>
+          <h3 className="text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Accountability Context</h3>
           <div className="p-4 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/20">
             <div className="flex items-start justify-between gap-4">
               <div className="flex flex-col gap-1 flex-1">
-                <p className="text-primary text-xs font-bold uppercase tracking-wider">{consequence.label}</p>
-                <p className="text-lg font-bold leading-tight">{consequence.title}</p>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-normal">Reason: {consequence.reason}</p>
+                <p className="text-primary text-xs font-bold uppercase tracking-wider">{reflectionContext.label}</p>
+                <p className="text-lg font-bold leading-tight">{reflectionContext.title}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm font-normal">Observation: {reflectionContext.reason}</p>
               </div>
               <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
                 <span className="material-symbols-outlined text-primary text-3xl">no_photography</span>
@@ -108,17 +108,17 @@ export default function AppealPage() {
           <div className="h-px bg-slate-100 dark:bg-slate-800 w-full"></div>
         </div>
 
-        {/* Reason for Appeal */}
+        {/* Reflection Request */}
         <div className="px-4 py-3">
           <label className="flex flex-col gap-2">
             <p className="text-base font-semibold">
-              Reason for Appeal <span className="text-red-400">*</span>
+              Reflection Request <span className="text-red-400">*</span>
             </p>
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               className="form-input flex w-full min-w-0 flex-1 resize-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary min-h-[120px] p-4 text-base font-normal outline-none transition-colors"
-              placeholder="Explain your side of the story here..."
+              placeholder="Share what happened and what you want adults to understand..."
             ></textarea>
           </label>
         </div>
@@ -126,13 +126,13 @@ export default function AppealPage() {
         {/* Proposed Alternative */}
         <div className="px-4 py-3">
           <label className="flex flex-col gap-2">
-            <p className="text-base font-semibold">Proposed Alternative</p>
+            <p className="text-base font-semibold">Proposed Repair</p>
             <input
               type="text"
               value={alternative}
               onChange={(e) => setAlternative(e.target.value)}
               className="form-input flex w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary px-4 text-base font-normal outline-none transition-colors leading-normal"
-              placeholder="e.g., Extra chore instead"
+              placeholder="e.g., Repair task or conversation instead"
             />
           </label>
         </div>
@@ -187,7 +187,7 @@ export default function AppealPage() {
           onClick={() => navigate('/more/appeal/review')}
           className="text-sm text-primary font-semibold flex items-center gap-1 hover:text-primary/80 transition-colors"
         >
-          Review as Parent
+          Review as Adult
           <span className="material-symbols-outlined text-base">arrow_forward</span>
         </button>
       </div>
@@ -200,7 +200,7 @@ export default function AppealPage() {
           className="w-full h-14 bg-primary disabled:bg-primary/50 disabled:cursor-not-allowed hover:bg-primary/90 text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2"
         >
           <span className="material-symbols-outlined text-xl">gavel</span>
-          Submit Appeal
+          Submit Reflection
         </button>
         <button 
           onClick={() => navigate('/more')}

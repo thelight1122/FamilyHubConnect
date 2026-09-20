@@ -10,7 +10,7 @@ export default function NegotiationPage() {
       id: 1,
       sender: 'Leo',
       isChild: true,
-      text: "Mom, I really need my phone for the group project tonight. Can we negotiate?",
+      text: "Mom, I really need my phone for the group project tonight. Can we find a repair plan?",
       avatar: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=150&h=150"
     },
     {
@@ -19,7 +19,7 @@ export default function NegotiationPage() {
       isParent: true,
       isProposal: true,
       proposalTerms: [
-        "Half-day ban (starts after project)",
+        "Half-day screen adjustment (starts after project)",
         "Wash all dinner dishes tonight"
       ],
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150"
@@ -36,8 +36,8 @@ export default function NegotiationPage() {
 
   const caseSummary = {
     caseId: appeal?.caseId ?? '12345',
-    original: '1-day screen time ban',
-    proposed: '1h ban + extra chores'
+    original: 'Screen time reflection',
+    proposed: '1h adjustment + extra chores'
   };
 
   const handleSendMessage = () => {
@@ -70,8 +70,8 @@ export default function NegotiationPage() {
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
         <div className="flex flex-col items-center flex-1">
-          <h2 className="text-lg font-bold leading-tight tracking-tight">Negotiation: Case #{caseSummary.caseId}</h2>
-          <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Family Court Protocol</p>
+          <h2 className="text-lg font-bold leading-tight tracking-tight">Resolution Dialogue: Case #{caseSummary.caseId}</h2>
+          <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Accountability Protocol</p>
         </div>
         <div className="size-10 flex items-center justify-center text-primary">
           <span className="material-symbols-outlined text-2xl">gavel</span>
@@ -83,7 +83,7 @@ export default function NegotiationPage() {
         <div className="flex gap-6 justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-            <p className="text-primary text-sm font-bold leading-normal">Actively Negotiating</p>
+            <p className="text-primary text-sm font-bold leading-normal">Resolution in Progress</p>
           </div>
           <p className="text-slate-500 text-xs font-bold leading-normal tracking-wide">MODERATION: 50%</p>
         </div>
@@ -92,13 +92,13 @@ export default function NegotiationPage() {
         </div>
       </div>
 
-      {/* Appeal Summary Card */}
+      {/* Reflection Summary Card */}
       <div className="p-4 bg-white dark:bg-background-dark shrink-0 z-10">
         <div className="flex flex-col items-stretch justify-start rounded-xl shadow-sm border border-primary/10 bg-white dark:bg-slate-800 overflow-hidden">
           <div className="flex w-full flex-col items-stretch justify-center gap-3 p-4">
             <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span className="material-symbols-outlined text-primary text-xl">description</span>
-              <p className="text-sm font-bold leading-tight">Appeal Summary</p>
+              <p className="text-sm font-bold leading-tight">Reflection Summary</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">

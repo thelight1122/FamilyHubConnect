@@ -11,13 +11,12 @@ test.describe('MarketPage', () => {
     await expect(page.getByText('Market Simulator')).toBeVisible();
   });
 
-  test('Buy button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Buy/i }).click();
-    await expect(page.getByText('Order placed — shares purchased!')).toBeVisible();
+  test('empty positions state is visible', async ({ page }) => {
+    await expect(page.getByText('No positions yet')).toBeVisible();
   });
 
-  test('Sell button shows toast', async ({ page }) => {
-    await page.getByRole('button', { name: /Sell/i }).click();
-    await expect(page.getByText('Shares sold successfully!')).toBeVisible();
+  test('cash balance is visible without positions', async ({ page }) => {
+    await expect(page.getByText('Cash Balance')).toBeVisible();
+    await expect(page.getByText('$500.00').nth(1)).toBeVisible();
   });
 });

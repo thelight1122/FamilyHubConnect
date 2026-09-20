@@ -12,7 +12,7 @@ const MOCK_NOTIFICATIONS = [
 const MOCK_TIMELINE = [
   { id: 101, title: 'Emma reached a savings goal!', time: 'Today, 10:30 AM', icon: 'savings', color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-500/10' },
   { id: 102, title: 'Leo submitted a loan pitch', time: 'Yesterday', icon: 'request_quote', color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-500/10' },
-  { id: 103, title: 'Family Court ticket dismissed', time: 'Tuesday', icon: 'gavel', color: 'text-violet-500', bg: 'bg-violet-100 dark:bg-violet-500/10' },
+  { id: 103, title: 'Accountability reflection completed', time: 'Tuesday', icon: 'gavel', color: 'text-violet-500', bg: 'bg-violet-100 dark:bg-violet-500/10' },
 ];
 
 export default function ChildDashboard() {

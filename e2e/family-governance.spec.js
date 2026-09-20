@@ -12,20 +12,20 @@ test.describe('FamilyGovernancePage', () => {
   });
 
   test('"Resolution" tab is active by default', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Resolution' })).toHaveClass(/text-primary/);
+    await expect(page.getByRole('button', { name: 'Resolution', exact: true })).toHaveClass(/text-primary/);
     await expect(page.getByText('Active Mediation')).toBeVisible();
   });
 
-  test('"Jury Pool" tab renders jury section', async ({ page }) => {
-    await page.getByRole('button', { name: 'Jury Pool' }).click();
-    await expect(page.getByText('The Jury Pool')).toBeVisible();
-    await expect(page.getByText('Mom (Sarah)')).toBeVisible();
+  test('"Circle" tab renders reflection section', async ({ page }) => {
+    await page.getByRole('button', { name: 'Circle', exact: true }).click();
+    await expect(page.getByText('The Reflection Circle')).toBeVisible();
+    await expect(page.getByText('No reflection circle rotation yet')).toBeVisible();
   });
 
   test('"Archive" tab renders archive section', async ({ page }) => {
     await page.getByRole('button', { name: 'Archive' }).click();
-    await expect(page.getByText('Court Archive')).toBeVisible();
-    await expect(page.getByText('The "Dirty Dishes" Dispute')).toBeVisible();
+    await expect(page.getByText('Resolution Archive')).toBeVisible();
+    await expect(page.getByText('No archived resolutions yet')).toBeVisible();
   });
 
   test('"Rule Book" tab renders rulebook section', async ({ page }) => {

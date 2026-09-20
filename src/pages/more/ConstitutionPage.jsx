@@ -16,7 +16,7 @@ export default function ConstitutionPage() {
     constitution?.mission ??
     'To foster a home of unconditional love, continuous growth, and unwavering support for every member of our family. We grow together, learn together, and celebrate each other.';
 
-  const rules = constitution?.rules ?? [
+  const rules = constitution?.rules?.length ? constitution.rules : [
     'No phones at the dinner table.',
     'Listen before reacting or interrupting.',
     'Always say "I love you" before sleep.',
@@ -28,7 +28,7 @@ export default function ConstitutionPage() {
       showToast('Please draft an amendment proposal');
       return;
     }
-    showToast('Amendment proposed for next family meeting!');
+    showToast('Amendment proposal submitted!');
     setIsProposeModalOpen(false);
     setProposalText('');
     setRationaleText('');
@@ -177,7 +177,7 @@ export default function ConstitutionPage() {
 
       {/* Propose Amendment Modal */}
       {isProposeModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setIsProposeModalOpen(false)}>
+        <div className="fixed inset-0 z-[120] flex items-end justify-center sm:items-center bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setIsProposeModalOpen(false)}>
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">

@@ -1,4 +1,5 @@
 import { paths } from '../config/routes';
+import { getOrbForRoute } from '../pod';
 import { familyMembers, finances, sports } from './mockData';
 
 export const familyName = 'Thompson Family';
@@ -16,8 +17,11 @@ export const dashboardQuickActions = [
   { label: 'Finance', icon: 'account_balance_wallet', path: paths.finance, color: 'text-primary bg-primary/10' },
   { label: 'Sports', icon: 'sports_soccer', path: paths.sports, color: 'text-green-600 bg-green-50' },
   { label: 'Pet Hub', icon: 'pets', path: paths.morePets, color: 'text-amber-500 bg-amber-50' },
-  { label: 'Family Court', icon: 'balance', path: paths.moreAppeal, color: 'text-violet-500 bg-violet-50' },
-];
+  { label: 'Reflection Request', icon: 'balance', path: paths.moreAppeal, color: 'text-violet-500 bg-violet-50' },
+].map((action) => ({
+  ...action,
+  orbId: getOrbForRoute(action.path)?.id ?? null,
+}));
 
 export const financeTools = [
   { label: 'Allowance', icon: 'payments', color: 'text-primary bg-primary/10', path: null },
@@ -39,19 +43,24 @@ export const walletMembers = familyMembers
 export const maxWalletBalance = Math.max(...walletMembers.map((member) => member.wallet), 1);
 
 export const moreFeatures = [
+  { label: 'Assistant', route: paths.moreAssistant, icon: 'smart_toy', bg: 'bg-primary/10', color: 'text-primary' },
   { label: 'Family Constitution', route: paths.moreConstitution, icon: 'gavel', bg: 'bg-violet-50', color: 'text-violet-600' },
   { label: 'Family Timeline', route: paths.moreTimeline, icon: 'timeline', bg: 'bg-rose-50', color: 'text-rose-500' },
   { label: 'Pet Hub', route: paths.morePets, icon: 'pets', bg: 'bg-amber-50', color: 'text-amber-500' },
   { label: 'Health Logs', route: paths.moreHealth, icon: 'health_and_safety', bg: 'bg-green-50', color: 'text-green-600' },
-  { label: 'Family Court', route: paths.moreCourt, icon: 'gavel', bg: 'bg-orange-50', color: 'text-orange-500' },
+  { label: 'Transparency', route: paths.moreTransparency, icon: 'visibility', bg: 'bg-slate-100', color: 'text-slate-600' },
+  { label: 'Accountability', route: paths.moreCourt, icon: 'gavel', bg: 'bg-orange-50', color: 'text-orange-500' },
   { label: "Creator's Studio", route: paths.moreCreator, icon: 'auto_fix_high', bg: 'bg-blue-50', color: 'text-blue-500' },
   { label: 'Family Governance', route: paths.moreGovernance, icon: 'balance', bg: 'bg-indigo-50', color: 'text-indigo-600' },
-];
+].map((feature) => ({
+  ...feature,
+  orbId: getOrbForRoute(feature.route)?.id ?? null,
+}));
 
 export const accountItems = [
-  { label: 'Profile Settings', icon: 'manage_accounts', route: null },
+  { label: 'Profile Settings', icon: 'manage_accounts', route: null, feedback: 'Profile settings are managed by the family account owner.' },
   { label: 'Invite Family', icon: 'group_add', route: paths.invite },
-  { label: 'Notifications', icon: 'notifications', route: null },
+  { label: 'Notifications', icon: 'notifications', route: null, feedback: 'Notifications are not enabled for this local preview.' },
 ];
 
 export const sportsTeams = sports.teams;

@@ -227,7 +227,7 @@ export default function CreatorStudioPage() {
 
       {/* Creation Type Chooser Modal */}
       {showCreateMenu && (
-        <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowCreateMenu(false)}>
+        <div className="fixed inset-0 z-[110] flex items-end justify-center bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowCreateMenu(false)}>
           <div className="bg-white w-full max-w-md rounded-t-3xl p-6 pb-12 animate-in slide-in-from-bottom-8 duration-200" onClick={(e) => e.stopPropagation()}>
             <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6" />
             <h3 className="text-xl font-black text-slate-900 mb-6 text-center tracking-tight">What do you want to create?</h3>
@@ -255,7 +255,7 @@ export default function CreatorStudioPage() {
 
       {/* Detailed Creator Forms Overlay */}
       {activeCreator && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200 p-4">
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-900/80 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200 p-4">
           <div className="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">

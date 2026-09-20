@@ -2,23 +2,42 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../context/useAuth';
 import { accountItems, familyName, moreFeatures, walletMembers } from '../../data/selectors';
 import { paths } from '../../config/routes';
+import useToast from '../../hooks/useToast';
+import Toast from '../../components/Toast';
 
 const avatarColors = ['bg-[#4c8ce6]', 'bg-rose-400', 'bg-amber-400', 'bg-green-400'];
 
 export default function MorePage() {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [toast, showToast] = useToast();
 
   const handleLogout = () => {
     logout();
     navigate(paths.login);
   };
 
+  const handleAccountAction = (item) => {
+    if (item.route) {
+      navigate(item.route);
+      return;
+    }
+
+    showToast(item.feedback);
+  };
+
+  const handleUnavailableAction = (message) => showToast(message);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f7f8]">
+      <Toast message={toast} />
       <div className="flex items-center justify-between px-4 pt-12 pb-4 bg-white">
         <h1 className="text-2xl font-bold text-slate-800">More</h1>
-        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f6f7f8]">
+        <button
+          onClick={() => handleUnavailableAction('More settings are not enabled for this local preview.')}
+          aria-label="More settings"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f6f7f8]"
+        >
           <span className="material-symbols-outlined text-slate-600">settings_applications</span>
         </button>
       </div>
@@ -41,7 +60,10 @@ export default function MorePage() {
               <p className="font-bold text-slate-800">{familyName}</p>
               <p className="text-xs text-slate-400 mt-0.5">{walletMembers.length} members</p>
             </div>
-            <button className="border border-[#4c8ce6] text-[#4c8ce6] text-xs font-semibold px-3 py-1.5 rounded-lg">
+            <button
+              onClick={() => handleUnavailableAction('Family profile editing is not enabled for this local preview.')}
+              className="border border-[#4c8ce6] text-[#4c8ce6] text-xs font-semibold px-3 py-1.5 rounded-lg"
+            >
               View Profile
             </button>
           </div>
@@ -76,7 +98,7 @@ export default function MorePage() {
             {accountItems.map((item, idx) => (
               <button
                 key={item.label}
-                onClick={() => item.route && navigate(item.route)}
+                onClick={() => handleAccountAction(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-[#f6f7f8] transition-all ${idx < accountItems.length - 1 ? 'border-b border-slate-100' : ''}`}
               >
                 <span className="material-symbols-outlined text-slate-400 text-xl">{item.icon}</span>

@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute';
 import MainLayout from '../templates/main/MainLayout';
+import { getOrbForRoute, orbIds } from '../pod';
 import { paths } from './paths';
 export { paths } from './paths';
 
@@ -12,6 +13,7 @@ import OnboardingValuesPage from '../pages/onboarding/OnboardingValuesPage';
 
 // Generic Dash (redirects)
 import DashboardPage from '../pages/DashboardPage';
+import MaintenancePage from '../pages/adult/MaintenancePage';
 
 // Templates
 import ChildDashboard from '../templates/child/ChildDashboard';
@@ -30,6 +32,8 @@ import ConstitutionPage from '../pages/more/ConstitutionPage';
 import TimelinePage from '../pages/more/TimelinePage';
 import PetHubPage from '../pages/more/PetHubPage';
 import HealthPage from '../pages/more/HealthPage';
+import AssistantPage from '../pages/more/AssistantPage';
+import TransparencyPage from '../pages/more/TransparencyPage';
 
 // Adult only modules
 import AppealPage from '../pages/more/AppealPage';
@@ -42,18 +46,18 @@ import ResolutionConfirmedPage from '../pages/more/ResolutionConfirmedPage';
 
 // Shared navigation definitions mapped for UI tabs
 export const childNavTabs = [
-  { label: 'Home', icon: 'home', path: paths.childDashboard, match: paths.childDashboard },
-  { label: 'Wallet', icon: 'account_balance_wallet', path: paths.finance, match: paths.finance },
-  { label: 'Chores', icon: 'checklist', path: paths.chores, match: paths.chores },
-  { label: 'Sports', icon: 'sports_soccer', path: paths.sports, match: paths.sports, badge: 2 },
+  { label: 'Home', icon: 'home', path: paths.childDashboard, match: paths.childDashboard, orbId: orbIds.FAMILY_POD },
+  { label: 'Wallet', icon: 'account_balance_wallet', path: paths.finance, match: paths.finance, orbId: orbIds.FINANCE_LEARNING },
+  { label: 'Chores', icon: 'checklist', path: paths.chores, match: paths.chores, orbId: orbIds.CHORES },
+  { label: 'Sports', icon: 'sports_soccer', path: paths.sports, match: paths.sports, badge: 2, orbId: orbIds.SPORTS_TEAM },
   { label: 'More', icon: 'grid_view', path: paths.more, match: paths.more, badge: 1 },
 ];
 
 export const adultNavTabs = [
-  { label: 'HQ', icon: 'home_app_logo', path: paths.adultDashboard, match: paths.adultDashboard },
-  { label: 'Finance', icon: 'account_balance_wallet', path: paths.finance, match: paths.finance },
-  { label: 'Chores', icon: 'checklist', path: paths.chores, match: paths.chores },
-  { label: 'Maint.', icon: 'handyman', path: paths.adultMaintenance, match: paths.adultMaintenance },
+  { label: 'HQ', icon: 'home_app_logo', path: paths.adultDashboard, match: paths.adultDashboard, orbId: orbIds.FAMILY_POD },
+  { label: 'Finance', icon: 'account_balance_wallet', path: paths.finance, match: paths.finance, orbId: orbIds.FINANCE_LEARNING },
+  { label: 'Chores', icon: 'checklist', path: paths.chores, match: paths.chores, orbId: orbIds.CHORES },
+  { label: 'Maint.', icon: 'handyman', path: paths.adultMaintenance, match: paths.adultMaintenance, orbId: orbIds.AUTO_MAINTENANCE },
   { label: 'More', icon: 'grid_view', path: paths.more, match: paths.more, badge: 3 },
 ];
 
@@ -73,7 +77,7 @@ export const mainLayoutRoute = {
   children: [
     { path: paths.childDashboard, element: <ProtectedRoute allowedRoles={['child']}><ChildDashboard /></ProtectedRoute> },
     { path: paths.adultDashboard, element: <ProtectedRoute allowedRoles={['adult']}><AdultDashboard /></ProtectedRoute> },
-    { path: paths.adultMaintenance, element: <ProtectedRoute allowedRoles={['adult']}><div className="p-4 safe-top">Maintenance Dashboard Coming Soon</div></ProtectedRoute> },
+    { path: paths.adultMaintenance, element: <ProtectedRoute allowedRoles={['adult']}><MaintenancePage /></ProtectedRoute> },
     
     // Shared features
     { path: paths.finance, element: <FinancePage /> },
@@ -84,10 +88,12 @@ export const mainLayoutRoute = {
     { path: paths.sports, element: <LockerRoomPage /> },
     { path: paths.sportsChat, element: <TeamChatPage /> },
     { path: paths.more, element: <MorePage /> },
+    { path: paths.moreAssistant, element: <AssistantPage /> },
     { path: paths.moreConstitution, element: <ConstitutionPage /> },
     { path: paths.moreTimeline, element: <TimelinePage /> },
     { path: paths.morePets, element: <PetHubPage /> },
     { path: paths.moreHealth, element: <HealthPage /> },
+    { path: paths.moreTransparency, element: <ProtectedRoute allowedRoles={['adult']}><TransparencyPage /></ProtectedRoute> },
     { path: paths.moreAppeal, element: <AppealPage /> },
     { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },
     
@@ -116,3 +122,10 @@ export const fallbackRoutes = [
   { path: '/', element: <Navigate to={paths.login} replace /> },
   { path: '*', element: <Navigate to={paths.login} replace /> },
 ];
+
+export const routeOrbAssignments = Object.freeze(
+  Object.values(paths).reduce((assignments, route) => {
+    const orb = getOrbForRoute(route);
+    return orb ? { ...assignments, [route]: orb.id } : assignments;
+  }, {}),
+);

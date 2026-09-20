@@ -102,3 +102,60 @@ export const creatorStudio = {
   stats: { posts: 0, views: 0, likes: 0 },
   creations: [],
 };
+
+// TODO: GET /api/adult/maintenance
+export const maintenance = {
+  summary: {
+    dueSoon: 3,
+    overdue: 1,
+    monthlySpend: 286,
+  },
+  vehicles: [
+    {
+      id: 'vehicle-1',
+      title: 'Family SUV',
+      detail: 'Oil change due in 420 miles',
+      status: 'Due soon',
+      icon: 'directions_car',
+    },
+    {
+      id: 'vehicle-2',
+      title: 'Tire rotation',
+      detail: 'Last recorded 5 months ago',
+      status: 'Schedule',
+      icon: 'tire_repair',
+    },
+  ],
+  home: [
+    {
+      id: 'home-1',
+      title: 'HVAC filter',
+      detail: 'Replace this weekend',
+      status: 'Overdue',
+      icon: 'air',
+    },
+    {
+      id: 'home-2',
+      title: 'Smoke detector test',
+      detail: 'Monthly safety check',
+      status: 'Ready',
+      icon: 'detector_smoke',
+    },
+  ],
+  subscriptions: [
+    {
+      id: 'subscription-1',
+      title: 'Music plan',
+      detail: '$16.99 renews Oct 3',
+      status: 'Review',
+      icon: 'subscriptions',
+    },
+    {
+      id: 'subscription-2',
+      title: 'Cloud storage',
+      detail: '$9.99 renews Oct 8',
+      status: 'Active',
+      icon: 'cloud_sync',
+    },
+  ],
+};

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { governance } from '../../data/mockData';
 
-const TABS = ['Resolution', 'Jury Pool', 'Archive', 'Rule Book'];
+const TABS = ['Resolution', 'Circle', 'Archive', 'Rule Book'];
 
 export default function FamilyGovernancePage() {
   const navigate = useNavigate();
@@ -79,12 +79,17 @@ export default function FamilyGovernancePage() {
           </section>
         )}
 
-        {/* Jury Pool Tab */}
-        {activeTab === 'Jury Pool' && (
+        {/* Circle Tab */}
+        {activeTab === 'Circle' && (
           <section className="px-4 pt-6">
-            <h3 className="text-xl font-bold tracking-tight mb-4">The Jury Pool</h3>
+            <h3 className="text-xl font-bold tracking-tight mb-4">The Reflection Circle</h3>
             <div className="grid grid-cols-1 gap-3">
-              {governance.juryPool.map((member) => (
+              {governance.juryPool.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
+                  <span className="material-symbols-outlined text-3xl text-slate-300">groups</span>
+                  <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No reflection circle rotation yet</p>
+                </div>
+              ) : governance.juryPool.map((member) => (
                 <div
                   key={member.id}
                   className={`flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-opacity ${
@@ -119,11 +124,16 @@ export default function FamilyGovernancePage() {
         {activeTab === 'Archive' && (
           <section className="px-4 pt-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold tracking-tight">Court Archive</h3>
+              <h3 className="text-xl font-bold tracking-tight">Resolution Archive</h3>
               <button className="text-sm text-primary font-semibold hover:text-primary/80 transition-colors">See All</button>
             </div>
             <div className="flex flex-col gap-4">
-              {governance.archive.map((item) => (
+              {governance.archive.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
+                  <span className="material-symbols-outlined text-3xl text-slate-300">inventory_2</span>
+                  <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No archived resolutions yet</p>
+                </div>
+              ) : governance.archive.map((item) => (
                 <div
                   key={item.id}
                   className={`bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 border-l-4 ${

@@ -45,7 +45,7 @@ export default function FamilyCourtPage() {
           ? { ...c, title: formData.title, violation: formData.violation, timeRemaining: formData.timeRemaining }
           : c
       ));
-      showToast('Consequence updated');
+      showToast('Reflection updated');
     } else {
       const newConsequence = {
         id: `consequence-${localConsequences.length + 1}`,
@@ -58,7 +58,7 @@ export default function FamilyCourtPage() {
       };
       setLocalConsequences(prev => [newConsequence, ...prev]);
       setLocalStats(prev => ({ ...prev, activeMeasures: prev.activeMeasures + 1 }));
-      showToast('New consequence enacted');
+      showToast('New reflection recorded');
     }
     closeModal();
   };
@@ -66,7 +66,7 @@ export default function FamilyCourtPage() {
   const handleDelete = (id) => {
     setLocalConsequences(prev => prev.filter(c => c.id !== id));
     setLocalStats(prev => ({ ...prev, activeMeasures: Math.max(0, prev.activeMeasures - 1) }));
-    showToast('Consequence removed');
+    showToast('Reflection removed');
     closeModal();
   };
 
@@ -114,8 +114,8 @@ export default function FamilyCourtPage() {
             <span className="material-symbols-outlined block">arrow_back</span>
           </button>
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Family Court</h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Consequence Management</p>
+            <h1 className="text-xl font-bold tracking-tight">Accountability</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Reflection Management</p>
           </div>
         </div>
         <button
@@ -145,10 +145,10 @@ export default function FamilyCourtPage() {
           </div>
         </section>
 
-        {/* Active Consequences */}
+        {/* Active Reflections */}
         <section className="px-4 py-2">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold">Active Consequences</h2>
+            <h2 className="text-lg font-bold">Active Reflections</h2>
             <button
               onClick={() => navigate('/more/appeal')}
               className="text-primary text-sm font-semibold cursor-pointer hover:text-primary/80 transition-colors"
@@ -182,7 +182,7 @@ export default function FamilyCourtPage() {
                       </div>
                       <div className="min-w-0 pr-2">
                         <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base truncate">{c.title}</h3>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">Violation: {c.violation}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">Pattern note: {c.violation}</p>
                       </div>
                     </div>
                     {effectiveStatus !== 'completed' && (
@@ -235,16 +235,16 @@ export default function FamilyCourtPage() {
             {localConsequences.length === 0 && (
               <div className="text-center py-6 bg-slate-50 dark:bg-slate-800 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
                 <span className="material-symbols-outlined text-slate-300 text-4xl mb-2">sentiment_satisfied</span>
-                <p className="text-slate-500 font-medium text-sm">No active consequences. Everyone is behaving!</p>
+                <p className="text-slate-500 font-medium text-sm">No active reflections. The ledger is clear.</p>
               </div>
             )}
           </div>
         </section>
 
-        {/* Consequence History */}
+        {/* Reflection History */}
         <section className="px-4 py-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold">Consequence History</h2>
+            <h2 className="text-lg font-bold">Reflection History</h2>
             <span className="material-symbols-outlined text-slate-400">history</span>
           </div>
           <div className="space-y-2">
@@ -279,11 +279,11 @@ export default function FamilyCourtPage() {
 
       {/* Add / Edit Modal Overlay */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[120] flex items-end justify-center sm:items-center bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                {editingConsequence ? 'Edit Consequence' : 'New Consequence'}
+                {editingConsequence ? 'Edit Reflection' : 'New Reflection'}
               </h3>
               <button onClick={closeModal} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                 <span className="material-symbols-outlined">close</span>
@@ -292,22 +292,22 @@ export default function FamilyCourtPage() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Consequence Action</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Reflection Action</label>
                 <input 
                   type="text" 
                   value={formData.title} 
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  placeholder="e.g. Screen Time Lockdown" 
+                  placeholder="e.g. Screen Time Reflection" 
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Rule Violated</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Pattern Observed</label>
                 <input 
                   type="text" 
                   value={formData.violation} 
                   onChange={(e) => setFormData({...formData, violation: e.target.value})}
-                  placeholder="e.g. Skipped assigned chores" 
+                  placeholder="e.g. Missed assigned chores" 
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
@@ -336,7 +336,7 @@ export default function FamilyCourtPage() {
                 onClick={handleSaveConsequence}
                 className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-colors shadow-lg shadow-primary/20"
               >
-                {editingConsequence ? 'Update' : 'Enact Consequence'}
+                {editingConsequence ? 'Update' : 'Record Reflection'}
               </button>
             </div>
           </div>

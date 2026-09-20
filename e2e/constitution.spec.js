@@ -25,6 +25,8 @@ test.describe('ConstitutionPage', () => {
 
   test('"Propose Amendment" button shows toast', async ({ page }) => {
     await page.getByRole('button', { name: /Propose Amendment/i }).click();
+    await page.locator('textarea[placeholder*="screen time"]').fill('Add a weekly family reflection check-in.');
+    await page.getByRole('button', { name: 'Submit Proposal' }).click();
     await expect(page.getByText('Amendment proposal submitted!')).toBeVisible();
   });
 });

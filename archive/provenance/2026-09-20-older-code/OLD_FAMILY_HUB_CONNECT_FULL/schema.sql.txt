@@ -1,0 +1,349 @@
+-- Family Hub Connect Supabase Schema
+-- version 1.2.0
+
+-- =============================================
+-- 1. Helper Functions for RLS
+-- =============================================
+-- These functions make it easier to write RLS policies by providing
+-- information about the currently authenticated user.
+
+-- Function to get the family_id of the currently authenticated user.
+create or replace function request.family_id()
+returns uuid
+language sql stable
+as $$
+  select family_id
+  from public.profiles
+  where user_id = auth.uid()
+  limit 1;
+$$;
+
+-- Function to get the role of the currently authenticated user.
+create or replace function request.profile_role()
+returns text
+language sql stable
+as $$
+  select role
+  from public.profiles
+  where user_id = auth.uid()
+  limit 1;
+$$;
+
+-- =============================================
+-- 2. Table Definitions
+-- =============================================
+
+-- Stores the core family unit and shared settings.
+create table public.families (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  -- Stores settings like gamifyTasks, allowanceSettings, availableRewards, authorizedApps etc.
+  personalization_data jsonb
+);
+
+-- Stores individual user profiles, linking them to a family and an auth user.
+create table public.profiles (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  -- Can be null for children who do not have their own login.
+  user_id uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  name text not null check (char_length(name) > 0),
+  role text not null check (role in ('adult', 'child')),
+  avatar_url text,
+  points integer not null default 0,
+  balance numeric not null default 0.0,
+  earned_badges text[],
+  theme jsonb,
+  age integer,
+  email text,
+  phone text,
+  screen_name text,
+  last_chore_completion_date date,
+  chore_streak_count integer not null default 0,
+  google_refresh_token text, -- NOTE: For production, encrypt this column using supabase-vault or pgsodium.
+  -- A user can only be in one family.
+  unique (user_id)
+);
+
+-- Stores all chore items, both templates and instances.
+create table public.chores (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  name text not null,
+  assigned_to uuid references public.profiles(id) on delete set null,
+  status text not null default 'pending',
+  requires_photo boolean not null default false,
+  photo_proof_url text,
+  points integer not null default 0,
+  due_date date,
+  is_recurring boolean not null default false,
+  recurrence_type text, -- 'none', 'daily', 'weekly'
+  recurrence_days integer[],
+  -- If this is an instance of a recurring chore, this points to the master template.
+  template_chore_id uuid references public.chores(id) on delete cascade,
+  min_age integer,
+  max_age integer,
+  rejection_reason text,
+  is_bonus boolean not null default false,
+  bonus_amount numeric
+);
+
+-- Stores all family messages, both P2P and group.
+create table public.messages (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  author_id uuid not null references public.profiles(id) on delete cascade,
+  -- If null, message is for the whole family.
+  recipient_id uuid references public.profiles(id) on delete cascade,
+  text text not null,
+  subject text,
+  is_priority boolean not null default false,
+  read_by uuid[]
+);
+
+-- Stores system-generated notifications for users.
+create table public.notifications (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  -- The user this notification is for.
+  related_profile_id uuid not null references public.profiles(id) on delete cascade,
+  message text not null,
+  type text not null, -- 'new_message', 'chore_status', etc.
+  read boolean not null default false
+);
+
+-- Stores the shared family shopping list.
+create table public.shopping_list (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  name text not null,
+  added_by uuid not null references public.profiles(id) on delete cascade,
+  is_checked boolean not null default false,
+  quantity integer not null default 1
+);
+
+-- Stores family events for the calendar.
+create table public.events (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  created_by uuid not null references public.profiles(id) on delete cascade,
+  title text not null,
+  description text,
+  date date not null,
+  end_date date,
+  "time" time,
+  -- Used to link an event to a trip, so it can be managed from the trip planner.
+  trip_id uuid,
+  google_event_id text
+);
+
+-- Stores book reading logs for children.
+create table public.book_log (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  title text not null,
+  author text,
+  status text not null, -- 'reading', 'finished', 'to_read'
+  start_date date,
+  finish_date date,
+  rating integer,
+  notes text
+);
+
+-- Stores the weekly meal plan.
+create table public.meal_plan (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  day_of_week text not null,
+  meal_type text not null,
+  meal jsonb not null
+);
+
+-- Stores trip planning details.
+create table public.trips (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  name text not null,
+  destination text,
+  start_date date not null,
+  end_date date not null,
+  mode_of_transport text,
+  todos jsonb,
+  shopping_items jsonb,
+  packing_list jsonb,
+  ai_sightseeing_suggestions text[],
+  journal jsonb
+);
+
+-- Stores all financial transactions (allowance, deductions, requests).
+create table public.transactions (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  amount numeric not null,
+  description text not null,
+  status text not null -- 'completed', 'pending', 'denied'
+);
+
+-- Stores children's savings goals.
+create table public.savings_goals (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  name text not null,
+  icon text,
+  target_amount numeric not null,
+  current_amount numeric not null default 0,
+  is_completed boolean not null default false
+);
+
+-- Stores photo album metadata.
+create table public.photo_albums (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  created_by uuid not null references public.profiles(id) on delete cascade,
+  name text not null,
+  description text
+);
+
+-- Stores individual photos, linked to an album.
+create table public.photos (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  album_id uuid not null references public.photo_albums(id) on delete cascade,
+  uploaded_by uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  -- The path to the image in Supabase Storage.
+  image_url text not null,
+  caption text
+);
+
+-- Stores parent-approved website URLs for the safe browser.
+create table public.safe_websites (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  name text not null,
+  url text not null
+);
+
+-- Stores infractions for the family court system.
+create table public.infractions (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  child_id uuid not null references public.profiles(id) on delete cascade,
+  created_by uuid not null references public.profiles(id) on delete cascade,
+  reason text not null,
+  evidence_urls text[],
+  consequence_type text not null,
+  consequence_value text not null,
+  status text not null,
+  created_at timestamptz not null default now(),
+  completed_at timestamptz
+);
+
+
+-- =============================================
+-- 3. Row Level Security (RLS) Policies
+-- =============================================
+-- These policies ensure that users can only access data belonging to their own family.
+
+-- Generic policy creator function to reduce boilerplate.
+create or replace function create_family_based_rls(table_name text)
+returns void
+language plpgsql
+as $$
+begin
+  execute format('alter table public.%I enable row level security;', table_name);
+  execute format('create policy "Family members can view data" on public.%I for select using (family_id = request.family_id());', table_name);
+  execute format('create policy "Family members can insert data" on public.%I for insert with check (family_id = request.family_id());', table_name);
+  execute format('create policy "Family members can update data" on public.%I for update using (family_id = request.family_id());', table_name);
+  execute format('create policy "Family members can delete data" on public.%I for delete using (family_id = request.family_id());', table_name);
+end;
+$$;
+
+-- Apply generic RLS to all tables with a `family_id` column.
+select create_family_based_rls('chores');
+select create_family_based_rls('messages');
+select create_family_based_rls('notifications');
+select create_family_based_rls('shopping_list');
+select create_family_based_rls('events');
+select create_family_based_rls('book_log');
+select create_family_based_rls('meal_plan');
+select create_family_based_rls('trips');
+select create_family_based_rls('transactions');
+select create_family_based_rls('savings_goals');
+select create_family_based_rls('photo_albums');
+select create_family_based_rls('photos');
+select create_family_based_rls('safe_websites');
+select create_family_based_rls('infractions');
+
+-- Special RLS for `families` table.
+alter table public.families enable row level security;
+create policy "Family members can access their own family entry" on public.families for all using (id = request.family_id());
+
+-- Special RLS for `profiles` table.
+alter table public.profiles enable row level security;
+create policy "Family members can view profiles in their family" on public.profiles for select using (family_id = request.family_id());
+-- An adult can add new profiles to their own family.
+create policy "Adults can insert new profiles" on public.profiles for insert with check (family_id = request.family_id() and request.profile_role() = 'adult');
+-- A user can update their own profile. An adult can update any profile in their family.
+create policy "Users can update their own profile, adults can update any" on public.profiles for update using (user_id = auth.uid() or (family_id = request.family_id() and request.profile_role() = 'adult'));
+-- An adult can delete any profile in their family except for their own.
+create policy "Adults can delete other profiles" on public.profiles for delete using (family_id = request.family_id() and request.profile_role() = 'adult' and user_id <> auth.uid());
+
+
+-- =============================================
+-- 4. Supabase Storage
+-- =============================================
+
+-- Create a bucket for family photos.
+-- This needs to be done manually in the Supabase Dashboard or via CLI.
+-- The following are the policies that should be applied to the bucket once created.
+-- We assume the bucket is named "photos" and is public. For private, adjust policies.
+-- We also assume a file path structure like: {family_id}/{album_id}/{photo_id.jpg}
+
+-- Example SQL for storage policies (run in Supabase SQL Editor):
+
+-- insert into storage.buckets (id, name, public) values ('photos', 'photos', true);
+
+-- create policy "Family members can view photos in their folder"
+-- on storage.objects for select
+-- using ( bucket_id = 'photos' and (storage.foldername(name))[1] = request.family_id()::text );
+
+-- create policy "Family members can upload photos to their folder"
+-- on storage.objects for insert
+-- with check ( bucket_id = 'photos' and (storage.foldername(name))[1] = request.family_id()::text );
+
+-- create policy "Family members can update their own photos"
+-- on storage.objects for update
+-- using ( bucket_id = 'photos' and (storage.foldername(name))[1] = request.family_id()::text );
+
+-- create policy "Family members can delete their own photos"
+-- on storage.objects for delete
+-- using ( bucket_id = 'photos' and (storage.foldername(name))[1] = request.family_id()::text );
+
+-- New Bucket for Infraction Evidence
+insert into storage.buckets (id, name, public)
+values ('evidence', 'evidence', true);
+
+create policy "Family members can view evidence"
+on storage.objects for select
+using ( bucket_id = 'evidence' and (storage.foldername(name))[1] = request.family_id()::text );
+
+create policy "Family members can upload evidence"
+on storage.objects for insert
+with check ( bucket_id = 'evidence' and (storage.foldername(name))[1] = request.family_id()::text );
