@@ -5,8 +5,8 @@ export default function ResolutionConfirmedPage() {
   const navigate = useNavigate();
 
   const caseData = {
-    child: "Leo",
-    summaryText: "Leo's screen time reflection has been resolved with washing all dinner dishes tonight and a half-day screen adjustment starting after his project."
+    child: "family member",
+    summaryText: "No live resolution has been recorded yet."
   };
 
   return (
@@ -34,10 +34,9 @@ export default function ResolutionConfirmedPage() {
         {/* Summary Card */}
         <div className="p-4 mt-2">
           <div className="flex flex-col items-stretch justify-start rounded-2xl shadow-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden transform transition-all hover:shadow-md">
-            <div 
-              className="w-full h-40 bg-center bg-no-repeat bg-cover" 
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1573497491765-dccce02b29df?auto=format&fit=crop&q=80&w=800')" }}
-            ></div>
+            <div className="flex h-40 w-full items-center justify-center bg-emerald-50 text-emerald-500">
+              <span className="material-symbols-outlined text-5xl">task_alt</span>
+            </div>
             <div className="flex w-full flex-col gap-2 p-5">
               <p className="text-primary text-xs font-bold uppercase tracking-wider">Resolution Summary</p>
               <p className="text-slate-800 dark:text-slate-200 text-[15px] font-medium leading-relaxed">
@@ -56,8 +55,8 @@ export default function ResolutionConfirmedPage() {
                 <span className="material-symbols-outlined text-2xl">skillet</span>
               </div>
               <div className="flex-1">
-                <p className="font-bold text-[15px]">Chore: Dinner Dishes</p>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-0.5">Due: Tonight, 7:00 PM</p>
+                <p className="font-bold text-[15px]">No live chore term</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-0.5">Resolution terms will appear after entry.</p>
               </div>
             </div>
             
@@ -66,8 +65,8 @@ export default function ResolutionConfirmedPage() {
                 <span className="material-symbols-outlined text-2xl">hourglass_top</span>
               </div>
               <div className="flex-1">
-                <p className="font-bold text-[15px]">Screen Time Reflection</p>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-0.5">Reduced to 4 hours total today</p>
+                <p className="font-bold text-[15px]">No live adjustment term</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-0.5">Accountability adjustments will appear after entry.</p>
               </div>
             </div>
           </div>
@@ -80,15 +79,15 @@ export default function ResolutionConfirmedPage() {
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-emerald-500 shrink-0">check_circle</span>
-                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">Task added to Chore Hub</span>
+                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">No live chore automation recorded</span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-emerald-500 shrink-0">check_circle</span>
-                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">Screen time limit updated in Router Control</span>
+                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">No live external adjustment recorded</span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-emerald-500 shrink-0">check_circle</span>
-                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">Notification sent to {caseData.child} and Parents</span>
+                <span className="text-slate-700 dark:text-slate-300 text-[13px] font-bold">No live notification recorded for {caseData.child}</span>
               </li>
             </ul>
           </div>

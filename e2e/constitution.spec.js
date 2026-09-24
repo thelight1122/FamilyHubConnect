@@ -13,19 +13,17 @@ test.describe('ConstitutionPage', () => {
 
   test('Core Values section renders values', async ({ page }) => {
     await expect(page.getByText('Our Core Values')).toBeVisible();
-    await expect(page.getByText('Kindness')).toBeVisible();
-    await expect(page.getByText('Honesty')).toBeVisible();
-    await expect(page.getByText('Curiosity')).toBeVisible();
+    await expect(page.getByText('No live values entered')).toBeVisible();
   });
 
   test('Family Rules section is visible', async ({ page }) => {
-    await expect(page.getByText('Family Rules')).toBeVisible();
-    await expect(page.getByText('No phones at the dinner table.')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Family Rules' })).toBeVisible();
+    await expect(page.getByText('No live family rules entered.')).toBeVisible();
   });
 
   test('"Propose Amendment" button shows toast', async ({ page }) => {
     await page.getByRole('button', { name: /Propose Amendment/i }).click();
-    await page.locator('textarea[placeholder*="screen time"]').fill('Add a weekly family reflection check-in.');
+    await page.locator('textarea[placeholder*="proposed change"]').fill('Add a weekly family reflection check-in.');
     await page.getByRole('button', { name: 'Submit Proposal' }).click();
     await expect(page.getByText('Amendment proposal submitted!')).toBeVisible();
   });

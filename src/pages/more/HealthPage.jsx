@@ -4,8 +4,6 @@ import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
-{/* TODO: fetch health data from /api/health/:memberId */}
-
 const EVENT_TYPES = ['Illness', 'Injury', 'Doctor Visit', 'Medication Change', 'Other'];
 
 export default function HealthPage() {
@@ -28,13 +26,12 @@ export default function HealthPage() {
       <div className="flex p-4">
         <div className="flex w-full flex-col gap-4">
           <div className="flex gap-4 items-center">
-            <div
-              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 ring-4 ring-primary/10"
-              style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDa5zxrqqwTj31VU2KY24dz48oODGdUE00S4bwE9CFiUtLITQvAIFwDZw1afw_t7t7L_aetixV7CRz1gH2dFcOTX_uXUan5hdlrJnot3YTNu-j9JkKlI8Rqp0SEXJbc-5JYevK3rgXCdBrOEGDdmtFJ1vNRNABXOpG9WtvlvwEOLNQgQCeMIaq1n8ljYbCFB3o8qE-UF_62O6r8U10bf5NQZ0zOHPa_F87-yIP45aZtUA5xJzpZ07iLxsQhDvq6_iu8w2e19-NHAL4")' }}
-            />
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary ring-4 ring-primary/10">
+              <span className="material-symbols-outlined text-4xl">person</span>
+            </div>
             <div className="flex flex-col">
-              <p className="text-slate-900 text-2xl font-bold leading-tight tracking-tight">Leo</p>
-              <p className="text-slate-500 text-sm font-normal leading-normal">Last updated: Today, 10:30 AM</p>
+              <p className="text-slate-900 text-2xl font-bold leading-tight tracking-tight">Family Member</p>
+              <p className="text-slate-500 text-sm font-normal leading-normal">No live health logs yet</p>
             </div>
           </div>
         </div>
@@ -64,33 +61,9 @@ export default function HealthPage() {
           <button className="text-primary text-sm font-semibold">View All</button>
         </div>
         <div className="space-y-3">
-          {/* Med Item 1 */}
-          <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <span className="material-symbols-outlined">pill</span>
-            </div>
-            <div className="flex-1">
-              <p className="text-slate-900 font-bold text-sm">Amoxicillin</p>
-              <p className="text-slate-500 text-xs">5ml • Twice daily</p>
-            </div>
-            <div className="text-right">
-              <p className="text-primary font-bold text-xs uppercase tracking-wider">Next Dose</p>
-              <p className="text-slate-900 font-semibold text-sm">8:00 PM</p>
-            </div>
-          </div>
-          {/* Med Item 2 */}
-          <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 text-orange-500">
-              <span className="material-symbols-outlined">medication</span>
-            </div>
-            <div className="flex-1">
-              <p className="text-slate-900 font-bold text-sm">Children's Tylenol</p>
-              <p className="text-slate-500 text-xs">As needed for fever</p>
-            </div>
-            <div className="text-right">
-              <p className="text-slate-400 font-bold text-xs uppercase tracking-wider">Last Taken</p>
-              <p className="text-slate-900 font-semibold text-sm">10:15 AM</p>
-            </div>
+          <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
+            <span className="material-symbols-outlined text-3xl text-slate-300">pill</span>
+            <p className="mt-2 text-sm font-bold text-slate-600">No live medications entered</p>
           </div>
         </div>
       </div>
@@ -99,37 +72,13 @@ export default function HealthPage() {
       <div className="px-4 pt-8">
         <h3 className="text-slate-900 text-lg font-bold leading-tight tracking-tight mb-4">Recent History</h3>
         <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-slate-100">
-          {/* History Event 1 */}
-          <div className="relative flex gap-4">
-            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-primary z-10">
-              <span className="material-symbols-outlined text-primary text-xl">thermometer</span>
-            </div>
-            <div className="flex flex-col gap-1 pb-2">
-              <p className="text-xs font-semibold text-slate-400 uppercase">Today • 10:15 AM</p>
-              <p className="text-slate-900 font-bold">Fever Logged</p>
-              <p className="text-slate-600 text-sm">Temperature: 101.2°F. Administered Tylenol. Leo is resting.</p>
-            </div>
-          </div>
-          {/* History Event 2 */}
-          <div className="relative flex gap-4">
-            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-orange-400 z-10">
-              <span className="material-symbols-outlined text-orange-400 text-xl">healing</span>
-            </div>
-            <div className="flex flex-col gap-1 pb-2">
-              <p className="text-xs font-semibold text-slate-400 uppercase">Yesterday • 4:30 PM</p>
-              <p className="text-slate-900 font-bold">Minor Injury</p>
-              <p className="text-slate-600 text-sm">Scraped knee while playing in the yard. Cleaned and bandaged.</p>
-            </div>
-          </div>
-          {/* History Event 3 */}
           <div className="relative flex gap-4">
             <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 z-10">
               <span className="material-symbols-outlined text-slate-400 text-xl">description</span>
             </div>
             <div className="flex flex-col gap-1 pb-6">
-              <p className="text-xs font-semibold text-slate-400 uppercase">Aug 22 • 9:00 AM</p>
-              <p className="text-slate-900 font-bold">Pediatrician Visit</p>
-              <p className="text-slate-600 text-sm">Routine check-up. Amoxicillin prescribed for ear infection.</p>
+              <p className="text-slate-900 font-bold">No live health history entered</p>
+              <p className="text-slate-600 text-sm">Health events will appear here after entry.</p>
             </div>
           </div>
         </div>

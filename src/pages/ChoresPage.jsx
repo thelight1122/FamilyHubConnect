@@ -1,71 +1,80 @@
-import { useState, useRef } from 'react';
-import { tasks, rewards } from '../data/mockData';
-import { currentMember } from '../data/selectors';
+import { useState } from 'react';
 import Toast from '../components/Toast';
 import useToast from '../hooks/useToast';
+import useAuth from '../context/useAuth';
+import useFamilyCore from '../hooks/useFamilyCore';
 
 export default function ChoresPage() {
+  const { currentUser, supabaseAuthEnabled } = useAuth();
+  const {
+    family,
+    chores,
+    rewards,
+    isLoading,
+    error,
+    createFamily,
+    addChore,
+    toggleChore,
+    addReward,
+  } = useFamilyCore();
   const [activeTab, setActiveTab] = useState('tasks');
-  const [completedIds, setCompletedIds] = useState([]);
-  const [verifyingId, setVerifyingId] = useState(null);
   const [toast, showToast] = useToast();
-  const fileInputRef = useRef(null);
+  const [familyForm, setFamilyForm] = useState({ name: '', displayName: currentUser?.name ?? '' });
+  const [choreForm, setChoreForm] = useState({ title: '', points: '0' });
+  const [rewardForm, setRewardForm] = useState({ title: '', points: '1' });
 
-  const toggleTask = (id) => {
-    setCompletedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
+  const completedCount = chores.filter((task) => task.completed_at).length;
+  const progressPercent = Math.round((completedCount / chores.length) * 100) || 0;
+
+  const handleCreateFamily = async (event) => {
+    event.preventDefault();
+    const result = await createFamily({
+      name: familyForm.name,
+      displayName: familyForm.displayName || currentUser?.name || currentUser?.email || 'Family Member',
+    });
+    showToast(result.ok ? 'Family created' : result.message);
   };
 
-  const handleVerifyClick = (taskId) => {
-    setVerifyingId(taskId);
-    fileInputRef.current?.click();
-  };
-
-  const handleFileSelected = (e) => {
-    if (e.target.files?.length > 0 && verifyingId != null) {
-      setCompletedIds((prev) => [...new Set([...prev, verifyingId])]);
-      showToast('✓ Photo submitted — task verified!');
+  const handleAddChore = async (event) => {
+    event.preventDefault();
+    const result = await addChore(choreForm);
+    if (result.ok) {
+      setChoreForm({ title: '', points: '0' });
     }
-    setVerifyingId(null);
-    e.target.value = '';
+    showToast(result.ok ? 'Chore added' : result.message);
   };
 
-  const handleRedeem = (reward) => {
-    if (450 >= reward.points) {
-      showToast(`🎉 Redeemed: ${reward.title}!`);
+  const handleToggleChore = async (chore) => {
+    const result = await toggleChore(chore);
+    showToast(result.ok ? (chore.completed_at ? 'Chore reopened' : 'Chore completed') : result.message);
+  };
+
+  const handleAddReward = async (event) => {
+    event.preventDefault();
+    const result = await addReward(rewardForm);
+    if (result.ok) {
+      setRewardForm({ title: '', points: '1' });
     }
+    showToast(result.ok ? 'Reward added' : result.message);
   };
-
-  const progressPercent = Math.round((completedIds.length / tasks.length) * 100) || 0;
 
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24 font-display flex flex-col">
       <Toast message={toast} />
 
-      {/* Hidden file input for photo verify */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        className="hidden"
-        onChange={handleFileSelected}
-      />
-
       {/* Header / Profile Section */}
       <header className="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
         <div className="flex items-center p-4 justify-between max-w-2xl mx-auto">
           <div className="flex size-10 shrink-0 items-center">
-             <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary overflow-hidden">
-               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJLjl6Ef7bK-u_B2NcS7dt7erjVSdao2IuOgK27fYvgiRYQ1c6TSjOn2sdLMrDArlKAERFzjINx7uZP06Noe9OuWk9booq3wx_Ryr2CnXiJmlGeFfkTTvbnQ2nyIl1AS87YfbZI6bo_EWwXAAb_y-FPf38D3Wjt2L_CCENy3dwziFH1GbRkcUEW70bREGv3h0R9w_7URV-lb-elowFiRVjBwBTZCHCe2qrwSOOSwX374fPBHyuCHdlgpBTKVSwwDgPaoq16c8oURM" alt="Avatar" className="w-full h-full object-cover" />
+             <div className="rounded-full size-10 border-2 border-primary bg-primary/10 text-primary flex items-center justify-center font-black">
+               {currentUser?.name?.slice(0, 1).toUpperCase() || 'F'}
              </div>
           </div>
           <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Chores & Rewards</h1>
           <div className="flex items-center justify-end">
              <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800/50 rounded-full px-3 py-1.5">
                <span className="material-symbols-outlined text-amber-500 text-base filled-icon">star</span>
-               <span className="text-sm font-bold text-amber-700 dark:text-amber-400">{currentMember.points}</span>
+               <span className="text-sm font-bold text-amber-700 dark:text-amber-400">{chores.reduce((sum, chore) => sum + (chore.completed_at ? chore.points : 0), 0)}</span>
              </div>
           </div>
         </div>
@@ -98,6 +107,44 @@ export default function ChoresPage() {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 flex-1">
+        {!supabaseAuthEnabled && (
+          <section className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+            Live data entry requires Supabase authentication. Configure Supabase and sign in to create your test family.
+          </section>
+        )}
+
+        {error && (
+          <section className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+            {error}
+          </section>
+        )}
+
+        {supabaseAuthEnabled && !isLoading && !family && (
+          <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="text-lg font-black">Create Test Family</h2>
+            <p className="mt-1 text-sm font-medium text-slate-500">This creates the first live family record for your signed-in account.</p>
+            <form className="mt-4 space-y-3" onSubmit={handleCreateFamily}>
+              <input
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-primary"
+                value={familyForm.name}
+                onChange={(event) => setFamilyForm((prev) => ({ ...prev, name: event.target.value }))}
+                placeholder="Family name"
+                required
+              />
+              <input
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-primary"
+                value={familyForm.displayName}
+                onChange={(event) => setFamilyForm((prev) => ({ ...prev, displayName: event.target.value }))}
+                placeholder="Your display name"
+                required
+              />
+              <button className="w-full rounded-xl bg-primary px-4 py-3 text-sm font-black text-white" type="submit">
+                Create Family
+              </button>
+            </form>
+          </section>
+        )}
+
         {activeTab === 'tasks' ? (
           <>
             {/* Hero Section */}
@@ -108,8 +155,8 @@ export default function ChoresPage() {
                     <span className="material-symbols-outlined text-primary text-4xl">rocket_launch</span>
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-2xl font-bold leading-tight">Great job, {currentMember.name}!</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">You're {progressPercent}% done for today.</p>
+                    <p className="text-2xl font-bold leading-tight">{family?.name ?? 'Live Family Setup'}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">{chores.length > 0 ? `You're ${progressPercent}% done for today.` : 'Add your first live chore to begin.'}</p>
                   </div>
                 </div>
               </div>
@@ -119,7 +166,7 @@ export default function ChoresPage() {
             <section className="mb-8">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">My Tasks for Today</h2>
-                <span className="text-primary text-sm font-bold">{completedIds.length}/{tasks.length} Done</span>
+                <span className="text-primary text-sm font-bold">{completedCount}/{chores.length} Done</span>
               </div>
               
               {/* Progress Bar */}
@@ -130,16 +177,36 @@ export default function ChoresPage() {
                 />
               </div>
 
+              {family && (
+                <form className="mb-4 grid grid-cols-[1fr_88px_auto] gap-2" onSubmit={handleAddChore}>
+                  <input
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"
+                    value={choreForm.title}
+                    onChange={(event) => setChoreForm((prev) => ({ ...prev, title: event.target.value }))}
+                    placeholder="New chore"
+                    required
+                  />
+                  <input
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"
+                    type="number"
+                    min="0"
+                    value={choreForm.points}
+                    onChange={(event) => setChoreForm((prev) => ({ ...prev, points: event.target.value }))}
+                    aria-label="Chore points"
+                  />
+                  <button className="rounded-xl bg-primary px-4 py-2 text-sm font-black text-white" type="submit">Add</button>
+                </form>
+              )}
+
               <div className="space-y-3">
-                {tasks.length === 0 ? (
+                {chores.length === 0 ? (
                   <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
                     <span className="material-symbols-outlined text-3xl text-slate-300">checklist</span>
-                    <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No tasks yet</h3>
-                    <p className="mt-1 text-sm font-medium text-slate-500">New chores will appear here when the family adds them.</p>
+                    <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No live chores entered</h3>
+                    <p className="mt-1 text-sm font-medium text-slate-500">Use the form above to add your first test-family chore.</p>
                   </div>
-                ) : tasks.map((task, idx) => {
-                  const isDone = completedIds.includes(task.id);
-                  // Assign some fun colors based on index to mimic the colorful mockup
+                ) : chores.map((task, idx) => {
+                  const isDone = Boolean(task.completed_at);
                   const icons = ["bed", "recycling", "auto_stories", "pet_supplies"];
                   const colors = ["blue", "green", "purple", "orange"];
                   const taskIcon = icons[idx % icons.length];
@@ -155,7 +222,7 @@ export default function ChoresPage() {
                           <h3 className="font-bold text-slate-400 line-through">{task.title}</h3>
                           <p className="text-sm text-slate-400">Completed!</p>
                         </div>
-                        <button onClick={() => toggleTask(task.id)} className="text-primary bg-primary/10 rounded-full p-1">
+                        <button onClick={() => handleToggleChore(task)} className="text-primary bg-primary/10 rounded-full p-1">
                           <span className="material-symbols-outlined text-3xl filled-icon">check_circle</span>
                         </button>
                       </div>
@@ -164,7 +231,7 @@ export default function ChoresPage() {
 
                   return (
                     <div key={task.id} className="bg-white dark:bg-slate-800 p-4 rounded-2xl flex items-center gap-4 border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:shadow-md">
-                      <button onClick={() => toggleTask(task.id)} className={`size-12 rounded-xl bg-${colorTheme}-100 dark:bg-${colorTheme}-900/30 flex items-center justify-center text-${colorTheme}-600 active:scale-95 transition-transform`}>
+                      <button onClick={() => handleToggleChore(task)} className={`size-12 rounded-xl bg-${colorTheme}-100 dark:bg-${colorTheme}-900/30 flex items-center justify-center text-${colorTheme}-600 active:scale-95 transition-transform`}>
                         <span className="material-symbols-outlined text-3xl">{taskIcon}</span>
                       </button>
                       <div className="flex-1">
@@ -175,16 +242,9 @@ export default function ChoresPage() {
                         </p>
                       </div>
                       
-                      {task.requiresPhoto ? (
-                        <button onClick={() => handleVerifyClick(task.id)} className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-primary-dark transition-colors">
-                          <span className="material-symbols-outlined text-sm">photo_camera</span>
-                          Verify
-                        </button>
-                      ) : (
-                        <button onClick={() => toggleTask(task.id)} className="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-bold hover:bg-slate-200 transition-colors">
-                          Done
-                        </button>
-                      )}
+                      <button onClick={() => handleToggleChore(task)} className="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-bold hover:bg-slate-200 transition-colors">
+                        Done
+                      </button>
                     </div>
                   );
                 })}
@@ -196,36 +256,48 @@ export default function ChoresPage() {
             {/* Rewards Store Tab */}
             <section className="py-6 mb-10">
               <h2 className="mb-4 text-xl font-bold">Rewards Store</h2>
+              {family && (
+                <form className="mb-4 grid grid-cols-[1fr_88px_auto] gap-2" onSubmit={handleAddReward}>
+                  <input
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"
+                    value={rewardForm.title}
+                    onChange={(event) => setRewardForm((prev) => ({ ...prev, title: event.target.value }))}
+                    placeholder="New reward"
+                    required
+                  />
+                  <input
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"
+                    type="number"
+                    min="1"
+                    value={rewardForm.points}
+                    onChange={(event) => setRewardForm((prev) => ({ ...prev, points: event.target.value }))}
+                    aria-label="Reward points"
+                  />
+                  <button className="rounded-xl bg-primary px-4 py-2 text-sm font-black text-white" type="submit">Add</button>
+                </form>
+              )}
               {rewards.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
                   <span className="material-symbols-outlined text-3xl text-slate-300">redeem</span>
-                  <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No rewards yet</h3>
-                  <p className="mt-1 text-sm font-medium text-slate-500">Reward choices will appear here when an adult adds them.</p>
+                  <h3 className="mt-2 font-bold text-slate-700 dark:text-slate-200">No live rewards entered</h3>
+                  <p className="mt-1 text-sm font-medium text-slate-500">Use the form above to add your first test-family reward.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
                   {rewards.map((reward, i) => {
-                  const canAfford = currentMember.points >= reward.points;
-                  
-                  // Add realistic placeholder images since the mockup had rich images
-                  const images = [
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuAMej0Wdsz3Xzgku3ZBCTZirLNz9e1rYuhgJ1pcPlWAbEpHrV9cKmrQDZFJZeM1g3ZBnmkfBX9h-YVIV4o38DMjzxxf1TvqwX-Hpk7rB3fVPCqnhlC6MSPk8iNWi8QFkYK3bjC1wdC-ngc-fSmttHCfaeXB6oONaq-yMGxCHxaPBb8cqkVVpd5DR-z8t83G-JKNTZv2BRBEseRjm1xWEzTFbV-poi4zKbWIBmue_NwZ0prtcNeKHN_I3Rgjk_fGLo-BZI4B1N6FcGg",
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuBSJI7-HJfJse6Sn4NflsNcXTYDmipvAlMZi32pfJMe9x1lmmqUkIjwdWBIXnln2p-Ck5kPeHhnvReERjIN0kn7c6ZzDRKmzLAHvOfLIt9SiBrjUzCb5Xm3nYuE41GTJHTobq4ohL-e3rABeDkha5SIMBVOIRZRE3PNpDUGKdBmAY21aGmJzh7AMZ4MJaeQltp5zzvd-oO-I6h3-McH64d1ad3tj6BFpf3BfzkMT-K8uHNQyPgp437Jc9y3FHBZDjdi3-rczISXvLM",
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuB6gXHkOzN6WHGK6wbMTLyGcBKWKYy_3S1Oz2khRp5-cepRmYWDp49zO6yRk1FRe0KerZBHH9DeC_c5jDAZSTvlfAlTnmRQ076inuVZ_tPThLpNeZhsLvQfohpcy0wh5RSfWPLDWkv853mEljSYhewKvNlO9IjkFMKlwj9ubHqw5oVdvQprspyCCtwb34BOTnmij4zQyPOxaRRZuQx9OxMo3Qb9069B-GtL4ZH1ji6rmdrt-su73ByBcEOiy80zxCylDLE-IhKm-FQ",
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuDlRUOinb7Ek7TUWRb0zQAIe1ahCjhSPo5jWIkyDmLUYIkECl7tmMFqjNHQ7kS5pxVk9Q6RQt_KvyCGMmPPCto_ls5xEcHMHTsBbongEb30A9YJpVxQ4CNtr0KqUuFF31OhfF40es0779NRiGj8V-8huHTfwvtRl0_VtZ_DEqmkcURXlk414Y-72gLVeJaIwYG61ppo9b7JxM7bJkJINAeSpMKZSs3uI4Da-4u1DX-IMWd5MrlTzd3jMNCtdz9BdF_dIlU-NA5qu6E"
-                  ];
+                  const canAfford = completedCount > 0;
                   
                   return (
                     <div key={reward.id} className="bg-white dark:bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col group hover:shadow-md transition-shadow">
-                      <div className="h-32 bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
-                        <img src={images[i % images.length]} alt={reward.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="h-32 bg-primary/10 dark:bg-slate-700 relative overflow-hidden flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-5xl">redeem</span>
                         {i === 0 && (
                           <div className="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">POPULAR</div>
                         )}
                       </div>
                       <div className="p-3 flex flex-col flex-1">
                         <h4 className="font-bold text-sm text-slate-800 dark:text-slate-100">{reward.title}</h4>
-                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5 mb-2">{reward.subtitle}</p>
+                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5 mb-2">Live reward</p>
                         
                         <div className="mt-auto flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-700">
                           <span className={`font-bold text-sm flex items-center gap-0.5 ${canAfford ? 'text-primary' : 'text-slate-400'}`}>
@@ -233,7 +305,7 @@ export default function ChoresPage() {
                           </span>
                           
                           {canAfford ? (
-                            <button onClick={() => handleRedeem(reward)} className="bg-primary/10 text-primary p-1.5 rounded-lg hover:bg-primary/20 transition-colors active:scale-90">
+                            <button onClick={() => showToast(`Reward selected: ${reward.title}`)} className="bg-primary/10 text-primary p-1.5 rounded-lg hover:bg-primary/20 transition-colors active:scale-90">
                               <span className="material-symbols-outlined text-lg">shopping_basket</span>
                             </button>
                           ) : (

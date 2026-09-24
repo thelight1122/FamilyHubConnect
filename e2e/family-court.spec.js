@@ -24,8 +24,8 @@ test.describe('FamilyCourtPage', () => {
 
   test('can add a local consequence', async ({ page }) => {
     await page.locator('button:has(span.material-symbols-outlined:text("add"))').click();
-    await page.locator('input[placeholder*="Screen Time"]').fill('Reflection check-in');
-    await page.locator('input[placeholder*="Missed"]').fill('Missed family agreement');
+    await page.locator('input[placeholder*="reflection action"]').fill('Reflection check-in');
+    await page.locator('input[placeholder*="observed pattern"]').fill('Missed family agreement');
     await page.getByRole('button', { name: /Record Reflection/i }).click();
     await expect(page.getByText('New reflection recorded')).toBeVisible();
     await expect(page.getByText('Reflection check-in')).toBeVisible();
@@ -38,7 +38,6 @@ test.describe('FamilyCourtPage', () => {
   test('Reflection History section can load older history', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Reflection History' })).toBeVisible();
     await page.getByRole('button', { name: /Load Older History/i }).click();
-    await expect(page.getByText('Loaded older history')).toBeVisible();
-    await expect(page.getByText('Loss of TV Privileges')).toBeVisible();
+    await expect(page.getByText('No live history to load yet')).toBeVisible();
   });
 });

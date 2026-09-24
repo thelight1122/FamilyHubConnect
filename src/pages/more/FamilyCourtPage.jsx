@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
-import { familyCourt } from '../../data/mockData';
 
 const STATUS_CONFIG = {
   in_progress: { dotClass: 'bg-amber-500 animate-pulse', textClass: 'text-amber-600', label: 'In Progress' },
@@ -14,10 +13,13 @@ export default function FamilyCourtPage() {
   const navigate = useNavigate();
   const [toast, showToast] = useToast();
   
-  // Convert mock data to local state
-  const [localStats, setLocalStats] = useState(familyCourt.stats);
-  const [localConsequences, setLocalConsequences] = useState(familyCourt.consequences);
-  const [localHistory, setLocalHistory] = useState(familyCourt.history);
+  const [localStats, setLocalStats] = useState({
+    activeMeasures: 0,
+    weeklyResolution: 0,
+    resolutionTrend: 0,
+  });
+  const [localConsequences, setLocalConsequences] = useState([]);
+  const [localHistory] = useState([]);
   
   const [markedDone, setMarkedDone] = useState([]);
   
@@ -88,16 +90,7 @@ export default function FamilyCourtPage() {
   };
 
   const handleLoadOlderHistory = () => {
-    const olderMock = {
-      id: Date.now(),
-      title: 'Loss of TV Privileges',
-      detail: 'Skipped soccer practice',
-      status: 'completed',
-      ago: '3 wks ago',
-      resolution: 'Completed 1 extra chore'
-    };
-    setLocalHistory(prev => [...prev, olderMock]);
-    showToast('Loaded older history');
+    showToast('No live history to load yet');
   };
 
   return (
@@ -297,7 +290,7 @@ export default function FamilyCourtPage() {
                   type="text" 
                   value={formData.title} 
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  placeholder="e.g. Screen Time Reflection" 
+                  placeholder="Enter reflection action" 
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
@@ -307,7 +300,7 @@ export default function FamilyCourtPage() {
                   type="text" 
                   value={formData.violation} 
                   onChange={(e) => setFormData({...formData, violation: e.target.value})}
-                  placeholder="e.g. Missed assigned chores" 
+                  placeholder="Enter observed pattern" 
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
@@ -317,7 +310,7 @@ export default function FamilyCourtPage() {
                   type="text" 
                   value={formData.timeRemaining} 
                   onChange={(e) => setFormData({...formData, timeRemaining: e.target.value})}
-                  placeholder="e.g. 24 hours" 
+                  placeholder="Enter duration or condition" 
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>

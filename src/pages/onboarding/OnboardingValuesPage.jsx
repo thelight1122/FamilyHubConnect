@@ -39,16 +39,16 @@ export default function OnboardingValuesPage() {
         <div className="flex flex-col gap-3 p-4">
           <div className="flex gap-6 justify-between items-center">
             <p className="text-slate-700 dark:text-slate-300 text-sm font-semibold uppercase tracking-wider">Onboarding Progress</p>
-            <p className="text-primary text-sm font-bold">1 of 3</p>
+            <p className="text-primary text-sm font-bold">2 of 4</p>
           </div>
           <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-            <div className="h-full rounded-full bg-primary" style={{ width: '33%' }}></div>
+            <div className="h-full rounded-full bg-primary" style={{ width: '50%' }}></div>
           </div>
         </div>
 
         {/* Hero Text */}
         <div className="px-4 pt-4 pb-4">
-          <h3 className="tracking-tight text-2xl font-bold leading-tight">Step 1: Core Values</h3>
+          <h3 className="tracking-tight text-2xl font-bold leading-tight">Step 2: Core Values</h3>
           <p className="text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed mt-2">
             Select the values that define your family. These will form the foundation of your Family Constitution.
           </p>
@@ -94,7 +94,7 @@ export default function OnboardingValuesPage() {
         {/* Footer Navigation */}
         <div className="mt-auto p-4 flex gap-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 sticky bottom-0">
           <button 
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/onboarding/setup')}
             className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
             Back

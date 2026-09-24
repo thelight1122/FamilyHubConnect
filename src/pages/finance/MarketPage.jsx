@@ -2,18 +2,13 @@ import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
-import { portfolio } from '../../data/mockData';
 
 export default function MarketPage() {
-  const [localPortfolio, setLocalPortfolio] = useState(() => {
-    // Inject a default cash balance for simulation purposes
-    const initialCash = 500.00;
-    const initialStocksValue = portfolio.stocks.reduce((acc, s) => acc + (s.shares * s.price), 0);
-    return {
-      ...portfolio,
-      cashBalance: initialCash,
-      value: initialStocksValue + initialCash // redefine total value to include cash
-    };
+  const [localPortfolio, setLocalPortfolio] = useState({
+    cashBalance: 0,
+    change: 0,
+    stocks: [],
+    value: 0,
   });
   
   const [selected, setSelected] = useState(null);
@@ -96,7 +91,7 @@ export default function MarketPage() {
                 <p className="text-xs font-semibold text-white/60 mb-0.5">Today's Return</p>
                 <span className="inline-flex items-center gap-1 text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/20 rounded-lg px-2 py-1">
                   <span className="material-symbols-outlined text-[10px]">trending_up</span>
-                  +{localPortfolio.change}%
+                  {localPortfolio.change >= 0 ? '+' : ''}{localPortfolio.change}%
                 </span>
               </div>
             </div>
@@ -210,7 +205,7 @@ export default function MarketPage() {
         <div className="bg-amber-50 border border-amber-200/60 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
           <span className="material-symbols-outlined text-amber-500 text-xl shrink-0 mt-0.5">lightbulb</span>
           <p className="text-sm text-amber-900 font-medium leading-relaxed">
-            Diversifying your portfolio helps reduce risk. Try exploring different sectors!
+            Live market entries will appear after the family records positions.
           </p>
         </div>
 

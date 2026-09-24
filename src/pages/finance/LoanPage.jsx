@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { currentMember } from '../../data/selectors';
-import { finances } from '../../data/mockData';
 import { paths } from '../../config/paths';
 
 export default function LoanPage() {
@@ -27,8 +26,8 @@ export default function LoanPage() {
 // PARENT LOAN VIEW (Review & Repayments)
 // ----------------------------------------------------------------------------
 function ParentLoanView({ navigate }) {
-  const loan = finances.loans[0] || { name: "Leo's Bike Loan", amount: 150, paid: 105, due: "Oct 15", borrower: "Leo" };
-  const progress = Math.round((loan.paid / loan.amount) * 100);
+  const loans = [];
+  const pitches = [];
 
   return (
     <div className="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark">
@@ -43,55 +42,24 @@ function ParentLoanView({ navigate }) {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
         <section className="space-y-4">
           <h2 className="text-xl font-bold tracking-tight">Repayment Tracking</h2>
-          
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:shadow-md">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-center bg-no-repeat bg-cover rounded-xl border border-slate-100 dark:border-slate-700" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=200")' }}></div>
-                <div>
-                  <p className="text-[#ec5b13] text-xs font-bold uppercase tracking-widest">{loan.borrower}'s Loan</p>
-                  <p className="font-bold text-lg leading-tight">{loan.name}</p>
-                </div>
-              </div>
-              <span className="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-widest border border-green-200 dark:border-green-800/50">ON TRACK</span>
+          {loans.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span className="material-symbols-outlined text-3xl text-slate-300">payments</span>
+              <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No live loans entered</p>
+              <p className="mt-1 text-xs font-medium text-slate-400">Loan records will appear here after family entry.</p>
             </div>
-
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-sm font-bold">
-                <span className="text-slate-600 dark:text-slate-400">${loan.paid} Paid</span>
-                <span className="text-[#ec5b13]">{progress}%</span>
-              </div>
-              <div className="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                <div className="bg-[#ec5b13] h-full rounded-full transition-all" style={{ width: `${progress}%` }}></div>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Target: {loan.due} • ${loan.amount - loan.paid} remaining</p>
-            </div>
-
-            <div className="flex gap-2 border-t border-slate-100 dark:border-slate-700 pt-4">
-              <button className="flex-1 bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 rounded-xl text-sm transition-colors border border-slate-200 dark:border-slate-600">
-                Log Payment
-              </button>
-              <button className="flex-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 rounded-xl text-sm transition-colors border border-slate-200 dark:border-slate-600">
-                Modify Terms
-              </button>
-            </div>
-          </div>
+          )}
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-xl font-bold tracking-tight">Pending Pitches (1)</h2>
-          <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:border-[#ec5b13] transition-colors" onClick={() => navigate(paths.financeLoanConfirmation)}>
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-full bg-[#ec5b13]/10 flex items-center justify-center text-[#ec5b13]">
-                <span className="material-symbols-outlined">description</span>
-              </div>
-              <div>
-                <p className="font-bold text-[15px]">Maya's Art Tablet</p>
-                <p className="text-xs text-slate-500 font-medium">Requested $200.00</p>
-              </div>
+          <h2 className="text-xl font-bold tracking-tight">Pending Pitches ({pitches.length})</h2>
+          {pitches.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span className="material-symbols-outlined text-3xl text-slate-300">description</span>
+              <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No live pitches submitted</p>
+              <p className="mt-1 text-xs font-medium text-slate-400">Submitted family pitches will be listed here for review.</p>
             </div>
-            <span className="material-symbols-outlined text-slate-400">chevron_right</span>
-          </div>
+          )}
         </section>
       </div>
     </div>
@@ -138,7 +106,7 @@ function ChildLoanPitchView({ navigate }) {
           <div className="relative">
             <textarea 
               className="w-full min-h-[120px] rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent p-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-sm shadow-sm transition-all focus:bg-white" 
-              placeholder="e.g., A new mountain bike for the summer trails so I can ride with the neighborhood club..."
+              placeholder="Describe the funding request..."
             ></textarea>
           </div>
         </section>

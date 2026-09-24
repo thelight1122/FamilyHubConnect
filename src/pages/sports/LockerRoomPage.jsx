@@ -4,13 +4,9 @@ import { paths } from '../../config/paths';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
-// TODO: fetch from /api/sports/teams
 const TEAMS = [];
-// TODO: fetch from /api/sports/checklist
 const CHECKLIST_ITEMS = [];
-// TODO: fetch from /api/sports/schedule
 const SCHEDULE = [];
-// TODO: fetch from /api/sports/contacts
 const CONTACTS = [];
 
 export default function LockerRoomPage() {
@@ -249,14 +245,14 @@ export default function LockerRoomPage() {
                 <div className="flex gap-2">
                   {contact.showCall && (
                     <button
-                      onClick={() => showToast('Message feature coming soon!')}
+                      onClick={() => showToast('No live contact action configured yet.')}
                       className="p-2 bg-slate-100 rounded-full text-primary"
                     >
                       <span className="material-symbols-outlined text-sm">call</span>
                     </button>
                   )}
                   <button
-                    onClick={() => showToast('Message feature coming soon!')}
+                    onClick={() => showToast('No live contact action configured yet.')}
                     className="p-2 bg-slate-100 rounded-full text-primary"
                   >
                     <span className="material-symbols-outlined text-sm">chat_bubble</span>

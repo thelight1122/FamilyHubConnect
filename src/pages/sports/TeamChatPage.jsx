@@ -4,12 +4,7 @@ import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
-// TODO: connect to real-time chat API
-
-// TODO: fetch online members from /api/sports/chat/online
 const ONLINE_AVATARS = [];
-
-// TODO: fetch from /api/sports/chat/messages
 const INITIAL_MESSAGES = [];
 
 export default function TeamChatPage() {
@@ -63,7 +58,7 @@ export default function TeamChatPage() {
           </div>
         ))}
         <div className="flex-shrink-0 size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold border-2 border-transparent">
-          +14
+          0
         </div>
       </div>
 
@@ -79,10 +74,9 @@ export default function TeamChatPage() {
             <p className="text-sm font-bold uppercase tracking-wider">Team Announcement</p>
           </div>
           <div className="space-y-1">
-            <p className="font-bold text-slate-900">Practice Location Change</p>
+            <p className="font-bold text-slate-900">No live announcements</p>
             <p className="text-sm text-slate-600">
-              Practice moved to Field 4 this Thursday due to maintenance. Please arrive 15 minutes
-              early for warmups.
+              Team announcements will appear here after entry.
             </p>
           </div>
           <button className="flex items-center gap-2 text-sm font-bold text-primary hover:underline group">
@@ -169,7 +163,7 @@ export default function TeamChatPage() {
       <footer className="p-4 bg-background-light border-t border-primary/10">
         <div className="flex items-center gap-2 max-w-md mx-auto">
           <button
-            onClick={() => showToast('File attachments coming soon!')}
+            onClick={() => showToast('No live attachment storage configured yet.')}
             className="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:text-primary transition-colors"
           >
             <span className="material-symbols-outlined">add</span>
@@ -185,7 +179,7 @@ export default function TeamChatPage() {
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
               <button
-                onClick={() => showToast('File attachments coming soon!')}
+                onClick={() => showToast('No live attachment storage configured yet.')}
                 className="p-1.5 text-slate-400 hover:text-primary"
               >
                 <span className="material-symbols-outlined text-xl">image</span>

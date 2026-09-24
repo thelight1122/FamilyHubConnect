@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
 import { paths } from '../../config/paths';
-import { maintenance } from '../../data/mockData';
+import { emptyMaintenance } from '../../data/liveData';
 import { orbIds, recordGovernanceEvent } from '../../pod';
 
 const SECTIONS = [
@@ -28,7 +28,8 @@ export default function MaintenancePage() {
     summary: 'Adult maintenance hub viewed with AI-safe household operational shadows.',
   });
 
-  const items = maintenance[activeSection] ?? [];
+  const items = emptyMaintenance[activeSection] ?? [];
+  const summary = emptyMaintenance.summary;
 
   const toggleComplete = (itemId) => {
     setCompleted((current) => (
@@ -60,15 +61,15 @@ export default function MaintenancePage() {
           <div className="mt-5 grid grid-cols-3 gap-3">
             <div className="rounded-2xl bg-white/10 p-3">
               <p className="text-[10px] font-bold uppercase text-white/50">Due soon</p>
-              <p className="mt-1 text-xl font-black">{maintenance.summary.dueSoon}</p>
+              <p className="mt-1 text-xl font-black">{summary.dueSoon}</p>
             </div>
             <div className="rounded-2xl bg-white/10 p-3">
               <p className="text-[10px] font-bold uppercase text-white/50">Overdue</p>
-              <p className="mt-1 text-xl font-black">{maintenance.summary.overdue}</p>
+              <p className="mt-1 text-xl font-black">{summary.overdue}</p>
             </div>
             <div className="rounded-2xl bg-white/10 p-3">
               <p className="text-[10px] font-bold uppercase text-white/50">Monthly</p>
-              <p className="mt-1 text-xl font-black">${maintenance.summary.monthlySpend}</p>
+              <p className="mt-1 text-xl font-black">${summary.monthlySpend}</p>
             </div>
           </div>
         </section>
@@ -93,6 +94,13 @@ export default function MaintenancePage() {
         </section>
 
         <section className="space-y-3">
+          {items.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm">
+              <span className="material-symbols-outlined text-3xl text-slate-300">handyman</span>
+              <p className="mt-2 text-sm font-black text-slate-700">No live maintenance items entered</p>
+              <p className="mt-1 text-xs font-semibold text-slate-400">Household maintenance records will appear here after entry.</p>
+            </div>
+          )}
           {items.map((item) => {
             const isComplete = completed.includes(item.id);
 

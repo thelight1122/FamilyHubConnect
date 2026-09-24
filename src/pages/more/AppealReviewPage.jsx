@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { appeal } from '../../data/mockData';
 
 const decisionConfig = {
   approved: { bg: 'bg-emerald-500', text: 'Reflection Approved', icon: 'check_circle', label: 'Approve Reflection' },
@@ -14,13 +13,13 @@ export default function AppealReviewPage() {
   const [pendingDecision, setPendingDecision] = useState(null);
 
   const appealData = {
-    caseId: appeal?.caseId ?? '12345',
-    child: 'Leo',
-    charge: appeal?.reason ?? 'Missed Curfew',
-    consequence: typeof appeal?.consequence === 'string' ? appeal.consequence : 'Screen time reflection',
-    childArgument: appeal?.childArgument ?? "I was helping a friend with homework and lost track of time. I didn't mean to be late, but it was really important for them to finish before tomorrow.",
-    proposedAlternative: appeal?.proposedAlternative ?? 'Extra chore: Vacuuming the living room',
-    evidenceCount: 1,
+    caseId: 'Live',
+    child: 'Family member',
+    charge: 'No live reflection submitted',
+    consequence: 'Awaiting live reflection',
+    childArgument: 'No live reflection has been submitted yet.',
+    proposedAlternative: 'No live repair proposal entered.',
+    evidenceCount: 0,
   };
 
   const confirmDecision = () => {
@@ -54,10 +53,9 @@ export default function AppealReviewPage() {
           <h2 className="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">The Reflection</h2>
           
           <div className="flex items-center gap-4 px-4 min-h-[72px] py-2">
-            <div 
-              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border-2 border-primary/20" 
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=150&h=150')" }}
-            ></div>
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-primary/20 bg-primary/10 text-primary">
+              <span className="material-symbols-outlined">person</span>
+            </div>
             <div className="flex flex-col justify-center">
               <p className="text-base font-bold leading-normal">{appealData.child}</p>
               <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">
@@ -101,22 +99,14 @@ export default function AppealReviewPage() {
         {/* Section 4: Evidence */}
         <section className="bg-white dark:bg-slate-900 mt-2 p-4">
           <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-primary">Evidence</h3>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-background-light dark:bg-background-dark p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-            <div className="relative group cursor-pointer w-24 h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 mx-auto sm:mx-0 shrink-0 shadow-sm">
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors z-10"></div>
-              <div 
-                className="w-full h-full bg-cover bg-center" 
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?auto=format&fit=crop&q=80&w=200&h=200')" }}
-              ></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                 <span className="material-symbols-outlined text-white block text-sm">zoom_in</span>
-              </div>
-              <div className="absolute bottom-1 right-1 bg-white/90 dark:bg-slate-900/90 rounded px-1.5 py-0.5 text-[10px] font-bold z-20">IMAGE</div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-background-light dark:bg-background-dark p-4 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+            <div className="mx-auto flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-400 sm:mx-0 dark:bg-slate-800">
+              <span className="material-symbols-outlined text-3xl">upload_file</span>
             </div>
             <div className="flex-1 flex flex-col justify-center text-center sm:text-left">
-              <p className="font-bold text-sm">homework_proof.jpg</p>
+              <p className="font-bold text-sm">No live evidence attached</p>
               <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
-                Attached by {appealData.child} &bull; 1.2 MB
+                Uploaded files will appear here after a reflection is submitted.
               </p>
             </div>
           </div>

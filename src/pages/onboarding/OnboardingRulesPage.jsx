@@ -49,17 +49,17 @@ export default function OnboardingRulesPage() {
         <div className="flex flex-col gap-3 p-6">
           <div className="flex gap-6 justify-between items-end">
             <p className="text-slate-900 dark:text-slate-100 text-sm font-semibold uppercase tracking-wider">Onboarding Progress</p>
-            <p className="text-primary text-sm font-bold">2 of 3</p>
+            <p className="text-primary text-sm font-bold">3 of 4</p>
           </div>
           <div className="rounded-full bg-slate-200 dark:bg-slate-700 h-2.5 overflow-hidden">
-            <div className="h-full rounded-full bg-primary" style={{ width: '66%' }}></div>
+            <div className="h-full rounded-full bg-primary" style={{ width: '75%' }}></div>
           </div>
-          <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">Next: Invite Family</p>
+          <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">Next: Invite Decision</p>
         </div>
 
         {/* Header Content */}
         <div className="px-6 pb-6">
-          <h2 className="text-slate-900 dark:text-slate-100 text-3xl font-extrabold leading-tight mb-2">Step 2: Household Rules</h2>
+          <h2 className="text-slate-900 dark:text-slate-100 text-3xl font-extrabold leading-tight mb-2">Step 3: Household Rules</h2>
           <p className="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
             Set initial rules for your family to keep everyone on the same page. You can always adjust these later.
           </p>
@@ -142,7 +142,7 @@ export default function OnboardingRulesPage() {
             onClick={() => navigate('/onboarding/invite')}
             className="flex-[2] py-4 px-6 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2"
           >
-            Next: Invite Family
+            Next: Invite Decision
             <span className="material-symbols-outlined">arrow_forward</span>
           </button>
         </div>

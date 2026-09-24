@@ -8,13 +8,13 @@ test.describe('FinancePage', () => {
   });
 
   test('page renders Family Finance heading', async ({ page }) => {
-    await expect(page.getByText("Leo's Wallet")).toBeVisible();
+    await expect(page.getByText("Family Member's Wallet")).toBeVisible();
   });
 
-  test('bank settings gives explicit local-preview feedback', async ({ page }) => {
+  test('bank settings gives explicit live-data feedback', async ({ page }) => {
     await page.getByRole('button', { name: 'Parent View' }).click();
     await page.getByRole('button', { name: 'Bank settings' }).click();
-    await expect(page.getByText('Bank settings are not enabled for this local preview.')).toBeVisible();
+    await expect(page.getByText('Bank settings will activate after live bank records are configured.')).toBeVisible();
   });
 
   test('Request Funds tile navigates to loan page', async ({ page }) => {

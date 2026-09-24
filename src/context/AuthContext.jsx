@@ -1,54 +1,121 @@
-import { useState, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import AuthContext from './auth-context';
 import { runtimeConfig } from '../config/runtime';
+import { supabase } from '../lib/supabase';
+
+const getRoleFromUser = (user, fallbackRole = 'adult') =>
+  user?.user_metadata?.family_role === 'child' ? 'child' : fallbackRole;
+
+const getDisplayName = (role, user) =>
+  user?.user_metadata?.display_name || user?.email || (role === 'adult' ? 'Adult' : 'Child');
 
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('fhc_logged_in') === 'true');
   const [role, setRole] = useState(() => localStorage.getItem('fhc_user_role') || null);
+  const [sessionUser, setSessionUser] = useState(null);
+  const [authReady, setAuthReady] = useState(runtimeConfig.authMode !== 'supabase');
 
-  // Mock currentUser. In production, this would be fetched from /api/auth/me
+  useEffect(() => {
+    if (runtimeConfig.authMode !== 'supabase' || !supabase) return undefined;
+
+    let isMounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!isMounted) return;
+      const user = data.session?.user ?? null;
+      const nextRole = getRoleFromUser(user, localStorage.getItem('fhc_user_role') || 'adult');
+
+      setSessionUser(user);
+      setRole(user ? nextRole : null);
+      setIsLoggedIn(Boolean(user));
+      setAuthReady(true);
+    });
+
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      const user = session?.user ?? null;
+      const nextRole = getRoleFromUser(user, localStorage.getItem('fhc_user_role') || 'adult');
+
+      setSessionUser(user);
+      setRole(user ? nextRole : null);
+      setIsLoggedIn(Boolean(user));
+      setAuthReady(true);
+
+      if (user) {
+        localStorage.setItem('fhc_user_role', nextRole);
+      } else {
+        localStorage.removeItem('fhc_logged_in');
+        localStorage.removeItem('fhc_user_role');
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.subscription.unsubscribe();
+    };
+  }, []);
+
   const currentUser = useMemo(() => {
     if (!isLoggedIn) return null;
-    return {
-      id: 'user-1',
-      name: role === 'adult' ? 'Dad' : 'Leo',
-      role: role,
-      avatar: role === 'adult' 
-        ? 'https://lh3.googleusercontent.com/aida-public/AB6AXuDCHzAmckYooADZpKaH2UZzfS-q1we1IVKibAswbz2GMCsNkWOCwbFb85p5lZftGD2LGCIl29-GJpZt44noQOh9vBAbfzmv4zUaKL_HcppnWgZk8Vk5x6R0AM7re32czMSN1pcMhC-Enm6b2KfeRNpIzPC98jtFW-KnnNfRo8suf35W582jxWC6ZRSCZ3COV4I3qeCYkkJHneMKMpdmS-Qfz1hi3s9qqmX89lqrFrCO05b22THacaBuBsJnB7ydFmMKrclCY37_nZM' 
-        : 'https://lh3.googleusercontent.com/aida-public/AB6AXuCtkM0Kz8TVPiuRxqDjNn33-crPQUMT3MkHVNxNXGTEuym3T1rpaZ12iCWtjA6xOer7eW1SGYP-xp4wmd09AHMyX6F_Zjta6d2wogH7HUdNLYdl3D6l9r9Ho2xr35rvUx4IuhDmtjgIme18QsfsA56SJYelHH_6h5B2xpAf76l8V3uAWCuqrZvikExrstN_Z3W7Ho6zueJpVqkKQet4Muw15unKvs_gE6Cu0eak-IOKitFMBNHw6ezgpvGqNaNBvEFFXQ_drOM49iM'
-    };
-  }, [isLoggedIn, role]);
 
-  const login = (selectedRole = 'adult') => { 
-    if (!runtimeConfig.mockAuthEnabled) {
-      return false;
+    return {
+      id: sessionUser?.id ?? 'user-1',
+      email: sessionUser?.email ?? null,
+      name: getDisplayName(role, sessionUser),
+      role: role,
+      avatar: sessionUser?.user_metadata?.avatar_url ?? '',
+    };
+  }, [isLoggedIn, role, sessionUser]);
+
+  const login = useCallback(async ({ email, password, role: selectedRole = 'adult' } = {}) => {
+    if (runtimeConfig.authMode === 'supabase' && supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        return { ok: false, message: error.message };
+      }
+
+      const nextRole = getRoleFromUser(data.user, selectedRole);
+      localStorage.setItem('fhc_user_role', nextRole);
+      localStorage.removeItem('fhc_logged_in');
+      setSessionUser(data.user);
+      setRole(nextRole);
+      setIsLoggedIn(Boolean(data.user));
+      return { ok: Boolean(data.user) };
     }
 
-    // Set values in localStorage first for persistence on immediate redirect
+    if (!runtimeConfig.mockAuthEnabled) {
+      return { ok: false, message: 'Sign-in is not configured for this deployment yet.' };
+    }
+
     localStorage.setItem('fhc_logged_in', 'true'); 
     localStorage.setItem('fhc_user_role', selectedRole);
-    
-    // Update local state
+    setSessionUser(null);
     setRole(selectedRole);
     setIsLoggedIn(true); 
-    return true;
-  };
+    return { ok: true };
+  }, []);
   
-  const logout = () => { 
+  const logout = useCallback(async () => { 
+    if (runtimeConfig.authMode === 'supabase' && supabase) {
+      await supabase.auth.signOut();
+    }
+
     localStorage.removeItem('fhc_logged_in'); 
     localStorage.removeItem('fhc_user_role');
+    setSessionUser(null);
     setRole(null);
     setIsLoggedIn(false); 
-  };
+  }, []);
 
   const contextValue = useMemo(() => ({
+    authReady,
+    authMode: runtimeConfig.authMode,
     isLoggedIn, 
     login, 
     logout, 
     currentUser, 
     role,
     mockAuthEnabled: runtimeConfig.mockAuthEnabled,
-  }), [isLoggedIn, currentUser, role]);
+    supabaseAuthEnabled: runtimeConfig.authMode === 'supabase',
+  }), [authReady, isLoggedIn, login, logout, currentUser, role]);
 
   return (
     <AuthContext.Provider value={contextValue}>

@@ -18,7 +18,7 @@ test.describe('AppealPage', () => {
   });
 
   test('alternative input accepts text', async ({ page }) => {
-    const input = page.locator('input[placeholder*="Repair task"]');
+    const input = page.locator('input[placeholder*="proposed repair"]');
     await input.fill('Extra chore instead');
     await expect(input).toHaveValue('Extra chore instead');
   });

@@ -34,7 +34,7 @@ export default function MorePage() {
       <div className="flex items-center justify-between px-4 pt-12 pb-4 bg-white">
         <h1 className="text-2xl font-bold text-slate-800">More</h1>
         <button
-          onClick={() => handleUnavailableAction('More settings are not enabled for this local preview.')}
+          onClick={() => handleUnavailableAction('More settings will activate after live family settings are configured.')}
           aria-label="More settings"
           className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f6f7f8]"
         >
@@ -61,7 +61,7 @@ export default function MorePage() {
               <p className="text-xs text-slate-400 mt-0.5">{walletMembers.length} members</p>
             </div>
             <button
-              onClick={() => handleUnavailableAction('Family profile editing is not enabled for this local preview.')}
+              onClick={() => handleUnavailableAction('Family profile editing will activate after live family profile storage is configured.')}
               className="border border-[#4c8ce6] text-[#4c8ce6] text-xs font-semibold px-3 py-1.5 rounded-lg"
             >
               View Profile

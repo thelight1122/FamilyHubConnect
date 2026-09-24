@@ -5,17 +5,23 @@ import useAuth from '../context/useAuth';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, mockAuthEnabled } = useAuth();
+  const { login, authMode, mockAuthEnabled, supabaseAuthEnabled } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('adult'); // 'adult' or 'child'
   const [authMessage, setAuthMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const didLogin = login(selectedRole);
-    if (!didLogin) {
-      setAuthMessage('Sign-in is not configured for this deployment yet.');
+    setIsSubmitting(true);
+    setAuthMessage(null);
+
+    const result = await login({ email, password, role: selectedRole });
+    setIsSubmitting(false);
+
+    if (!result.ok) {
+      setAuthMessage(result.message ?? 'Sign-in is not configured for this deployment yet.');
       return;
     }
 
@@ -67,9 +73,21 @@ export default function LoginPage() {
           </div>
 
           <form className="space-y-5" onSubmit={handleSubmit}>
-            {!mockAuthEnabled && (
+            {authMode === 'unconfigured' && (
               <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800" role="status">
                 Production authentication is not configured.
+              </div>
+            )}
+
+            {supabaseAuthEnabled && (
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800" role="status">
+                Supabase authentication is active for this deployment.
+              </div>
+            )}
+
+            {mockAuthEnabled && (
+              <div className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-medium text-sky-800" role="status">
+                Local preview mode accepts any password.
               </div>
             )}
 
@@ -112,10 +130,11 @@ export default function LoginPage() {
             </div>
 
             <button
+              disabled={isSubmitting}
               className="w-full bg-primary hover:bg-primary-dark text-white font-black py-5 rounded-2xl shadow-lifted shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2 mt-4"
               type="submit"
             >
-              Sign In as {selectedRole === 'adult' ? 'Dad' : 'Leo'}
+              {isSubmitting ? 'Signing In...' : `Sign In as ${selectedRole === 'adult' ? 'Adult' : 'Child'}`}
               <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </button>
           </form>
@@ -143,7 +162,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center mt-10 text-slate-500 font-medium text-sm">
-          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingValues)}>Create Family Account</button>
+          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingSetup)}>Create Family Account</button>
         </p>
       </div>
     </div>

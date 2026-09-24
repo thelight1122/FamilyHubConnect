@@ -9,6 +9,7 @@ export { paths } from './paths';
 import LoginPage from '../pages/LoginPage';
 import InviteFamilyPage from '../pages/onboarding/InviteFamilyPage';
 import OnboardingRulesPage from '../pages/onboarding/OnboardingRulesPage';
+import OnboardingSetupPage from '../pages/onboarding/OnboardingSetupPage';
 import OnboardingValuesPage from '../pages/onboarding/OnboardingValuesPage';
 
 // Generic Dash (redirects)
@@ -64,6 +65,8 @@ export const adultNavTabs = [
 export const publicRoutes = [
   { path: paths.login, element: <LoginPage /> },
   { path: paths.invite, element: <InviteFamilyPage /> },
+  { path: paths.onboardingSetup, element: <OnboardingSetupPage /> },
+  { path: paths.onboardingInvite, element: <InviteFamilyPage /> },
   { path: paths.onboardingValues, element: <OnboardingValuesPage /> },
   { path: paths.onboardingRules, element: <OnboardingRulesPage /> },
 ];

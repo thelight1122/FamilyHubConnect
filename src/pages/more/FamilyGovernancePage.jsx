@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { governance } from '../../data/mockData';
 
 const TABS = ['Resolution', 'Circle', 'Archive', 'Rule Book'];
+const reflectionCircle = [];
+const resolutionArchive = [];
 
 export default function FamilyGovernancePage() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export default function FamilyGovernancePage() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold tracking-tight">Active Mediation</h3>
               <span className="text-xs font-semibold px-2 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 rounded">
-                1 Pending
+                0 Pending
               </span>
             </div>
             
@@ -84,12 +85,12 @@ export default function FamilyGovernancePage() {
           <section className="px-4 pt-6">
             <h3 className="text-xl font-bold tracking-tight mb-4">The Reflection Circle</h3>
             <div className="grid grid-cols-1 gap-3">
-              {governance.juryPool.length === 0 ? (
+              {reflectionCircle.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
                   <span className="material-symbols-outlined text-3xl text-slate-300">groups</span>
                   <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No reflection circle rotation yet</p>
                 </div>
-              ) : governance.juryPool.map((member) => (
+              ) : reflectionCircle.map((member) => (
                 <div
                   key={member.id}
                   className={`flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-opacity ${
@@ -128,12 +129,12 @@ export default function FamilyGovernancePage() {
               <button className="text-sm text-primary font-semibold hover:text-primary/80 transition-colors">See All</button>
             </div>
             <div className="flex flex-col gap-4">
-              {governance.archive.length === 0 ? (
+              {resolutionArchive.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800">
                   <span className="material-symbols-outlined text-3xl text-slate-300">inventory_2</span>
                   <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No archived resolutions yet</p>
                 </div>
-              ) : governance.archive.map((item) => (
+              ) : resolutionArchive.map((item) => (
                 <div
                   key={item.id}
                   className={`bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 border-l-4 ${
@@ -167,17 +168,11 @@ export default function FamilyGovernancePage() {
               </div>
               <h3 className="text-lg font-bold mb-2 relative z-10">Family Constitution</h3>
               <p className="text-slate-400 text-sm mb-4 relative z-10">
-                Our agreed-upon rules for a happy and fair household.
+                Live family rules will appear here after your test family enters them.
               </p>
               <div className="flex flex-wrap gap-2 relative z-10">
                 <span className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                  Article 1: Privacy
-                </span>
-                <span className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                  Article 2: Chores
-                </span>
-                <span className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                  Article 3: Respect
+                  No live articles entered
                 </span>
               </div>
               <button

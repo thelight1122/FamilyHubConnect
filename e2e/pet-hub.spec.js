@@ -16,18 +16,17 @@ test.describe('PetHubPage', () => {
   });
 
   test('pet profile stats are visible', async ({ page }) => {
-    await expect(page.getByText('30kg')).toBeVisible();
-    await expect(page.getByText('High')).toBeVisible();
+    await expect(page.getByText('No live pet entered')).toBeVisible();
+    await expect(page.getByText('--')).toHaveCount(3);
   });
 
   test('Feeding Schedule section is visible', async ({ page }) => {
-    await expect(page.getByText('Feeding Schedule')).toBeVisible();
-    await expect(page.getByText('Morning Meal')).toBeVisible();
-    await expect(page.getByText('Evening Meal')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Feeding Schedule' })).toBeVisible();
+    await expect(page.getByText('No live feeding schedule entered')).toBeVisible();
   });
 
   test('Vet Appointments section is visible', async ({ page }) => {
-    await expect(page.getByText('Vet Appointments')).toBeVisible();
-    await expect(page.getByText('Annual Check-up')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Vet Appointments' })).toBeVisible();
+    await expect(page.getByText('No live vet appointments entered')).toBeVisible();
   });
 });

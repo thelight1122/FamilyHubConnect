@@ -8,7 +8,7 @@ test.describe('HealthPage', () => {
   });
 
   test('page renders Health Logs heading', async ({ page }) => {
-    await expect(page.getByText('Health Logs')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Health Logs' })).toBeVisible();
   });
 
   test('"Add Log" button opens modal', async ({ page }) => {

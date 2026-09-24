@@ -31,7 +31,7 @@ test.describe('CreatorStudioPage', () => {
   });
 
   test('voice memo requires recording before publish', async ({ page }) => {
-    await page.getByText('Voice Memo').click();
+    await page.getByText('Voice Memo', { exact: true }).click();
     await expect(page.getByRole('button', { name: /Publish to Family/i })).toBeDisabled();
   });
 
