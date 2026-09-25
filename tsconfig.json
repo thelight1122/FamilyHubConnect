@@ -1,0 +1,21 @@
+{
+  // TypeScript is adopted file by file. JS/JSX files keep working unchanged
+  // (allowJs) and are not type-checked yet (checkJs off); every .ts/.tsx file
+  // is checked strictly by `npm run typecheck`.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src"]
+}

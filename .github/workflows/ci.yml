@@ -11,16 +11,17 @@ concurrency:
 
 jobs:
   app:
-    name: Lint, build, unit and prototype browser tests
+    name: Lint, types, build, unit and prototype browser tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm run typecheck
       - run: npm run build
       - run: npm run test:unit
       - run: npx playwright install --with-deps chromium
@@ -33,14 +34,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.117.0
       - name: Start local Supabase (applies every migration)
         run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector,supavisor,realtime,storage-api
       - run: npm ci
       - run: supabase test db
+      - name: Database types match the migrations
+        run: |
+          supabase gen types typescript --local > /tmp/database.ts
+          diff --strip-trailing-cr /tmp/database.ts src/types/database.ts || (echo "Run npm run db:types and commit the result." && exit 1)
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e:live
