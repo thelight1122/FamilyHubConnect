@@ -174,7 +174,7 @@ export const standardOrbRegistry = Object.freeze([
     id: orbIds.CREATOR_STUDIO,
     label: 'Creator Studio Orb',
     routes: [paths.moreCreator],
-    rolePermissions: [rolePermissions.ADULT],
+    rolePermissions: [rolePermissions.ADULT, rolePermissions.CHILD],
     dataClassification: dataClassification.HOUSEHOLD_OPERATIONAL,
     aiAccessLevel: aiAccessLevels.SUMMARY_ONLY,
     vaultAccessRule: vaultAccessRules.NONE,

@@ -105,13 +105,14 @@ export const mainLayoutRoute = {
     { path: paths.morePets, element: <PetHubPage /> },
     { path: paths.moreHealth, element: <HealthPage /> },
     { path: paths.moreFamily, element: <FamilyMembersPage /> },
+    // Children create and vote too; adults can remove any post (migration 0700).
+    { path: paths.moreCreator, element: <CreatorStudioPage /> },
     { path: paths.moreTransparency, element: <ProtectedRoute allowedRoles={['adult']}><TransparencyPage /></ProtectedRoute> },
     { path: paths.moreAppeal, element: <AppealPage /> },
     { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },
     
     // Role restricted adult modules
     { path: paths.moreAppealReview, element: <ProtectedRoute allowedRoles={['adult']}><AppealReviewPage /></ProtectedRoute> },
-    { path: paths.moreCreator, element: <ProtectedRoute allowedRoles={['adult']}><CreatorStudioPage /></ProtectedRoute> },
     { path: paths.moreGovernance, element: <ProtectedRoute allowedRoles={['adult']}><FamilyGovernancePage /></ProtectedRoute> },
     // Accountability is mutual: children give their accounts too (spec §3).
     { path: paths.moreCourt, element: <ProtectedRoute allowedRoles={['adult', 'child']}><FamilyCourtPage /></ProtectedRoute> },
