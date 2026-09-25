@@ -6,6 +6,8 @@ import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useFinance from '../../hooks/useFinance';
+import useAuth from '../../context/useAuth';
+import { FAMILY_NOT_READY } from '../../hooks/liveResult';
 
 export default function LoanPage() {
   const navigate = useNavigate();
@@ -83,11 +85,16 @@ function ParentLoanView({ navigate }) {
 // CHILD LOAN PITCH VIEW (Pitch Request)
 // ----------------------------------------------------------------------------
 function ChildLoanPitchView({ navigate, finance, showToast }) {
+  const { supabaseAuthEnabled } = useAuth();
   const [purpose, setPurpose] = useState('');
   const [amount, setAmount] = useState('');
 
   const submit = async () => {
-    if (finance.live) {
+    if (supabaseAuthEnabled) {
+      if (!finance.live) {
+        showToast(FAMILY_NOT_READY);
+        return;
+      }
       const outcome = await finance.requestLoan({ amount, purpose });
       if (!outcome.ok) {
         showToast(outcome.message);
@@ -212,7 +219,8 @@ function ChildLoanPitchView({ navigate, finance, showToast }) {
       <div className="p-4 pt-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 sticky bottom-0 z-20">
         <button 
           onClick={submit}
-          className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+          disabled={supabaseAuthEnabled && !finance.live}
+          className="disabled:opacity-50 w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
         >
           <span className="text-[15px] tracking-wide">Submit Pitch to Parents</span>
           <span className="material-symbols-outlined text-[18px]">send</span>

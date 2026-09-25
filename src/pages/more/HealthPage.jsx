@@ -6,6 +6,7 @@ import useToast from '../../hooks/useToast';
 import useAuth from '../../context/useAuth';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useHealth, { HEALTH_EVENT_TYPES } from '../../hooks/useHealth';
+import { FAMILY_NOT_READY } from '../../hooks/liveResult';
 
 const EVENT_ICONS = {
   Illness: 'sick',
@@ -22,7 +23,7 @@ export default function HealthPage() {
   const [toast, showToast] = useToast();
   const { family, membership, members } = useFamilyCore();
   const health = useHealth(family?.id);
-  const { currentUser } = useAuth();
+  const { currentUser, supabaseAuthEnabled } = useAuth();
   const myId = currentUser?.id;
   const isAdult = membership?.role === 'adult';
 
@@ -37,7 +38,11 @@ export default function HealthPage() {
   const [medForm, setMedForm] = useState({ name: '', dose: '', schedule: '' });
 
   const handleSave = async () => {
-    if (health.live && subject) {
+    if (supabaseAuthEnabled) {
+      if (!health.live || !subject) {
+        showToast(FAMILY_NOT_READY);
+        return;
+      }
       const outcome = await health.logEvent(subject.user_id, logType, logNote);
       if (!outcome.ok) {
         showToast(outcome.message);
@@ -235,7 +240,8 @@ export default function HealthPage() {
             {/* Save button */}
             <button
               onClick={handleSave}
-              className="mt-4 w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-colors shadow-sm"
+              disabled={supabaseAuthEnabled && !(health.live && subject)}
+              className="disabled:opacity-50 mt-4 w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-colors shadow-sm"
             >
               Save Log
             </button>
