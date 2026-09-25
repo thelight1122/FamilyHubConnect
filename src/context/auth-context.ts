@@ -22,6 +22,10 @@ export interface AuthContextValue {
   authMode: AuthMode;
   isLoggedIn: boolean;
   login: (credentials?: { email?: string; password?: string; role?: FamilyRole }) => Promise<LoginResult>;
+  signUp: (details: { email: string; password: string; displayName: string; redirectTo?: string }) => Promise<
+    { ok: true; needsConfirmation: boolean } | { ok: false; message: string }
+  >;
+  setFamilyRole: (role: FamilyRole) => Promise<void>;
   logout: () => Promise<void>;
   currentUser: CurrentUser | null;
   role: FamilyRole | null;

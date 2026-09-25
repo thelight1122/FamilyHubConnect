@@ -14,6 +14,9 @@ const InviteFamilyPage = lazy(() => import('../pages/onboarding/InviteFamilyPage
 const OnboardingRulesPage = lazy(() => import('../pages/onboarding/OnboardingRulesPage'));
 const OnboardingSetupPage = lazy(() => import('../pages/onboarding/OnboardingSetupPage'));
 const OnboardingValuesPage = lazy(() => import('../pages/onboarding/OnboardingValuesPage'));
+const SignUpPage = lazy(() => import('../pages/SignUpPage'));
+const JoinPage = lazy(() => import('../pages/JoinPage'));
+const FamilyMembersPage = lazy(() => import('../pages/more/FamilyMembersPage'));
 
 // Generic Dash (redirects)
 const DashboardPage = lazy(() => import('../pages/DashboardPage'));
@@ -67,6 +70,8 @@ export const adultNavTabs = [
 
 export const publicRoutes = [
   { path: paths.login, element: <LoginPage /> },
+  { path: paths.signup, element: <SignUpPage /> },
+  { path: paths.join, element: <JoinPage /> },
   { path: paths.invite, element: <InviteFamilyPage /> },
   { path: paths.onboardingSetup, element: <OnboardingSetupPage /> },
   { path: paths.onboardingInvite, element: <InviteFamilyPage /> },
@@ -99,6 +104,7 @@ export const mainLayoutRoute = {
     { path: paths.moreTimeline, element: <TimelinePage /> },
     { path: paths.morePets, element: <PetHubPage /> },
     { path: paths.moreHealth, element: <HealthPage /> },
+    { path: paths.moreFamily, element: <FamilyMembersPage /> },
     { path: paths.moreTransparency, element: <ProtectedRoute allowedRoles={['adult']}><TransparencyPage /></ProtectedRoute> },
     { path: paths.moreAppeal, element: <AppealPage /> },
     { path: paths.moreAppealNegotiation, element: <NegotiationPage /> },

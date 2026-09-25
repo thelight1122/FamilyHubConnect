@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { paths } from '../config/paths';
 import useAuth from '../context/useAuth';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Where to go after signing in, e.g. back to an invite link. Only same-site paths.
+  const next = searchParams.get('next')?.startsWith('/') ? searchParams.get('next') : null;
   const { login, authMode, mockAuthEnabled, supabaseAuthEnabled } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +28,7 @@ export default function LoginPage() {
       return;
     }
 
-    navigate(paths.dashboard);
+    navigate(next ?? paths.dashboard);
   };
 
   return (
@@ -162,7 +165,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center mt-10 text-slate-500 font-medium text-sm">
-          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(paths.onboardingSetup)}>Create Family Account</button>
+          Don't have an account? <button className="text-primary font-bold hover:underline" onClick={() => navigate(supabaseAuthEnabled ? `${paths.signup}${next ? `?next=${encodeURIComponent(next)}` : ''}` : paths.onboardingSetup)}>Create Family Account</button>
         </p>
       </div>
     </div>

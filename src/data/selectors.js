@@ -53,7 +53,7 @@ export const moreFeatures = [
 
 export const accountItems = [
   { label: 'Profile Settings', icon: 'manage_accounts', route: null, feedback: 'Profile settings are managed by the family account owner.' },
-  { label: 'Invite Family', icon: 'group_add', route: paths.invite },
+  { label: 'Invite Family', icon: 'group_add', route: paths.moreFamily },
   { label: 'Notifications', icon: 'notifications', route: null, feedback: 'Notifications will appear after your family records live activity.' },
 ];
 

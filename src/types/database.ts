@@ -377,6 +377,59 @@ export type Database = {
           },
         ]
       }
+      family_invites: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          code: string
+          created_at: string
+          created_by: string | null
+          display_name: string
+          email: string | null
+          expires_at: string
+          family_id: string
+          id: string
+          revoked_at: string | null
+          role: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          display_name: string
+          email?: string | null
+          expires_at?: string
+          family_id: string
+          id?: string
+          revoked_at?: string | null
+          role: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          display_name?: string
+          email?: string | null
+          expires_at?: string
+          family_id?: string
+          id?: string
+          revoked_at?: string | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_invites_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           created_at: string
@@ -446,6 +499,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      invite_attempts: {
+        Row: {
+          created_at: string
+          id: number
+          succeeded: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          succeeded: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          succeeded?: boolean
+          user_id?: string
+        }
+        Relationships: []
       }
       ledger_entries: {
         Row: {
@@ -1281,6 +1355,7 @@ export type Database = {
       }
     }
     Functions: {
+      accept_family_invite: { Args: { invite_code: string }; Returns: Json }
       acknowledge_session_record: {
         Args: { personal_reflection: string; target_record_id: string }
         Returns: {
@@ -1318,6 +1393,34 @@ export type Database = {
         SetofOptions: {
           from: "*"
           to: "accountability_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      create_family_invite: {
+        Args: {
+          invite_email?: string
+          invite_name: string
+          invite_role: string
+          target_family_id: string
+        }
+        Returns: {
+          accepted_at: string | null
+          accepted_by: string | null
+          code: string
+          created_at: string
+          created_by: string | null
+          display_name: string
+          email: string | null
+          expires_at: string
+          family_id: string
+          id: string
+          revoked_at: string | null
+          role: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "family_invites"
           isOneToOne: true
           isSetofReturn: false
         }
