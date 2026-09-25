@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute';
 import MainLayout from '../templates/main/MainLayout';
@@ -5,45 +6,47 @@ import { getOrbForRoute, orbIds } from '../pod';
 import { paths } from './paths';
 export { paths } from './paths';
 
+// Pages load on first visit (code-split); the login page stays in the main bundle.
+
 // Onboarding & Auth
 import LoginPage from '../pages/LoginPage';
-import InviteFamilyPage from '../pages/onboarding/InviteFamilyPage';
-import OnboardingRulesPage from '../pages/onboarding/OnboardingRulesPage';
-import OnboardingSetupPage from '../pages/onboarding/OnboardingSetupPage';
-import OnboardingValuesPage from '../pages/onboarding/OnboardingValuesPage';
+const InviteFamilyPage = lazy(() => import('../pages/onboarding/InviteFamilyPage'));
+const OnboardingRulesPage = lazy(() => import('../pages/onboarding/OnboardingRulesPage'));
+const OnboardingSetupPage = lazy(() => import('../pages/onboarding/OnboardingSetupPage'));
+const OnboardingValuesPage = lazy(() => import('../pages/onboarding/OnboardingValuesPage'));
 
 // Generic Dash (redirects)
-import DashboardPage from '../pages/DashboardPage';
-import MaintenancePage from '../pages/adult/MaintenancePage';
+const DashboardPage = lazy(() => import('../pages/DashboardPage'));
+const MaintenancePage = lazy(() => import('../pages/adult/MaintenancePage'));
 
 // Templates
-import ChildDashboard from '../templates/child/ChildDashboard';
-import AdultDashboard from '../templates/adult/AdultDashboard';
+const ChildDashboard = lazy(() => import('../templates/child/ChildDashboard'));
+const AdultDashboard = lazy(() => import('../templates/adult/AdultDashboard'));
 
 // Features
-import FinancePage from '../pages/finance/FinancePage';
-import MarketPage from '../pages/finance/MarketPage';
-import LoanPage from '../pages/finance/LoanPage';
-import LoanConfirmationPage from '../pages/finance/LoanConfirmationPage';
-import ChoresPage from '../pages/ChoresPage';
-import LockerRoomPage from '../pages/sports/LockerRoomPage';
-import TeamChatPage from '../pages/sports/TeamChatPage';
-import MorePage from '../pages/more/MorePage';
-import ConstitutionPage from '../pages/more/ConstitutionPage';
-import TimelinePage from '../pages/more/TimelinePage';
-import PetHubPage from '../pages/more/PetHubPage';
-import HealthPage from '../pages/more/HealthPage';
-import AssistantPage from '../pages/more/AssistantPage';
-import TransparencyPage from '../pages/more/TransparencyPage';
+const FinancePage = lazy(() => import('../pages/finance/FinancePage'));
+const MarketPage = lazy(() => import('../pages/finance/MarketPage'));
+const LoanPage = lazy(() => import('../pages/finance/LoanPage'));
+const LoanConfirmationPage = lazy(() => import('../pages/finance/LoanConfirmationPage'));
+const ChoresPage = lazy(() => import('../pages/ChoresPage'));
+const LockerRoomPage = lazy(() => import('../pages/sports/LockerRoomPage'));
+const TeamChatPage = lazy(() => import('../pages/sports/TeamChatPage'));
+const MorePage = lazy(() => import('../pages/more/MorePage'));
+const ConstitutionPage = lazy(() => import('../pages/more/ConstitutionPage'));
+const TimelinePage = lazy(() => import('../pages/more/TimelinePage'));
+const PetHubPage = lazy(() => import('../pages/more/PetHubPage'));
+const HealthPage = lazy(() => import('../pages/more/HealthPage'));
+const AssistantPage = lazy(() => import('../pages/more/AssistantPage'));
+const TransparencyPage = lazy(() => import('../pages/more/TransparencyPage'));
 
 // Adult only modules
-import AppealPage from '../pages/more/AppealPage';
-import AppealReviewPage from '../pages/more/AppealReviewPage';
-import CreatorStudioPage from '../pages/more/CreatorStudioPage';
-import FamilyGovernancePage from '../pages/more/FamilyGovernancePage';
-import FamilyCourtPage from '../pages/more/FamilyCourtPage';
-import NegotiationPage from '../pages/more/NegotiationPage';
-import ResolutionConfirmedPage from '../pages/more/ResolutionConfirmedPage';
+const AppealPage = lazy(() => import('../pages/more/AppealPage'));
+const AppealReviewPage = lazy(() => import('../pages/more/AppealReviewPage'));
+const CreatorStudioPage = lazy(() => import('../pages/more/CreatorStudioPage'));
+const FamilyGovernancePage = lazy(() => import('../pages/more/FamilyGovernancePage'));
+const FamilyCourtPage = lazy(() => import('../pages/more/FamilyCourtPage'));
+const NegotiationPage = lazy(() => import('../pages/more/NegotiationPage'));
+const ResolutionConfirmedPage = lazy(() => import('../pages/more/ResolutionConfirmedPage'));
 
 // Shared navigation definitions mapped for UI tabs
 export const childNavTabs = [

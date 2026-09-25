@@ -1,3 +1,5 @@
+export type AuthMode = 'mock' | 'supabase' | 'unconfigured';
+
 const isDevelopment = import.meta.env.DEV;
 const mockAuthFlag = import.meta.env.VITE_ENABLE_MOCK_AUTH;
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? '';
@@ -12,5 +14,5 @@ export const runtimeConfig = Object.freeze({
   supabaseConfigured,
   isDevelopment,
   mockAuthEnabled,
-  authMode: mockAuthEnabled ? 'mock' : supabaseConfigured ? 'supabase' : 'unconfigured',
+  authMode: (mockAuthEnabled ? 'mock' : supabaseConfigured ? 'supabase' : 'unconfigured') as AuthMode,
 });
