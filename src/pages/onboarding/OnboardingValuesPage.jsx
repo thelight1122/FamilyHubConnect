@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { readDraft, saveDraft } from './draft';
 
 const VALUES = [
   { id: 'kindness', label: 'Kindness', desc: 'Empathy & Care', icon: 'favorite' },
@@ -12,7 +13,34 @@ const VALUES = [
 
 export default function OnboardingValuesPage() {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(['kindness', 'respect', 'curiosity']);
+  // Custom values the family adds join the presets; choices are saved to the draft.
+  const saved = readDraft()?.values;
+  const [values, setValues] = useState(() => [
+    ...VALUES,
+    ...(saved ?? [])
+      .filter((label) => !VALUES.some((v) => v.label === label))
+      .map((label) => ({ id: `custom-${label}`, label, desc: 'Your own value', icon: 'star' })),
+  ]);
+  const [selected, setSelected] = useState(() =>
+    saved ? values.filter((v) => saved.includes(v.label)).map((v) => v.id) : ['kindness', 'respect', 'curiosity']
+  );
+  const [customValue, setCustomValue] = useState('');
+  const [addingCustom, setAddingCustom] = useState(false);
+
+  const addCustomValue = () => {
+    const label = customValue.trim();
+    if (!label) return;
+    const id = `custom-${label}`;
+    if (!values.some((v) => v.id === id)) setValues((prev) => [...prev, { id, label, desc: 'Your own value', icon: 'star' }]);
+    setSelected((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setCustomValue('');
+    setAddingCustom(false);
+  };
+
+  const goTo = (path) => {
+    saveDraft({ values: values.filter((v) => selected.includes(v.id)).map((v) => v.label) });
+    navigate(path);
+  };
 
   const toggle = (id) =>
     setSelected((prev) =>
@@ -56,7 +84,7 @@ export default function OnboardingValuesPage() {
 
         {/* Values Grid */}
         <div className="grid grid-cols-2 gap-4 p-4">
-          {VALUES.map((value) => {
+          {values.map((value) => {
             const isSelected = selected.includes(value.id);
             return (
               <label key={value.id} className="relative flex flex-col gap-3 pb-3 group cursor-pointer" onClick={(e) => {
@@ -85,22 +113,40 @@ export default function OnboardingValuesPage() {
 
         {/* Add Custom Value */}
         <div className="px-4 pt-2 mb-8">
-          <button className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-slate-500 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-            <span className="material-symbols-outlined text-xl">add_circle</span>
-            Add Custom Value
-          </button>
+          {addingCustom ? (
+            <div className="flex gap-2">
+              <input
+                autoFocus
+                value={customValue}
+                onChange={(e) => setCustomValue(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && addCustomValue()}
+                placeholder="Your value (e.g. Generosity)"
+                maxLength={80}
+                className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm"
+              />
+              <button onClick={addCustomValue} className="rounded-xl bg-primary px-5 font-bold text-white">Add</button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setAddingCustom(true)}
+              className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-slate-500 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-xl">add_circle</span>
+              Add Custom Value
+            </button>
+          )}
         </div>
 
         {/* Footer Navigation */}
         <div className="mt-auto p-4 flex gap-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 sticky bottom-0">
           <button 
-            onClick={() => navigate('/onboarding/setup')}
+            onClick={() => goTo('/onboarding/setup')}
             className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
             Back
           </button>
           <button 
-            onClick={() => navigate('/onboarding/rules')}
+            onClick={() => goTo('/onboarding/rules')}
             className="flex-[2] px-4 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
           >
             Next: Rules
