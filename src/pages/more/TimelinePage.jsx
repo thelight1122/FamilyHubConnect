@@ -4,7 +4,6 @@ import BackHeader from '../../components/BackHeader';
 
 const FILTERS = ['All', 'Achievements', 'Memories', 'Journal'];
 
-// TODO: fetch from /api/timeline
 const TIMELINE_ENTRIES = [];
 
 function MonthDivider({ month }) {

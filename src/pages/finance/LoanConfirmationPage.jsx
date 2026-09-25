@@ -41,18 +41,17 @@ function ParentReviewPitchView({ navigate }) {
         <section className="p-6 flex flex-col items-center border-b border-slate-50 dark:border-slate-800">
           <div className="relative">
             <div className="w-24 h-24 rounded-full border-4 border-[#ec5b13]/20 p-1">
-              <div 
-                className="w-full h-full rounded-full bg-center bg-cover" 
-                style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhMQ2rgH7zv3cV3US_oug68ihs_ByNp6dRiQum_4FIuf7YPmgdxMno4u_3XfnVlYbSNRh8PWr3YDec6wKmSf25-ELXdpO80YOE4hcWGeFBdwXn5zbKvNTTFW8eIiQen1mk4g01Yv6nL9nNlC6LVksd7NPdCWHPkU__0pNVZR16ngXwghNF81-Ool0xvOIfASHaBc7N4ZjvOu3eNC6T0gwTmpdb4D3ZAZiFo1F4wNu9rP5FoKsEtRZqYYJOFdX4sPWmhdCXkn4qqr0")' }}
-              ></div>
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-[#ec5b13]/10 text-[#ec5b13]">
+                <span className="material-symbols-outlined text-4xl">person</span>
+              </div>
             </div>
             <div className="absolute bottom-0 right-0 bg-[#ec5b13] text-white p-1 rounded-full border-2 border-white dark:border-slate-900">
               <span className="material-symbols-outlined text-xs block">verified</span>
             </div>
           </div>
           <div className="text-center mt-4">
-            <p className="text-3xl font-bold text-[#ec5b13]">$200.00</p>
-            <p className="text-slate-500 dark:text-slate-400 font-medium">Pitch by Leo • Oct 10</p>
+            <p className="text-3xl font-bold text-[#ec5b13]">$0.00</p>
+            <p className="text-slate-500 dark:text-slate-400 font-medium">No live pitch selected</p>
           </div>
         </section>
 
@@ -61,7 +60,7 @@ function ParentReviewPitchView({ navigate }) {
           <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">The Vision</h3>
           <div className="bg-[#ec5b13]/5 dark:bg-[#ec5b13]/10 p-4 rounded-xl border-l-4 border-[#ec5b13]">
             <p className="text-slate-700 dark:text-slate-200 leading-relaxed italic">
-              "A new mountain bike for the summer trails. I've been saving up, but need a little extra to get the safety gear too. I'll take care of it and ride it to school every day."
+              No live pitch details have been submitted yet.
             </p>
           </div>
         </section>
@@ -75,21 +74,21 @@ function ParentReviewPitchView({ navigate }) {
                 <span className="material-symbols-outlined text-[#ec5b13]">category</span>
                 <span className="text-slate-600 dark:text-slate-300">Category</span>
               </div>
-              <span className="font-semibold">Sports & Outdoors</span>
+              <span className="font-semibold">Not entered</span>
             </div>
             <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-[#ec5b13]">payments</span>
                 <span className="text-slate-600 dark:text-slate-300">Payback Plan</span>
               </div>
-              <span className="font-semibold text-right">Weekly Allowance Deductions</span>
+              <span className="font-semibold text-right">Not entered</span>
             </div>
             <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-[#ec5b13]">calendar_today</span>
                 <span className="text-slate-600 dark:text-slate-300">Target Date</span>
               </div>
-              <span className="font-semibold text-right">Nov 15</span>
+              <span className="font-semibold text-right">Not entered</span>
             </div>
           </div>
         </section>
@@ -103,7 +102,7 @@ function ParentReviewPitchView({ navigate }) {
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-[#ec5b13] mb-1">AI Insight</p>
                 <p className="text-sm text-slate-200 dark:text-slate-100 leading-snug">
-                  <span className="font-bold">Educational Opportunity:</span> This is a great chance to discuss interest rates and the value of maintenance to ensure the bike lasts beyond the loan term.
+                  Insight will appear after a live loan pitch is submitted.
                 </p>
               </div>
             </div>
@@ -114,17 +113,9 @@ function ParentReviewPitchView({ navigate }) {
         <section className="px-6 py-4">
           <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Evidence & Attachments</h3>
           <div className="flex gap-3 overflow-x-auto pb-2">
-            <div 
-              className="shrink-0 w-32 h-24 rounded-lg bg-center bg-cover border border-slate-200 dark:border-slate-700" 
-              style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhDc8Ed2MNWp76wWc8TdhzkiQiMLWJpTaNORwYeten_-g0d6r-LjN5Q4JaYVx_RDKoOGPtK6UI8u8j8_Sd_poJVT3ZQYnbAw3EJnhQuCl92kaEs4-SJV5dGLhc7odonWuYG4N6ap4pTJgr3BHklr0w5YvolO3a2ofsBsIJVETh1Nb3TtIjObgda_BLi3hIKOVvXpzw6zTPQNgTRNli2ENhrBYaqP6lO5ZXTAMqnMzOjMVkYiYiOBuv9kxwPag2lO4pDHZ_2mTWgDA")' }}
-            ></div>
-            <div 
-              className="shrink-0 w-32 h-24 rounded-lg bg-center bg-cover border border-slate-200 dark:border-slate-700" 
-              style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCfKbWPegDSbKKS4KQj3e9-DEsc-HuOFmhk915VtVyX0Hs3tkc8pZm1U96n3MDMx0V2RqfERkLS06t3VTPtI0bsehw2_vlDz4wsiMeaaICfLTuwG5L7eiDH_r6HoeRjJ9rYw-1z3xb3aEU6n-wKa5jOGCV-YV31KB28jHJdTA1ixJajZ8d7LoCuXjFv3p-UD1ah0ADcGEl0vx_lEUXuLCdS6p4bNI7d2hEJtdgqbAx2TKmSujiQ3CkEh3agqLwmud5RyqUdCPpo2LY")' }}
-            ></div>
-            <div className="shrink-0 w-32 h-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+            <div className="shrink-0 w-full h-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
               <span className="material-symbols-outlined text-slate-400">description</span>
-              <span className="text-[10px] text-slate-500 mt-1 uppercase font-bold">Web Quote.pdf</span>
+              <span className="text-[10px] text-slate-500 mt-1 uppercase font-bold">No live attachments</span>
             </div>
           </div>
         </section>
@@ -162,28 +153,28 @@ function ChildLoanApprovalView({ navigate }) {
         <div onClick={() => navigate(-1)} className="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
-        <h2 className="text-slate-900 dark:text-slate-100 text-[19px] font-bold leading-tight tracking-tight flex-1 text-center pr-12">Loan Approved! 🎉</h2>
+        <h2 className="text-slate-900 dark:text-slate-100 text-[19px] font-bold leading-tight tracking-tight flex-1 text-center pr-12">Loan Status</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto pb-8">
         {/* Hero Image */}
         <div className="px-4 py-4">
-          <div 
-            className="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden bg-primary/10 rounded-2xl min-h-[220px] border border-primary/20 shadow-sm" 
-            style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkrxyZDUdttyvQzJT7iar7YwBS8NhHyDA9BfmUMa-sQa8nRRo3Oh0WwwTQ1i3bApWTYDSsfC4-KXqiDXm6HofZorAAWIJu_Tcn6Iu9HaG8pfYwXjNvSdhRqhzP7JeQkKn3X1njSFoIDzGn61ZTuA7JiDu8AVRsUiNp_XRXciv_ogNU-uAVJeVoTSOIe230OGw7Hg5V0FIL5K4YeCtI2tgGvPesd81qBpXCOQMoGoNPMFIxg8eXikzd7iy2X8C0pIe2VCO7gyMGBR0")' }}
-          ></div>
+          <div className="flex min-h-[220px] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-primary/20 bg-primary/10 text-primary shadow-sm">
+            <span className="material-symbols-outlined text-5xl">request_quote</span>
+            <p className="mt-2 text-sm font-bold">No live approval recorded</p>
+          </div>
         </div>
 
         {/* Amount Display */}
         <div className="text-center px-4 pt-4">
           <span className="text-primary font-bold text-xs uppercase tracking-widest">Total Approved</span>
-          <h1 className="text-slate-900 dark:text-slate-100 tracking-tight text-[54px] font-extrabold leading-none pb-2 mt-1">$200.00</h1>
+          <h1 className="text-slate-900 dark:text-slate-100 tracking-tight text-[54px] font-extrabold leading-none pb-2 mt-1">$0.00</h1>
         </div>
 
         {/* Personalized Message */}
         <div className="px-6 text-center mb-8">
-          <h3 className="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-tight pb-2 mt-2">Great news, Leo!</h3>
-          <p className="text-slate-600 dark:text-slate-400 text-[15px] font-medium leading-relaxed">Your loan for the new mountain bike has been approved and is ready to use.</p>
+          <h3 className="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-tight pb-2 mt-2">Awaiting live approval</h3>
+          <p className="text-slate-600 dark:text-slate-400 text-[15px] font-medium leading-relaxed">Approved family loan details will appear here after review.</p>
         </div>
 
         {/* Terms Summary Card */}
@@ -195,15 +186,15 @@ function ChildLoanApprovalView({ navigate }) {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Interest Rate</span>
-              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">0% (Family Rate)</span>
+              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Not entered</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Repayment Method</span>
-              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Allowance Deduction</span>
+              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Not entered</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Target Completion</span>
-              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Nov 15</span>
+              <span className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Not entered</span>
             </div>
           </div>
         </div>
@@ -217,8 +208,8 @@ function ChildLoanApprovalView({ navigate }) {
                 <span className="material-symbols-outlined text-[20px]">account_balance_wallet</span>
               </div>
               <div className="pt-0.5">
-                <p className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Funds Transferred</p>
-                <p className="text-slate-500 dark:text-slate-400 text-[13px] mt-0.5 font-medium leading-relaxed">The $200.00 has been added to your Digital Wallet.</p>
+                <p className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Funds Transfer</p>
+                <p className="text-slate-500 dark:text-slate-400 text-[13px] mt-0.5 font-medium leading-relaxed">No live transfer has been recorded.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -227,7 +218,7 @@ function ChildLoanApprovalView({ navigate }) {
               </div>
               <div className="pt-0.5">
                 <p className="text-slate-900 dark:text-slate-100 font-bold text-[15px]">Scheduled Repayment</p>
-                <p className="text-slate-500 dark:text-slate-400 text-[13px] mt-0.5 font-medium leading-relaxed">First deduction starts this Friday from your weekly allowance.</p>
+                <p className="text-slate-500 dark:text-slate-400 text-[13px] mt-0.5 font-medium leading-relaxed">No live repayment schedule has been recorded.</p>
               </div>
             </div>
           </div>

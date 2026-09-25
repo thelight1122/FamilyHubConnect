@@ -3,25 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/routes';
 import { dashboardQuickActions } from '../../data/selectors';
 import useAuth from '../../context/useAuth';
-
-const MOCK_NOTIFICATIONS = [
-  { id: 1, icon: 'star', color: 'text-amber-500', bg: 'bg-amber-50', text: 'You earned 50 pts for "Clean Room"!', ago: '10m ago' },
-  { id: 2, icon: 'sports_soccer', color: 'text-green-600', bg: 'bg-green-50', text: 'Practice reminder: Today at 4 PM.', ago: '2h ago' },
-];
-
-const MOCK_TIMELINE = [
-  { id: 101, title: 'Emma reached a savings goal!', time: 'Today, 10:30 AM', icon: 'savings', color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-500/10' },
-  { id: 102, title: 'Leo submitted a loan pitch', time: 'Yesterday', icon: 'request_quote', color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-500/10' },
-  { id: 103, title: 'Accountability reflection completed', time: 'Tuesday', icon: 'gavel', color: 'text-violet-500', bg: 'bg-violet-100 dark:bg-violet-500/10' },
-];
+import useFamilyCore from '../../hooks/useFamilyCore';
 
 export default function ChildDashboard() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const { chores, family } = useFamilyCore();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // Fallback
-  const user = currentUser || { name: 'Friend', avatar: '', allowance: 0, points: 0 };
+  const user = currentUser || { name: 'Family Member', avatar: '', allowance: 0, points: 0 };
+  const completedChores = chores.filter((chore) => chore.completed_at).length;
+  const totalChores = chores.length;
+  const progressPercent = totalChores > 0 ? Math.round((completedChores / totalChores) * 100) : 0;
 
   const todayDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -32,11 +25,9 @@ export default function ChildDashboard() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <div className="size-12 rounded-full border-2 border-primary overflow-hidden shadow-sm">
-              <img
-                className="w-full h-full object-cover"
-                alt={user.name}
-                src={user.avatar || 'https://i.pravatar.cc/150'}
-              />
+              <div className="flex h-full w-full items-center justify-center bg-primary/10 text-sm font-black text-primary">
+                {user.name?.slice(0, 1).toUpperCase() || 'F'}
+              </div>
             </div>
             <div>
               <p className="text-primary font-bold text-[10px] uppercase tracking-widest leading-none mb-1">My Adventure</p>
@@ -49,7 +40,6 @@ export default function ChildDashboard() {
             className="relative p-3 rounded-2xl bg-white shadow-atmospheric text-slate-600 hover:text-primary transition-all active:scale-90"
           >
             <span className="material-symbols-outlined text-[2px] font-light">notifications</span>
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white shadow-sm" />
           </button>
         </div>
       </header>
@@ -84,7 +74,7 @@ export default function ChildDashboard() {
                   <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
                 </div>
                 <h3 className="text-lg font-black leading-tight">My<br/>Wallet</h3>
-                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">${user.allowance || 0} / {user.points || 0} pts</p>
+                <p className="text-[10px] font-bold tracking-wider mt-3 opacity-80 uppercase">{completedChores} of {totalChores} Done</p>
               </div>
               <div className="absolute -bottom-4 -right-4 opacity-10 blur-[2px]">
                 <span className="material-symbols-outlined text-8xl">payments</span>
@@ -97,32 +87,24 @@ export default function ChildDashboard() {
         <section className="bg-white p-6 rounded-[2.5rem] shadow-atmospheric relative overflow-hidden">
           <div className="flex items-center justify-between mb-5 relative z-10">
             <h2 className="font-extrabold text-lg tracking-tight">Today's Chores</h2>
-            <span className="text-xs font-black text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-widest">2/4 Done</span>
+            <span className="text-xs font-black text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-widest">{completedChores}/{totalChores} Done</span>
           </div>
           <div className="w-full bg-slate-100 h-3 rounded-full mb-8 relative z-10 overflow-hidden">
-            <div className="bg-primary h-full rounded-full shadow-[0_0_12px_rgba(244,63,94,0.4)] transition-all duration-1000 ease-out" style={{ width: '50%' }}></div>
+            <div className="bg-primary h-full rounded-full shadow-[0_0_12px_rgba(244,63,94,0.4)] transition-all duration-1000 ease-out" style={{ width: `${progressPercent}%` }}></div>
           </div>
           <ul className="space-y-4 relative z-10">
-            <li className="flex items-center gap-3">
-              <div className="size-6 rounded-md border-2 border-primary bg-primary flex items-center justify-center text-white shadow-sm">
-                <span className="material-symbols-outlined text-sm font-bold">check</span>
-              </div>
-              <span className="text-sm text-slate-400 line-through decoration-2">Walk the dog</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="size-6 rounded-md border-2 border-primary bg-primary flex items-center justify-center text-white shadow-sm">
-                <span className="material-symbols-outlined text-sm font-bold">check</span>
-              </div>
-              <span className="text-sm text-slate-400 line-through decoration-2">Make bed</span>
-            </li>
-            <li className="flex items-center gap-3 group cursor-pointer">
-              <div className="size-6 rounded-md border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary transition-colors"></div>
-              <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">Feed the Dog</span>
-            </li>
-            <li className="flex items-center gap-3 group cursor-pointer">
-              <div className="size-6 rounded-md border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary transition-colors"></div>
-              <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">Fold Laundry</span>
-            </li>
+            {chores.length === 0 ? (
+              <li className="rounded-2xl border border-dashed border-slate-200 p-4 text-center text-sm font-semibold text-slate-500">
+                {family ? 'No chores have been entered yet.' : 'Create your family to begin adding chores.'}
+              </li>
+            ) : chores.slice(0, 4).map((chore) => (
+              <li key={chore.id} className="flex items-center gap-3">
+                <div className={`size-6 rounded-md border-2 flex items-center justify-center shadow-sm ${chore.completed_at ? 'border-primary bg-primary text-white' : 'border-slate-300'}`}>
+                  {chore.completed_at && <span className="material-symbols-outlined text-sm font-bold">check</span>}
+                </div>
+                <span className={`text-sm ${chore.completed_at ? 'text-slate-400 line-through decoration-2' : 'font-semibold text-slate-700'}`}>{chore.title}</span>
+              </li>
+            ))}
           </ul>
         </section>
 
@@ -134,19 +116,10 @@ export default function ChildDashboard() {
           </div>
           <div className="bg-white rounded-[2rem] p-6 shadow-atmospheric">
             <div className="relative border-l-2 border-slate-100 ml-3 space-y-7">
-              {MOCK_TIMELINE.map((item) => (
-                <div key={item.id} className="relative pl-6">
-                  <div className={`absolute -left-[1.125rem] bg-white p-1 rounded-full`}>
-                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color} shadow-sm`}>
-                      <span className="material-symbols-outlined text-[12px] filled-icon font-bold">{item.icon}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[14px] text-slate-800 leading-snug">{item.title}</h4>
-                    <p className="text-[11px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{item.time}</p>
-                  </div>
-                </div>
-              ))}
+              <div className="rounded-2xl border border-dashed border-slate-200 p-5 text-center">
+                <span className="material-symbols-outlined text-3xl text-slate-300">timeline</span>
+                <p className="mt-2 text-sm font-semibold text-slate-600">No live family story yet</p>
+              </div>
             </div>
           </div>
         </section>
@@ -212,17 +185,10 @@ export default function ChildDashboard() {
               </button>
             </div>
             <div className="space-y-4 mb-8">
-              {MOCK_NOTIFICATIONS.map((n) => (
-                <div key={n.id} className="flex items-start gap-4 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer">
-                  <div className={`w-12 h-12 rounded-2xl ${n.bg} flex items-center justify-center shrink-0`}>
-                    <span className={`material-symbols-outlined text-xl ${n.color}`}>{n.icon}</span>
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <p className="text-[14px] font-semibold text-slate-800 dark:text-slate-200 leading-snug">{n.text}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400 mt-1.5">{n.ago}</p>
-                  </div>
-                </div>
-              ))}
+              <div className="rounded-2xl border border-dashed border-slate-200 p-5 text-center">
+                <span className="material-symbols-outlined text-3xl text-slate-300">notifications</span>
+                <p className="mt-2 text-sm font-semibold text-slate-600">No live notifications yet</p>
+              </div>
             </div>
           </div>
         </div>

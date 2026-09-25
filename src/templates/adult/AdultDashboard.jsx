@@ -3,25 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/routes';
 import { dashboardQuickActions } from '../../data/selectors';
 import useAuth from '../../context/useAuth';
-
-const MOCK_NOTIFICATIONS = [
-  { id: 1, icon: 'gavel', color: 'text-primary', bg: 'bg-primary/10', text: 'Leo submitted a pitch — pending review.', ago: '2h ago' },
-  { id: 2, icon: 'star', color: 'text-amber-500', bg: 'bg-amber-50', text: 'Emma completed "Clean Room" and earned 50 pts!', ago: '4h ago' },
-];
-
-const MOCK_TIMELINE = [
-  { id: 101, title: 'Emma reached a savings goal!', time: 'Today, 10:30 AM', icon: 'savings', color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-500/10' },
-  { id: 102, title: 'Leo submitted a loan pitch', time: 'Yesterday', icon: 'request_quote', color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-500/10' },
-  { id: 103, title: 'Accountability reflection completed', time: 'Tuesday', icon: 'gavel', color: 'text-violet-500', bg: 'bg-violet-100 dark:bg-violet-500/10' },
-];
+import useFamilyCore from '../../hooks/useFamilyCore';
 
 export default function AdultDashboard() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const { family, chores, rewards } = useFamilyCore();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // Fallback to avoid crash if loading/refreshing
-  const user = currentUser || { name: 'Admin', avatar: '' };
+  const user = currentUser || { name: 'Adult', avatar: '' };
+  const activeChores = chores.filter((chore) => !chore.completed_at).length;
 
   const todayDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -32,11 +23,9 @@ export default function AdultDashboard() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <div className="size-12 rounded-full border-2 border-primary overflow-hidden shadow-sm">
-              <img
-                className="w-full h-full object-cover"
-                alt={user.name}
-                src={user.avatar || 'https://i.pravatar.cc/150'}
-              />
+              <div className="flex h-full w-full items-center justify-center bg-primary/10 text-sm font-black text-primary">
+                {user.name?.slice(0, 1).toUpperCase() || 'A'}
+              </div>
             </div>
             <div>
               <p className="text-primary font-bold text-[10px] uppercase tracking-widest leading-none mb-1">HQ Command</p>
@@ -49,7 +38,6 @@ export default function AdultDashboard() {
             className="relative p-3 rounded-2xl bg-white shadow-atmospheric text-slate-600 hover:text-primary transition-all active:scale-90"
           >
             <span className="material-symbols-outlined text-[22px] font-light">notifications</span>
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white shadow-sm" />
           </button>
         </div>
       </header>
@@ -70,8 +58,8 @@ export default function AdultDashboard() {
                 <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-md">
                   <span className="material-symbols-outlined text-sm filled-icon">gavel</span>
                 </div>
-                <h3 className="text-lg font-black leading-tight">2 Pitches<br/>to Review</h3>
-                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">Tap to Resolve</p>
+                <h3 className="text-lg font-black leading-tight">{activeChores}<br/>Open Chores</h3>
+                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">Live Family Data</p>
               </div>
               <div className="absolute -bottom-6 -right-6 opacity-20 blur-[1px]">
                 <span className="material-symbols-outlined text-9xl">reviews</span>
@@ -86,8 +74,8 @@ export default function AdultDashboard() {
                 <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center mb-3 backdrop-blur-md">
                   <span className="material-symbols-outlined text-sm filled-icon">account_balance</span>
                 </div>
-                <h3 className="text-lg font-black leading-tight">Family<br/>Vault</h3>
-                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">$1,250 Shared</p>
+                <h3 className="text-lg font-black leading-tight">Reward<br/>Catalog</h3>
+                <p className="text-[10px] font-black tracking-widest mt-4 opacity-80 uppercase">{rewards.length} Live Rewards</p>
               </div>
               <div className="absolute -bottom-6 -right-6 opacity-20 blur-[1px]">
                 <span className="material-symbols-outlined text-9xl">account_balance_wallet</span>
@@ -100,23 +88,15 @@ export default function AdultDashboard() {
         <section>
           <div className="flex items-center justify-between mb-4 px-1">
             <h2 className="font-extrabold text-slate-900 tracking-tight">Family Activity</h2>
-            <button className="text-primary text-[11px] font-black uppercase tracking-widest hover:underline">View All</button>
+            <button onClick={() => navigate(paths.moreTimeline)} className="text-primary text-[11px] font-black uppercase tracking-widest hover:underline">View All</button>
           </div>
           <div className="bg-white rounded-[2rem] p-6 shadow-atmospheric">
-            <div className="relative border-l-2 border-slate-100 ml-3 space-y-7">
-              {MOCK_TIMELINE.map((item) => (
-                <div key={item.id} className="relative pl-6">
-                  <div className={`absolute -left-[1.125rem] bg-white p-1 rounded-full`}>
-                    <div className={`size-6 rounded-full flex items-center justify-center ${item.bg} ${item.color} shadow-sm`}>
-                      <span className="material-symbols-outlined text-[12px] filled-icon">{item.icon}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[14px] text-slate-800 leading-snug">{item.title}</h4>
-                    <p className="text-[11px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{item.time}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="rounded-2xl border border-dashed border-slate-200 p-5 text-center">
+              <span className="material-symbols-outlined text-3xl text-slate-300">timeline</span>
+              <h3 className="mt-2 font-bold text-slate-800">No live activity recorded</h3>
+              <p className="mt-1 text-sm font-medium text-slate-500">
+                {family ? 'Family activity will appear after chores, rewards, and reflections are entered.' : 'Create your test family to begin recording activity.'}
+              </p>
             </div>
           </div>
         </section>
@@ -182,17 +162,10 @@ export default function AdultDashboard() {
               </button>
             </div>
             <div className="space-y-4 mb-8">
-              {MOCK_NOTIFICATIONS.map((n) => (
-                <div key={n.id} className="flex items-start gap-4 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer">
-                  <div className={`w-12 h-12 rounded-2xl ${n.bg} flex items-center justify-center shrink-0`}>
-                    <span className={`material-symbols-outlined text-xl ${n.color}`}>{n.icon}</span>
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <p className="text-[14px] font-semibold text-slate-800 dark:text-slate-200 leading-snug">{n.text}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400 mt-1.5">{n.ago}</p>
-                  </div>
-                </div>
-              ))}
+              <div className="rounded-2xl border border-dashed border-slate-200 p-5 text-center">
+                <span className="material-symbols-outlined text-3xl text-slate-300">notifications</span>
+                <p className="mt-2 text-sm font-semibold text-slate-600">No live notifications yet</p>
+              </div>
             </div>
           </div>
         </div>

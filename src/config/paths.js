@@ -1,6 +1,8 @@
 export const paths = {
   login: '/login',
   invite: '/invite',
+  onboardingSetup: '/onboarding/setup',
+  onboardingInvite: '/onboarding/invite',
   onboardingValues: '/onboarding/values',
   onboardingRules: '/onboarding/rules',
   dashboard: '/dashboard',

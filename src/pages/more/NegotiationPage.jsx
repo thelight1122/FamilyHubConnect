@@ -1,56 +1,28 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/paths';
-import { appeal } from '../../data/mockData';
 
 export default function NegotiationPage() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: 'Leo',
-      isChild: true,
-      text: "Mom, I really need my phone for the group project tonight. Can we find a repair plan?",
-      avatar: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=150&h=150"
-    },
-    {
-      id: 2,
-      sender: 'Mom (Proposal)',
-      isParent: true,
-      isProposal: true,
-      proposalTerms: [
-        "Half-day screen adjustment (starts after project)",
-        "Wash all dinner dishes tonight"
-      ],
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150"
-    },
-    {
-      id: 3,
-      sender: 'Leo',
-      isChild: true,
-      text: "That sounds fair. Can I do the dishes tomorrow instead? I have a lot of homework after the project.",
-      avatar: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=150&h=150"
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
 
   const caseSummary = {
-    caseId: appeal?.caseId ?? '12345',
-    original: 'Screen time reflection',
-    proposed: '1h adjustment + extra chores'
+    caseId: 'Live',
+    original: 'No live reflection selected',
+    proposed: 'No live proposal entered'
   };
 
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
     setMessages([
       ...messages, 
-      {
-        id: Date.now(),
-        sender: 'Parent', // Let's mock the current user sending
-        isParent: true,
-        text: inputMessage,
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150"
-      }
+        {
+          id: Date.now(),
+        sender: 'Adult',
+          isParent: true,
+          text: inputMessage,
+        }
     ]);
     setInputMessage('');
   };
@@ -123,7 +95,7 @@ export default function NegotiationPage() {
             return (
               <div key={msg.id} className="flex items-end gap-3 fade-in">
                 <div className="bg-primary/20 aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden border border-primary/30">
-                  <img className="w-full h-full object-cover" alt="Child avatar" src={msg.avatar} />
+                  <span className="material-symbols-outlined text-sm text-primary">person</span>
                 </div>
                 <div className="flex flex-col gap-1 items-start max-w-[80%]">
                   <p className="text-slate-500 dark:text-slate-400 text-[11px] font-bold ml-1 uppercase">{msg.sender}</p>
@@ -136,8 +108,8 @@ export default function NegotiationPage() {
           } else if (msg.isParent && msg.isProposal) {
             return (
               <div key={msg.id} className="flex items-end gap-3 flex-row-reverse fade-in">
-                <div className="bg-primary aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
-                  <img className="w-full h-full object-cover" alt="Parent avatar" src={msg.avatar} />
+                <div className="bg-primary aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden shadow-sm text-white">
+                  <span className="material-symbols-outlined text-sm">person</span>
                 </div>
                 <div className="flex flex-col gap-1 items-end max-w-[85%]">
                   <p className="text-primary text-[11px] font-bold mr-1 uppercase">{msg.sender}</p>
@@ -170,8 +142,8 @@ export default function NegotiationPage() {
             // General Parent message
             return (
               <div key={msg.id} className="flex items-end gap-3 flex-row-reverse fade-in">
-                <div className="bg-primary aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden border border-primary/20 shadow-sm">
-                  <img className="w-full h-full object-cover" alt="Parent avatar" src={msg.avatar} />
+                <div className="bg-primary aspect-square rounded-full w-8 shrink-0 flex items-center justify-center overflow-hidden border border-primary/20 shadow-sm text-white">
+                  <span className="material-symbols-outlined text-sm">person</span>
                 </div>
                 <div className="flex flex-col gap-1 items-end max-w-[80%]">
                   <p className="text-slate-500 dark:text-slate-400 text-[11px] font-bold mr-1 uppercase">{msg.sender}</p>
@@ -183,6 +155,12 @@ export default function NegotiationPage() {
             );
           }
         })}
+        {messages.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center dark:border-slate-700 dark:bg-slate-800">
+            <span className="material-symbols-outlined text-3xl text-slate-300">forum</span>
+            <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No live resolution messages yet</p>
+          </div>
+        )}
       </div>
 
       {/* Input Area */}

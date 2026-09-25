@@ -37,13 +37,13 @@ test.describe('TeamChatPage', () => {
     await expect(input).toHaveValue('');
   });
 
-  test('attach button shows "File attachments coming soon!" toast', async ({ page }) => {
+  test('attach button shows live storage toast', async ({ page }) => {
     await page.locator('button').filter({ has: page.locator('.material-symbols-outlined:text("add")') }).first().click();
-    await expect(page.getByText('File attachments coming soon!')).toBeVisible();
+    await expect(page.getByText('No live attachment storage configured yet.')).toBeVisible();
   });
 
-  test('image button shows "File attachments coming soon!" toast', async ({ page }) => {
+  test('image button shows live storage toast', async ({ page }) => {
     await page.locator('button').filter({ has: page.locator('.material-symbols-outlined:text("image")') }).click();
-    await expect(page.getByText('File attachments coming soon!')).toBeVisible();
+    await expect(page.getByText('No live attachment storage configured yet.')).toBeVisible();
   });
 });

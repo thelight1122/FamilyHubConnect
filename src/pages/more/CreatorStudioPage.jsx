@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
-import { creatorStudio } from '../../data/mockData';
 
 const CREATE_TYPES = [
   { id: 'photo', label: 'Photo Story', icon: 'photo_camera', gradient: 'from-pink-400 to-rose-500' },
@@ -20,8 +19,8 @@ export default function CreatorStudioPage() {
   const [showCreateMenu, setShowCreateMenu] = useState(false);
   const [toast, showToast] = useToast();
 
-  const [localStats, setLocalStats] = useState(creatorStudio.stats);
-  const [localCreations, setLocalCreations] = useState(creatorStudio.creations);
+  const [localStats, setLocalStats] = useState({ posts: 0, views: 0, likes: 0 });
+  const [localCreations, setLocalCreations] = useState([]);
 
   const [activeCreator, setActiveCreator] = useState(null); // 'photo', 'voice', 'poll'
 
@@ -168,6 +167,13 @@ export default function CreatorStudioPage() {
         <div className="px-4 mt-6">
           <h3 className="text-sm font-bold text-slate-800 mb-3 uppercase tracking-wider">Library</h3>
           <div className="space-y-3">
+            {localCreations.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm">
+                <span className="material-symbols-outlined text-3xl text-slate-300">auto_stories</span>
+                <p className="mt-2 text-sm font-bold text-slate-600">No live creations yet</p>
+                <p className="mt-1 text-xs font-medium text-slate-400">Photo stories, polls, and voice memos will appear here after entry.</p>
+              </div>
+            )}
             {localCreations.map((creation) => (
               <div
                 key={creation.id}

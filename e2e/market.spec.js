@@ -17,6 +17,6 @@ test.describe('MarketPage', () => {
 
   test('cash balance is visible without positions', async ({ page }) => {
     await expect(page.getByText('Cash Balance')).toBeVisible();
-    await expect(page.getByText('$500.00').nth(1)).toBeVisible();
+    await expect(page.getByText('$0.00').nth(1)).toBeVisible();
   });
 });

@@ -12,15 +12,15 @@ test.describe('MorePage', () => {
     await expect(page.getByText('Profile settings are managed by the family account owner.')).toBeVisible();
   });
 
-  test('notifications gives explicit local-preview feedback', async ({ page }) => {
+  test('notifications gives explicit live-data feedback', async ({ page }) => {
     await page.getByRole('button', { name: /Notifications/i }).click();
-    await expect(page.getByText('Notifications are not enabled for this local preview.')).toBeVisible();
+    await expect(page.getByText('Notifications will appear after your family records live activity.')).toBeVisible();
   });
 
   test('header settings and profile actions give local feedback', async ({ page }) => {
     await page.getByRole('button', { name: 'More settings' }).click();
-    await expect(page.getByText('More settings are not enabled for this local preview.')).toBeVisible();
+    await expect(page.getByText('More settings will activate after live family settings are configured.')).toBeVisible();
     await page.getByRole('button', { name: 'View Profile' }).click();
-    await expect(page.getByText('Family profile editing is not enabled for this local preview.')).toBeVisible();
+    await expect(page.getByText('Family profile editing will activate after live family profile storage is configured.')).toBeVisible();
   });
 });

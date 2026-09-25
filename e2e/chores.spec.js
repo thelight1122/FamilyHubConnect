@@ -18,12 +18,12 @@ test.describe('ChoresPage', () => {
   });
 
   test('tasks tab shows empty state when no tasks', async ({ page }) => {
-    await expect(page.getByText('No tasks yet')).toBeVisible();
+    await expect(page.getByText('No live chores entered')).toBeVisible();
   });
 
   test('rewards tab shows empty state when no rewards', async ({ page }) => {
     await page.getByRole('button', { name: 'Rewards Store' }).click();
-    await expect(page.getByText('No rewards yet')).toBeVisible();
+    await expect(page.getByText('No live rewards entered')).toBeVisible();
   });
 
   test('progress counter shows 0/0', async ({ page }) => {

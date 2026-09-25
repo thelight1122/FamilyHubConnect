@@ -1,10 +1,16 @@
 const isDevelopment = import.meta.env.DEV;
 const mockAuthFlag = import.meta.env.VITE_ENABLE_MOCK_AUTH;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY ?? '';
+const mockAuthEnabled = isDevelopment || mockAuthFlag === 'true';
+const supabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const runtimeConfig = Object.freeze({
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
-  supabaseUrl: import.meta.env.VITE_SUPABASE_URL ?? '',
-  supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? '',
+  supabaseUrl,
+  supabaseAnonKey,
+  supabaseConfigured,
   isDevelopment,
-  mockAuthEnabled: isDevelopment || mockAuthFlag === 'true',
+  mockAuthEnabled,
+  authMode: mockAuthEnabled ? 'mock' : supabaseConfigured ? 'supabase' : 'unconfigured',
 });

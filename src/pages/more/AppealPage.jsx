@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { appeal } from '../../data/mockData';
 
 export default function AppealPage() {
   const navigate = useNavigate();
@@ -13,8 +12,8 @@ export default function AppealPage() {
 
   const reflectionContext = {
     label: 'Active Reflection',
-    title: typeof appeal?.consequence === 'string' ? appeal.consequence : 'Screen time reflection',
-    reason: appeal?.reason ?? 'Missing curfew by 15 mins',
+    title: 'No live reflection selected',
+    reason: 'Create a live reflection to attach context',
   };
 
   const handleFileSelect = (e) => {
@@ -132,7 +131,7 @@ export default function AppealPage() {
               value={alternative}
               onChange={(e) => setAlternative(e.target.value)}
               className="form-input flex w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary px-4 text-base font-normal outline-none transition-colors leading-normal"
-              placeholder="e.g., Repair task or conversation instead"
+              placeholder="Enter a proposed repair"
             />
           </label>
         </div>
@@ -174,7 +173,7 @@ export default function AppealPage() {
               <>
                 <span className="material-symbols-outlined text-slate-400 dark:text-slate-500 group-hover:text-primary mb-2 text-4xl transition-colors">upload_file</span>
                 <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Tap to upload photo or file</p>
-                <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">(e.g., Proof of finished homework)</p>
+                <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">Optional supporting context</p>
               </>
             )}
           </div>

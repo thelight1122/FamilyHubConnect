@@ -3,8 +3,12 @@ import { paths } from '../config/routes';
 import useAuth from '../context/useAuth';
 
 export default function ProtectedRoute({ children, allowedRoles }) {
-  const { isLoggedIn, role } = useAuth();
+  const { authReady, isLoggedIn, role } = useAuth();
   const location = useLocation();
+
+  if (!authReady) {
+    return null;
+  }
 
   if (!isLoggedIn) {
     return <Navigate to={paths.login} state={{ from: location }} replace />;

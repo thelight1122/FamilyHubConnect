@@ -22,10 +22,31 @@ test.describe('LoginPage', () => {
     await expect(page.getByText('Forgot password?')).toBeVisible();
   });
 
-  test('"Create Family Account" navigates to onboarding values', async ({ page }) => {
+  test('"Create Family Account" starts with account and family setup', async ({ page }) => {
     await page.getByText('Create Family Account').click();
+    await page.waitForURL('**/onboarding/setup');
+    await expect(page.getByRole('heading', { name: 'Create Family Account' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Your Login' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Family Members' })).toBeVisible();
+  });
+
+  test('family setup collects members before invite decision', async ({ page }) => {
+    await page.getByText('Create Family Account').click();
+    await page.locator('input[placeholder="Enter your name"]').fill('Tracey');
+    await page.locator('input[placeholder="you@example.com"]').fill('tracey@example.com');
+    await page.locator('input[placeholder="Enter family name"]').fill('Test Family');
+    await page.locator('input[placeholder="Family member name"]').fill('Alex');
+    await page.locator('input[placeholder="Optional invite email"]').fill('alex@example.com');
+    await page.getByRole('button', { name: /Continue to Family Values/i }).click();
     await page.waitForURL('**/onboarding/values');
-    expect(page.url()).toContain('/onboarding/values');
+
+    await page.getByRole('button', { name: /Next: Rules/i }).click();
+    await page.waitForURL('**/onboarding/rules');
+    await page.getByRole('button', { name: /Next: Invite Decision/i }).click();
+    await page.waitForURL('**/onboarding/invite');
+
+    await expect(page.getByRole('heading', { name: 'Send invites?' })).toBeVisible();
+    await expect(page.getByText('alex@example.com - adult')).toBeVisible();
   });
 
   test('Google and Apple sign-in buttons are visible', async ({ page }) => {

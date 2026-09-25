@@ -1,17 +1,19 @@
 import { paths } from '../config/routes';
 import { getOrbForRoute } from '../pod';
-import { familyMembers, finances, sports } from './mockData';
+import { emptyFinance, emptySports } from './liveData';
 
-export const familyName = 'Thompson Family';
+export const familyName = 'Family Hub';
 
-export const currentMember =
-  familyMembers.find((member) => member.name === 'Leo') ?? familyMembers[0];
+export const currentMember = {
+  id: null,
+  name: 'Family Member',
+  role: 'adult',
+  wallet: 0,
+  points: 0,
+  avatar: '',
+};
 
-export const dashboardSchedule = [
-  { id: 1, title: 'Soccer Practice', time: '3:30 PM', icon: 'sports_soccer', color: 'text-primary bg-primary/10' },
-  { id: 2, title: 'Dinner', time: '6:00 PM', icon: 'restaurant', color: 'text-orange-500 bg-orange-50' },
-  { id: 3, title: 'Homework', time: '7:30 PM', icon: 'menu_book', color: 'text-violet-500 bg-violet-50' },
-];
+export const dashboardSchedule = [];
 
 export const dashboardQuickActions = [
   { label: 'Finance', icon: 'account_balance_wallet', path: paths.finance, color: 'text-primary bg-primary/10' },
@@ -30,15 +32,7 @@ export const financeTools = [
   { label: 'Market Sim', icon: 'show_chart', color: 'text-orange-500 bg-orange-50', path: paths.financeMarket },
 ];
 
-export const walletMembers = familyMembers
-  .filter((member) => member.wallet !== undefined)
-  .sort((left, right) => right.wallet - left.wallet)
-  .map((member) => ({
-    id: member.id,
-    name: member.name,
-    wallet: member.wallet,
-    avatar: member.avatar,
-  }));
+export const walletMembers = [];
 
 export const maxWalletBalance = Math.max(...walletMembers.map((member) => member.wallet), 1);
 
@@ -60,14 +54,14 @@ export const moreFeatures = [
 export const accountItems = [
   { label: 'Profile Settings', icon: 'manage_accounts', route: null, feedback: 'Profile settings are managed by the family account owner.' },
   { label: 'Invite Family', icon: 'group_add', route: paths.invite },
-  { label: 'Notifications', icon: 'notifications', route: null, feedback: 'Notifications are not enabled for this local preview.' },
+  { label: 'Notifications', icon: 'notifications', route: null, feedback: 'Notifications will appear after your family records live activity.' },
 ];
 
-export const sportsTeams = sports.teams;
+export const sportsTeams = emptySports.teams;
 export const activeSportsTeam = sportsTeams.find((team) => team.active) ?? sportsTeams[0];
-export const sportsContacts = sports.contacts;
-export const sportsChecklist = sports.equipment;
-export const sportsSchedule = sports.schedule;
+export const sportsContacts = emptySports.contacts;
+export const sportsChecklist = emptySports.equipment;
+export const sportsSchedule = emptySports.schedule;
 export const onlineMembers = sportsContacts.map((contact, index) => ({
   name: contact.name
     .split(' ')
@@ -78,4 +72,4 @@ export const onlineMembers = sportsContacts.map((contact, index) => ({
   color: ['bg-[#4c8ce6]', 'bg-amber-400', 'bg-green-400', 'bg-rose-400'][index % 4],
 }));
 
-export const totalFamilySavings = finances.totalSavings;
+export const totalFamilySavings = emptyFinance.totalSavings;

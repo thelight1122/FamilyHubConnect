@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { currentMember } from '../../data/selectors';
-import { finances } from '../../data/mockData';
+import { emptyFinance } from '../../data/liveData';
 import { paths } from '../../config/paths';
 import { useState } from 'react';
 import useToast from '../../hooks/useToast';
@@ -37,7 +37,7 @@ export default function FinancePage() {
         <div className="flex w-10 items-center justify-end">
           {isParentView ? (
             <button
-              onClick={() => showToast('Bank settings are not enabled for this local preview.')}
+              onClick={() => showToast('Bank settings will activate after live bank records are configured.')}
               aria-label="Bank settings"
               className="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-transparent transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
             >
@@ -60,6 +60,9 @@ export default function FinancePage() {
 // PARENT BANK VIEW
 // ----------------------------------------------------------------------------
 function ParentBankView({ navigate }) {
+  const pendingPitches = [];
+  const activeLoans = [];
+
   return (
     <main className="flex-1 overflow-y-auto">
       <section className="flex flex-wrap gap-4 p-4">
@@ -68,8 +71,8 @@ function ParentBankView({ navigate }) {
             <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
             <p className="text-white/90 text-sm font-bold leading-normal uppercase tracking-wider">Shared Pool</p>
           </div>
-          <p className="text-white tracking-tight text-3xl font-extrabold leading-tight">$1,250.00</p>
-          <p className="text-white/80 text-xs font-medium">+ $120.00 from last month</p>
+          <p className="text-white tracking-tight text-3xl font-extrabold leading-tight">$0.00</p>
+          <p className="text-white/80 text-xs font-medium">No live deposits recorded</p>
         </div>
         <div 
           onClick={() => navigate(paths.financeLoan)}
@@ -79,56 +82,36 @@ function ParentBankView({ navigate }) {
             <span className="material-symbols-outlined text-slate-500 text-sm">payments</span>
             <p className="text-slate-500 dark:text-slate-400 text-sm font-bold leading-normal uppercase tracking-wider">Active Loans</p>
           </div>
-          <p className="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight">$435.00</p>
-          <p className="text-[#ec5b13] text-xs font-bold">3 Total Borrowers</p>
+          <p className="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight">$0.00</p>
+          <p className="text-[#ec5b13] text-xs font-bold">0 Total Borrowers</p>
         </div>
       </section>
 
       <section className="px-4 py-2">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Pending Loan Pitches</h3>
-          <span className="bg-[#ec5b13]/10 text-[#ec5b13] text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-widest">2 New</span>
+          <span className="bg-[#ec5b13]/10 text-[#ec5b13] text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-widest">{pendingPitches.length} New</span>
         </div>
         <div className="space-y-3">
-          <div className="flex flex-col gap-4 rounded-2xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:shadow-md">
-            <div className="flex justify-between items-start">
-              <div className="flex gap-3">
-                <div className="size-10 rounded-full bg-[#ec5b13]/20 flex items-center justify-center text-[#ec5b13]">
-                  <span className="material-symbols-outlined">person</span>
-                </div>
-                <div>
-                  <p className="text-slate-900 dark:text-slate-100 font-bold">Maya's Tablet Pitch</p>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">Requested: $200.00 • 2% Interest</p>
-                </div>
-              </div>
-              <span className="text-xs text-slate-400 italic font-medium">2h ago</span>
+          {pendingPitches.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span className="material-symbols-outlined text-3xl text-slate-300">request_quote</span>
+              <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No live pitches submitted</p>
+              <p className="mt-1 text-xs font-medium text-slate-400">Family loan pitches will appear here after entry.</p>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 font-medium">"I want to buy a tablet for my digital art classes. I'll pay back $20 every week from my allowance..."</p>
-            <div className="flex gap-2">
-              <button onClick={() => navigate(paths.financeLoanConfirmation)} className="flex-1 bg-[#ec5b13] hover:bg-[#ec5b13]/90 active:scale-[0.98] text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-sm">Review Pitch</button>
-              <button className="px-6 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-[0.98] text-slate-600 dark:text-slate-300 font-bold py-2.5 rounded-xl text-sm transition-all">Decline</button>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
       <section className="px-4 py-6">
         <h3 className="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight mb-4">Active Loans</h3>
         <div className="grid grid-cols-1 gap-4">
-          <div className="flex items-center gap-4 rounded-2xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:shadow-md cursor-pointer">
-            <div className="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-xl shrink-0 border border-slate-100 dark:border-slate-700" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=200")' }}></div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[#ec5b13] text-[10px] font-bold uppercase tracking-widest mb-0.5">Leo</p>
-              <p className="text-slate-900 dark:text-slate-100 font-bold truncate text-[15px]">Leo's Bike Loan</p>
-              <div className="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-2.5 overflow-hidden">
-                <div className="bg-[#ec5b13] h-full rounded-full" style={{ width: '70%' }}></div>
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 text-[10px] mt-1.5 uppercase font-bold tracking-wider">$45.00 remaining of $150.00</p>
+          {activeLoans.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span className="material-symbols-outlined text-3xl text-slate-300">payments</span>
+              <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No live loans entered</p>
             </div>
-            <button className="size-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-700 text-slate-400 group-hover:bg-[#ec5b13] group-hover:text-white transition-colors">
-              <span className="material-symbols-outlined text-lg">chevron_right</span>
-            </button>
-          </div>
+          )}
         </div>
       </section>
 
@@ -139,20 +122,8 @@ function ParentBankView({ navigate }) {
         </div>
         <div className="space-y-4">
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Global Interest Rates</p>
-          <div className="flex items-center justify-between p-3.5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
-                <span className="material-symbols-outlined">school</span>
-              </div>
-              <div>
-                <p className="text-[15px] font-bold">Educational</p>
-                <p className="text-[10px] font-bold tracking-wide text-slate-500 uppercase mt-0.5">Lower rates encourage learning</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-extrabold text-[#ec5b13]">1.5%</span>
-              <span className="material-symbols-outlined text-slate-300 text-lg">edit</span>
-            </div>
+          <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-5 text-sm font-semibold text-slate-500 dark:border-slate-700 dark:bg-slate-800">
+            No live banking settings entered.
           </div>
         </div>
       </section>
@@ -164,27 +135,28 @@ function ParentBankView({ navigate }) {
 // CHILD WALLET VIEW
 // ----------------------------------------------------------------------------
 function ChildWalletView({ navigate }) {
+  const transactions = emptyFinance.recentActivity;
+
   return (
     <main className="flex-1 max-w-md mx-auto w-full pb-24">
       {/* Balance Card */}
       <section className="p-6 pb-2 text-center animate-in slide-in-from-bottom-2 fade-in duration-500">
         <div className="relative inline-block mb-4">
           <div className="w-32 h-32 rounded-full border-4 border-primary p-1 bg-white dark:bg-slate-800 shadow-xl shadow-primary/10">
-            <div 
-              className="w-full h-full rounded-full bg-center bg-cover" 
-              style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=200")' }}
-            ></div>
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-primary/10 text-primary">
+              <span className="material-symbols-outlined text-5xl">person</span>
+            </div>
           </div>
           <div className="absolute -bottom-2 -right-2 bg-green-400 text-white p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-white dark:border-background-dark">
             <span className="material-symbols-outlined text-[16px]">verified</span>
           </div>
         </div>
         <div className="space-y-1">
-          <p className="text-5xl font-extrabold text-primary tracking-tighter drop-shadow-sm">$45.50</p>
+          <p className="text-5xl font-extrabold text-primary tracking-tighter drop-shadow-sm">$0.00</p>
           <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-[10px] pt-1">Current Balance</p>
           <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary px-3 py-1 rounded-full text-[11px] font-bold mt-3">
             <span className="material-symbols-outlined text-[14px]">trending_up</span>
-            <span>Keep it up, Champ!</span>
+            <span>Live wallet ready</span>
           </div>
         </div>
       </section>
@@ -197,19 +169,19 @@ function ChildWalletView({ navigate }) {
         </div>
         <div className="flex gap-3">
           <div className="flex-1 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl text-center border border-slate-100 dark:border-slate-700">
-            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">02</p>
+            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">--</p>
             <p className="text-[10px] font-bold tracking-wider text-primary uppercase mt-1">Days</p>
           </div>
           <div className="flex-1 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl text-center border border-slate-100 dark:border-slate-700">
-            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">14</p>
+            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">--</p>
             <p className="text-[10px] font-bold tracking-wider text-primary uppercase mt-1">Hrs</p>
           </div>
           <div className="flex-1 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl text-center border border-slate-100 dark:border-slate-700">
-            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">32</p>
+            <p className="text-2xl font-black text-slate-800 dark:text-slate-100">--</p>
             <p className="text-[10px] font-bold tracking-wider text-primary uppercase mt-1">Min</p>
           </div>
         </div>
-        <p className="text-center text-[11px] font-bold text-slate-400 mt-4 italic">Allowance arrives Saturday at 8:00 AM 🚀</p>
+        <p className="text-center text-[11px] font-bold text-slate-400 mt-4 italic">No live payout schedule entered.</p>
       </section>
 
       {/* Savings Goal */}
@@ -218,7 +190,7 @@ function ChildWalletView({ navigate }) {
           <div className="flex justify-between items-start mb-5">
             <div>
               <p className="text-blue-100 text-[10px] font-bold uppercase tracking-widest mb-1">Active Savings Goal</p>
-              <h3 className="text-[22px] font-extrabold tracking-tight">New Mountain Bike</h3>
+              <h3 className="text-[22px] font-extrabold tracking-tight">No live goal entered</h3>
             </div>
             <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-sm">
               <span className="material-symbols-outlined text-3xl text-white">pedal_bike</span>
@@ -226,11 +198,11 @@ function ChildWalletView({ navigate }) {
           </div>
           <div className="space-y-3">
             <div className="flex justify-between text-xs font-bold tracking-wider">
-              <span className="text-white/90">$120.00 / $250.00</span>
-              <span className="text-white">48%</span>
+              <span className="text-white/90">$0.00 / $0.00</span>
+              <span className="text-white">0%</span>
             </div>
             <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden p-[2px]">
-              <div className="bg-white h-full rounded-full w-[48%] relative">
+              <div className="bg-white h-full rounded-full w-0 relative">
                 {/* Shine effect */}
                 <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-r from-transparent via-white/50 to-transparent translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>
               </div>
@@ -271,12 +243,12 @@ function ChildWalletView({ navigate }) {
           <button className="text-primary text-[11px] font-bold uppercase tracking-wider hover:underline">See All</button>
         </div>
         <div className="space-y-3">
-          {finances.recentActivity.length === 0 ? (
+          {transactions.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <span className="material-symbols-outlined text-3xl text-slate-300">receipt_long</span>
               <p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">No transactions yet</p>
             </div>
-          ) : finances.recentActivity.slice(0,3).map((item) => {
+          ) : transactions.slice(0,3).map((item) => {
             const isPositive = item.amount > 0;
             return (
               <div key={item.id} className="flex items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
