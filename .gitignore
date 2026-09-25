@@ -28,3 +28,6 @@ test-results
 *.sln
 *.sw?
 dist-live
+
+# Per-machine Claude Code settings
+.claude/settings.local.json
