@@ -134,7 +134,8 @@ select throws_ok(
 reset role;
 
 select is(
-  (select count(*)::int from public.chores where completed_at is not null),
+  (select count(*)::int from public.chores
+    where family_id = '10000000-0000-0000-0000-000000000001' and completed_at is not null),
   2, 'exactly the two permitted completions were saved');
 
 select is(
