@@ -40,7 +40,7 @@ jobs:
         with:
           version: 2.117.0
       - name: Start local Supabase (applies every migration)
-        run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector,supavisor,realtime,storage-api
+        run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector,supavisor,realtime
       - run: npm ci
       - run: supabase test db
       - name: Database types match the migrations

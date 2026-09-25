@@ -15,7 +15,7 @@ Family Hub Connect is currently a verified local prototype. Production readiness
 - [x] Server-side validation, audit logging and per-user write rate limits (migration `0500`).
 - [x] Continuous integration: lint, build, unit, prototype browser tests, database rule tests and live sign-in tests (`.github/workflows/ci.yml`).
 - [x] Production-like acceptance tests against a non-production backend (`npm run test:e2e:live` against the local Supabase stack).
-- [ ] Replace mock domain data with authenticated, authorized reads and writes. Done: chores, rewards, finance, constitution, Accountability sessions. Remaining: governance, health, pets, timeline, sports, creator studio.
+- [x] Replace mock domain data with authenticated, authorized reads and writes: chores, rewards, finance, constitution, Accountability, governance, health, pets, timeline, sports, creator studio and maintenance. Photos and voice memos go to a private, family-scoped storage bucket. Still prototype screens: the Appeal/Negotiation flow (superseded by Accountability), Market Simulator and the Assistant.
 - [ ] Configure production Supabase Auth providers, redirects, email templates, and invite policy. See `docs/PRODUCTION_SETUP.md` §2.
 - [ ] Configure secrets and deployment environments outside the repository. See `docs/PRODUCTION_SETUP.md` §1, §3, §4.
 - [ ] Complete release, rollback, monitoring, and incident procedures. Written in `docs/PRODUCTION_SETUP.md` §4–5; the accounts and tools still need setting up.

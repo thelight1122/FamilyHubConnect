@@ -20,6 +20,9 @@ export default defineConfig({
     baseURL: `http://localhost:${port}`,
     ...devices['Pixel 5'],
     trace: 'retain-on-failure',
+    // A fake microphone, so voice memos can be recorded headlessly.
+    permissions: ['microphone'],
+    launchOptions: { args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] },
   },
   webServer: {
     command: `npx vite build --outDir dist-live && npx vite preview --outDir dist-live --port ${port} --strictPort`,
