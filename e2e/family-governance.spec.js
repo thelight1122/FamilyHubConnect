@@ -34,10 +34,10 @@ test.describe('FamilyGovernancePage', () => {
     await expect(page.getByText('Open Rule Book')).toBeVisible();
   });
 
-  test('"New Resolution Request" button navigates to appeal page', async ({ page }) => {
+  test('"New Resolution Request" button opens Accountability', async ({ page }) => {
     await page.getByRole('button', { name: /New Resolution Request/i }).click();
-    await page.waitForURL('**/more/appeal');
-    expect(page.url()).toContain('/more/appeal');
+    await page.waitForURL('**/more/court');
+    expect(page.url()).toContain('/more/court');
   });
 
   test('"Open Rule Book" button navigates to constitution page', async ({ page }) => {

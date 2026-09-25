@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import { test, expect } from '@playwright/test';
 import { createClient } from '@supabase/supabase-js';
 import { localSupabaseEnv } from './supabaseEnv.js';
@@ -144,4 +145,168 @@ test('an accountability question: each account stays private until everyone is h
   await page.getByPlaceholder('The common ground you agreed').fill('Write the limit on the fridge.');
   await page.getByRole('button', { name: 'Record common ground' }).click();
   await expect(page.getByText('Write the limit on the fridge.')).toBeVisible();
+});
+
+// A 1x1 PNG for photo uploads.
+const PNG = {
+  name: 'photo.png',
+  mimeType: 'image/png',
+  buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64'),
+};
+
+test('health: a child logs their own event; the parent sees it under the child, not their own', async ({ page }) => {
+  await signIn(page, CHILD);
+  await page.goto('/more/health');
+  await page.getByRole('button', { name: /Add Log/ }).click();
+  await page.getByRole('button', { name: 'Illness' }).click();
+  await page.locator('textarea[placeholder*="symptoms"]').fill('Sore throat');
+  await page.getByRole('button', { name: 'Save Log' }).click();
+  await expect(page.getByText('Health event logged!')).toBeVisible();
+  await expect(page.getByText('Sore throat')).toBeVisible();
+
+  await signIn(page, PARENT);
+  await page.goto('/more/health');
+  await expect(page.getByText('Sore throat')).toHaveCount(0);
+  await page.getByRole('button', { name: CHILD.name }).click();
+  await expect(page.getByText('Sore throat')).toBeVisible();
+});
+
+test('pets: the parent adds a pet and the child logs a walk', async ({ page }) => {
+  await signIn(page, PARENT);
+  await page.goto('/more/pets');
+  await page.getByPlaceholder('Pet name').fill('Rex');
+  await page.getByPlaceholder('Species').fill('Dog');
+  await page.getByRole('button', { name: 'Add pet' }).click();
+  await expect(page.getByRole('heading', { name: 'Rex' })).toBeVisible();
+
+  await signIn(page, CHILD);
+  await page.goto('/more/pets');
+  await expect(page.getByPlaceholder('Pet name')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Add Walk' }).click();
+  await page.getByPlaceholder('km').fill('1.5');
+  await page.getByRole('button', { name: 'Log walk' }).click();
+  await expect(page.getByText('Walk logged')).toBeVisible();
+  await expect(page.getByText(`${CHILD.name} · 20 min`)).toBeVisible();
+});
+
+test('timeline: a private journal stays with its author; shared moments reach the family', async ({ page }) => {
+  await signIn(page, CHILD);
+  await page.goto('/more/timeline');
+  await page.getByRole('button', { name: 'Add a moment' }).click();
+  await page.getByRole('button', { name: 'journal', exact: true }).click();
+  await page.getByPlaceholder('Write your entry').fill('A private thought.');
+  await page.getByLabel('Keep private').check();
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByText('Added to the timeline')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Add a moment' }).click();
+  await page.getByRole('button', { name: 'achievement', exact: true }).click();
+  await page.getByPlaceholder('Title').fill('Learned to swim');
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByText('Learned to swim')).toBeVisible();
+  await expect(page.getByText('A private thought.')).toBeVisible();
+
+  await signIn(page, PARENT);
+  await page.goto('/more/timeline');
+  await expect(page.getByText('Learned to swim')).toBeVisible();
+  await expect(page.getByText('A private thought.')).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Add a moment' }).click();
+  await page.getByPlaceholder('Title').fill('Beach day');
+  await page.getByLabel('Photo').setInputFiles(PNG);
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByText('Added to the timeline')).toBeVisible();
+  await expect(page.locator('div[style*="family-media"]')).toHaveCount(1);
+});
+
+test('sports: the parent sets up a team, the child packs and chats', async ({ page }) => {
+  await signIn(page, PARENT);
+  await page.goto('/sports');
+  await page.getByText('Add Team').click();
+  await page.getByPlaceholder('Team name').fill('Tigers');
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByRole('heading', { name: 'Tigers' })).toBeVisible();
+  await page.getByPlaceholder('Item', { exact: true }).fill('Shin guards');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(page.getByText('0 of 1 packed')).toBeVisible();
+
+  await signIn(page, CHILD);
+  await page.goto('/sports');
+  await expect(page.getByPlaceholder('Team name')).toHaveCount(0);
+  await page.getByText('Shin guards').click();
+  await expect(page.getByText('1 of 1 packed')).toBeVisible();
+  await page.getByText('Open Team Chat').click();
+  await page.getByPlaceholder('Type a message to the team...').fill('Ready for practice!');
+  await page.keyboard.press('Enter');
+  await expect(page.getByText('Ready for practice!')).toBeVisible();
+
+  await signIn(page, PARENT);
+  await page.goto('/sports/chat');
+  await expect(page.getByText('Ready for practice!')).toBeVisible();
+  await expect(page.getByText(CHILD.name, { exact: true })).toBeVisible();
+});
+
+test('creator studio: poll voting, a photo story and a recorded voice memo', async ({ page }) => {
+  await signIn(page, PARENT);
+  await page.goto('/more/creator');
+  await page.getByText('Family Poll').click();
+  await page.getByPlaceholder('Ask the family a question...').fill('Pizza or tacos?');
+  await page.getByPlaceholder('Option 1').fill('Pizza');
+  await page.getByPlaceholder('Option 2').fill('Tacos');
+  await page.getByRole('button', { name: /Publish to Family/ }).click();
+  await expect(page.getByText('Family Poll published successfully!')).toBeVisible();
+
+  await page.getByText('Photo Story').first().click();
+  await page.getByLabel('Photo').setInputFiles(PNG);
+  await page.locator('textarea[placeholder*="caption"]').fill('Backyard science day');
+  await page.getByRole('button', { name: /Publish to Family/ }).click();
+  await expect(page.getByText('Photo Story published successfully!')).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Backyard science day' })).toBeVisible();
+
+  await page.getByText('Voice Memo', { exact: true }).first().click();
+  await page.getByRole('button', { name: 'Start Recording' }).click();
+  await page.waitForTimeout(1500);
+  await page.getByRole('button', { name: 'Stop Recording' }).click();
+  await page.getByRole('button', { name: /Publish to Family/ }).click();
+  await expect(page.getByText('Voice Memo published successfully!')).toBeVisible();
+  await expect(page.locator('audio')).toHaveCount(1);
+
+  // The studio route is adult-only for now, so the child votes through the
+  // API with their own sign-in: the same database rules the app uses.
+  const kid = createClient(url, localSupabaseEnv().anonKey, { auth: { persistSession: false } });
+  await kid.auth.signInWithPassword({ email: CHILD.email, password: CHILD.password });
+  const { data: poll } = await kid.from('creator_posts').select('id, family_id, poll_options(id, label)').eq('kind', 'poll').single();
+  const tacos = poll.poll_options.find((o) => o.label === 'Tacos');
+  const { error: voteError } = await kid.from('poll_votes').insert({ post_id: poll.id, option_id: tacos.id, family_id: poll.family_id });
+  expect(voteError).toBeNull();
+
+  await page.reload();
+  await page.getByRole('button', { name: /Pizza/ }).click();
+  await expect(page.getByText('Vote counted')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Tacos\s*1/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Pizza\s*1/ })).toBeVisible();
+});
+
+test('governance shows the closed question and the family circle', async ({ page }) => {
+  await signIn(page, PARENT);
+  await page.goto('/more/governance');
+  await page.getByRole('button', { name: 'Archive' }).click();
+  await expect(page.getByText('The screen-time agreement')).toBeVisible();
+  await expect(page.getByText('"Write the limit on the fridge."')).toBeVisible();
+  await page.getByRole('button', { name: 'Circle', exact: true }).click();
+  await expect(page.getByText(CHILD.name, { exact: true })).toBeVisible();
+});
+
+test('maintenance: an item due soon is flagged, then handled', async ({ page }) => {
+  await signIn(page, PARENT);
+  await page.goto('/adult/maintenance');
+  await page.getByPlaceholder('What needs doing').fill('Oil change');
+  const soon = new Date(Date.now() + 3 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+  await page.getByLabel('Due date').fill(soon);
+  await page.getByRole('button', { name: 'Add item' }).click();
+  await expect(page.getByRole('heading', { name: 'Oil change' })).toBeVisible();
+  await expect(page.locator('article').getByText('Due soon')).toBeVisible();
+  await page.getByRole('button', { name: 'Mark handled' }).click();
+  await expect(page.getByText('Marked handled')).toBeVisible();
+  await expect(page.locator('article').getByText('Done')).toBeVisible();
 });

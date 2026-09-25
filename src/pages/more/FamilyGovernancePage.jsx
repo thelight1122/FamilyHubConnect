@@ -1,13 +1,39 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { paths } from '../../config/paths';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useAccountability from '../../hooks/useAccountability';
+import useConstitution from '../../hooks/useConstitution';
 
 const TABS = ['Resolution', 'Circle', 'Archive', 'Rule Book'];
-const reflectionCircle = [];
-const resolutionArchive = [];
 
+// Governance reads what the family already keeps: open Accountability
+// questions, the members, closed questions with their common ground, and
+// the constitution's rules.
 export default function FamilyGovernancePage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Resolution');
+  const { family, members } = useFamilyCore();
+  const { sessions } = useAccountability(family?.id);
+  const constitution = useConstitution(family?.id);
+
+  const openSessions = sessions.filter((s) => s.status === 'open');
+  const resolutionArchive = sessions
+    .filter((s) => s.status === 'closed')
+    .map((s) => ({
+      id: s.id,
+      title: s.topic,
+      resolution: s.common_ground || 'Closed without a written agreement.',
+      date: new Date(s.closed_at ?? s.opened_at).toLocaleDateString(),
+      highlight: Boolean(s.common_ground),
+    }));
+  const reflectionCircle = members.map((m) => ({
+    id: m.user_id,
+    name: m.display_name,
+    period: m.role === 'adult' ? 'Adult' : 'Child',
+    active: openSessions.some((s) => s.participantIds.includes(m.user_id)),
+  }));
+  const nameOf = (userId) => members.find((m) => m.user_id === userId)?.display_name ?? 'Family member';
 
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-x-hidden">
@@ -49,9 +75,23 @@ export default function FamilyGovernancePage() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold tracking-tight">Active Mediation</h3>
               <span className="text-xs font-semibold px-2 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 rounded">
-                0 Pending
+                {openSessions.length} Open
               </span>
             </div>
+
+            {openSessions.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => navigate(paths.moreCourt)}
+                className="mb-3 w-full rounded-xl border border-slate-200 bg-white p-4 text-left dark:border-slate-700 dark:bg-slate-800"
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wider text-primary">{s.door === 'support' ? 'Support' : 'Accountability'}</p>
+                <p className="font-bold">{s.topic}</p>
+                <p className="text-xs text-slate-500">
+                  {s.accounts.length === s.participantIds.length ? 'Everyone heard' : `Waiting on accounts from ${s.participantIds.length} people`} · {s.participantIds.map(nameOf).join(', ')}
+                </p>
+              </button>
+            ))}
             
             <div className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">
               <div
@@ -63,13 +103,13 @@ export default function FamilyGovernancePage() {
                 </div>
               </div>
               <div className="p-5">
-                <h4 className="text-lg font-bold mb-1">Request a Family Hearing</h4>
+                <h4 className="text-lg font-bold mb-1">Open a Question</h4>
                 <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
-                  Formally present a conflict for mediation. This ensures a neutral platform where everyone
-                  is heard and a fair resolution is reached.
+                  Bring something to the family. Everyone gives their account before anything is concluded,
+                  and the question stays impersonal: it names what happened, not a person.
                 </p>
                 <button
-                  onClick={() => navigate('/more/appeal')}
+                  onClick={() => navigate(paths.moreCourt)}
                   className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">add_circle</span>
@@ -114,10 +154,6 @@ export default function FamilyGovernancePage() {
                 </div>
               ))}
             </div>
-            <button className="mt-4 text-primary text-sm font-semibold flex items-center gap-1 hover:text-primary/80 transition-colors">
-              <span>View full rotation schedule</span>
-              <span className="material-symbols-outlined text-sm">chevron_right</span>
-            </button>
           </section>
         )}
 
@@ -126,7 +162,6 @@ export default function FamilyGovernancePage() {
           <section className="px-4 pt-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold tracking-tight">Resolution Archive</h3>
-              <button className="text-sm text-primary font-semibold hover:text-primary/80 transition-colors">See All</button>
             </div>
             <div className="flex flex-col gap-4">
               {resolutionArchive.length === 0 ? (
@@ -145,7 +180,7 @@ export default function FamilyGovernancePage() {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
-                      Ruling: {item.date}
+                      Common ground · {item.date}
                     </span>
                     {item.highlight && (
                       <span className="material-symbols-outlined text-slate-300 dark:text-slate-500">history_edu</span>
@@ -168,12 +203,15 @@ export default function FamilyGovernancePage() {
               </div>
               <h3 className="text-lg font-bold mb-2 relative z-10">Family Constitution</h3>
               <p className="text-slate-400 text-sm mb-4 relative z-10">
-                Live family rules will appear here after your test family enters them.
+                {constitution.mission || 'Live family rules will appear here after your family enters them.'}
               </p>
               <div className="flex flex-wrap gap-2 relative z-10">
-                <span className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                  No live articles entered
-                </span>
+                {constitution.rules.length === 0 && (
+                  <span className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">No live articles entered</span>
+                )}
+                {constitution.rules.map((rule) => (
+                  <span key={rule.id} className="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">{rule.body}</span>
+                ))}
               </div>
               <button
                 onClick={() => navigate('/more/constitution')}

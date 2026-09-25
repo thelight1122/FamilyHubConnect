@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import BackHeader from '../../components/BackHeader';
 import { paths } from '../../config/paths';
-import { emptyMaintenance } from '../../data/liveData';
 import { orbIds, recordGovernanceEvent } from '../../pod';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useMaintenance, { maintenanceStatus } from '../../hooks/useMaintenance';
 
 const SECTIONS = [
   { id: 'vehicles', label: 'Vehicles', icon: 'directions_car' },
@@ -17,30 +20,54 @@ const STATUS_CLASS = {
   Ready: 'bg-emerald-50 text-emerald-600 border-emerald-100',
   Review: 'bg-violet-50 text-violet-600 border-violet-100',
   Active: 'bg-slate-100 text-slate-600 border-slate-200',
+  Done: 'bg-emerald-50 text-emerald-600 border-emerald-100',
 };
+
+const SECTION_ICONS = { vehicles: 'directions_car', home: 'home_repair_service', subscriptions: 'subscriptions' };
+const inputClass = 'rounded-lg border border-slate-200 px-3 py-2 text-sm';
+const blankItem = { title: '', detail: '', dueOn: '', monthlyCost: '' };
 
 export default function MaintenancePage() {
   const [activeSection, setActiveSection] = useState('vehicles');
-  const [completed, setCompleted] = useState([]);
+  const [toast, showToast] = useToast();
+  const [form, setForm] = useState(blankItem);
+  const { family } = useFamilyCore();
+  const maintenance = useMaintenance(family?.id);
   const transparencyPreview = recordGovernanceEvent({
     orbId: orbIds.AUTO_MAINTENANCE,
     eventType: 'maintenance_view',
     summary: 'Adult maintenance hub viewed with AI-safe household operational shadows.',
   });
 
-  const items = emptyMaintenance[activeSection] ?? [];
-  const summary = emptyMaintenance.summary;
+  const items = maintenance.items
+    .filter((item) => item.section === activeSection)
+    .map((item) => ({
+      ...item,
+      icon: SECTION_ICONS[item.section],
+      status: maintenanceStatus(item),
+      detail: [
+        item.detail,
+        item.due_on && `Due ${new Date(`${item.due_on}T00:00:00`).toLocaleDateString()}`,
+        item.monthly_cost_cents != null && `${(item.monthly_cost_cents / 100).toFixed(2)}/mo`,
+      ].filter(Boolean).join(' · '),
+    }));
+  const summary = maintenance.summary;
 
-  const toggleComplete = (itemId) => {
-    setCompleted((current) => (
-      current.includes(itemId)
-        ? current.filter((id) => id !== itemId)
-        : [...current, itemId]
-    ));
+  const toggleComplete = async (item) => {
+    const outcome = await maintenance.setHandled(item.id, !item.handled_at);
+    showToast(outcome.ok ? (item.handled_at ? 'Item reopened' : 'Marked handled') : outcome.message);
+  };
+
+  const addItem = async (event) => {
+    event.preventDefault();
+    const outcome = await maintenance.addItem({ section: activeSection, ...form });
+    showToast(outcome.ok ? 'Item added' : outcome.message);
+    if (outcome.ok) setForm(blankItem);
   };
 
   return (
     <div className="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-surface-0 text-slate-900 overflow-x-hidden">
+      <Toast message={toast} />
       <BackHeader title="Maintenance" backTo={paths.adultDashboard} />
 
       <main className="flex-1 overflow-y-auto px-4 py-5 pb-28 space-y-6">
@@ -94,6 +121,16 @@ export default function MaintenancePage() {
         </section>
 
         <section className="space-y-3">
+          {maintenance.error && <p className="rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-700">{maintenance.error}</p>}
+          {maintenance.live && (
+            <form onSubmit={addItem} className="grid grid-cols-2 gap-2 rounded-2xl border border-slate-100 bg-white p-3 shadow-sm" aria-label="Add maintenance item">
+              <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="What needs doing" required className={`${inputClass} col-span-2`} />
+              <input value={form.detail} onChange={(e) => setForm((f) => ({ ...f, detail: e.target.value }))} placeholder="Details" className={`${inputClass} col-span-2`} />
+              <input type="date" value={form.dueOn} onChange={(e) => setForm((f) => ({ ...f, dueOn: e.target.value }))} aria-label="Due date" className={inputClass} />
+              <input type="number" min="0" step="0.01" value={form.monthlyCost} onChange={(e) => setForm((f) => ({ ...f, monthlyCost: e.target.value }))} placeholder="$/month" className={inputClass} />
+              <button type="submit" className="col-span-2 rounded-lg bg-primary py-2 text-sm font-bold text-white">Add item</button>
+            </form>
+          )}
           {items.length === 0 && (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm">
               <span className="material-symbols-outlined text-3xl text-slate-300">handyman</span>
@@ -102,7 +139,7 @@ export default function MaintenancePage() {
             </div>
           )}
           {items.map((item) => {
-            const isComplete = completed.includes(item.id);
+            const isComplete = Boolean(item.handled_at);
 
             return (
               <article
@@ -122,11 +159,11 @@ export default function MaintenancePage() {
                         <p className="mt-1 text-xs font-semibold leading-relaxed text-slate-500">{item.detail}</p>
                       </div>
                       <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-black ${STATUS_CLASS[item.status] ?? STATUS_CLASS.Active}`}>
-                        {isComplete ? 'Done' : item.status}
+                        {item.status}
                       </span>
                     </div>
                     <button
-                      onClick={() => toggleComplete(item.id)}
+                      onClick={() => toggleComplete(item)}
                       className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-slate-100 px-3 py-2 text-xs font-black text-slate-700 transition-colors hover:bg-slate-200"
                     >
                       <span className="material-symbols-outlined text-sm">{isComplete ? 'undo' : 'task_alt'}</span>
