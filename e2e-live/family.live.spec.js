@@ -2,14 +2,14 @@ import { Buffer } from 'node:buffer';
 import { test, expect } from '@playwright/test';
 import { createClient } from '@supabase/supabase-js';
 import { localSupabaseEnv } from './supabaseEnv.js';
-import { PARENT, CHILD } from './people.js';
+import { PARENT, CHILD, NEWCOMER } from './people.js';
 
 // One family, end to end, with real sign-in and the real database rules.
 // Tests run in order and build on each other.
 test.describe.configure({ mode: 'serial' });
 
-const { url, serviceRoleKey } = localSupabaseEnv();
-const admin = createClient(url, serviceRoleKey, { auth: { persistSession: false } });
+// No admin client here: everyone joins through the app, as real families do.
+const { url } = localSupabaseEnv();
 
 async function signIn(page, person) {
   await page.context().clearCookies();
@@ -22,10 +22,19 @@ async function signIn(page, person) {
   await page.waitForURL(/dashboard/);
 }
 
-async function userId(email) {
-  const { data } = await admin.auth.admin.listUsers({ perPage: 1000 });
-  return data.users.find((u) => u.email === email).id;
+// Creates an invite on the Family page (signed in as an adult) and returns its code.
+async function createInvite(page, name, role, email = '') {
+  await page.goto('/more/family');
+  await page.getByPlaceholder('Their name').fill(name);
+  await page.getByRole('radio', { name: role }).click();
+  if (email) await page.getByPlaceholder(/Their email/).fill(email);
+  await page.getByRole('button', { name: 'Create invite' }).click();
+  const code = (await page.getByTestId('invite-code').textContent()).trim();
+  expect(code).toMatch(/^[A-HJ-NP-Z2-9]{10}$/);
+  return code;
 }
+
+let kidCode;
 
 test('a wrong password is refused', async ({ page }) => {
   await page.goto('/login');
@@ -55,15 +64,49 @@ test('parent creates the family, a chore and a reward', async ({ page }) => {
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await expect(page.getByText('Reward added')).toBeVisible();
 
-  // The invite flow is not built yet, so the child joins through the admin API.
-  const { data: family } = await admin.from('families').select('id').eq('name', 'E2E Family').single();
-  const { error } = await admin.from('family_members').insert({
-    family_id: family.id,
-    user_id: await userId(CHILD.email),
-    role: 'child',
-    display_name: CHILD.name,
-  });
-  expect(error).toBeNull();
+  kidCode = await createInvite(page, CHILD.name, 'child');
+});
+
+test('the child opens the invite link, signs in and joins', async ({ page }) => {
+  await page.context().clearCookies();
+  await page.goto('/login');
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(`/join?code=${kidCode}`);
+  await page.getByRole('link', { name: 'I already have an account' }).click();
+  await page.fill('input[type="email"]', CHILD.email);
+  await page.fill('input[type="password"]', CHILD.password);
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/join\?code=/);
+  await page.getByRole('button', { name: 'Accept invite' }).click();
+  await expect(page.getByText(`Welcome to E2E Family, ${CHILD.name}!`)).toBeVisible();
+
+  // The same code can't be used twice.
+  await page.goto(`/join?code=${kidCode}`);
+  await page.getByRole('button', { name: 'Accept invite' }).click();
+  await expect(page.getByRole('alert')).toContainText('not valid');
+});
+
+test('a newcomer signs up from an email-locked invite and joins as an adult', async ({ page }) => {
+  await signIn(page, PARENT);
+  const code = await createInvite(page, NEWCOMER.name, 'adult', NEWCOMER.email);
+
+  await page.context().clearCookies();
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(`/join?code=${code}`);
+  await page.getByRole('link', { name: 'Create account' }).click();
+  await page.getByPlaceholder('Your name').fill(NEWCOMER.name);
+  await page.getByPlaceholder('Email').fill(NEWCOMER.email);
+  await page.getByPlaceholder(/Password/).fill(NEWCOMER.password);
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.waitForURL(/\/join\?code=/);
+  await page.getByRole('button', { name: 'Accept invite' }).click();
+  await expect(page.getByText(`Welcome to E2E Family, ${NEWCOMER.name}!`)).toBeVisible();
+  await page.getByRole('button', { name: 'Go to your family' }).click();
+  await page.waitForURL(/adult\/dashboard/);
+
+  await page.goto('/more/family');
+  await expect(page.getByText(`${NEWCOMER.name}(you)`)).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Invites' }).getByText('accepted').first()).toBeVisible();
 });
 
 test('child sees the chores, completes one, and cannot add chores', async ({ page }) => {

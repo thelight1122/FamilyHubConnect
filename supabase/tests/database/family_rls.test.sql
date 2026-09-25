@@ -35,11 +35,19 @@ select lives_ok(
      values ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000a', 'adult', 'Parent') $$,
   'the creator joins as the first adult');
 
-select lives_ok(
-  $$ insert into public.family_members (family_id, user_id, role, display_name) values
-     ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000b', 'child', 'Kid'),
-     ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000c', 'child', 'Other') $$,
-  'an adult can add children');
+select throws_ok(
+  $$ insert into public.family_members (family_id, user_id, role, display_name)
+     values ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000b', 'child', 'Kid') $$,
+  '42501', null,
+  'an adult cannot add someone directly; people join by accepting an invite (migration 0800)');
+
+-- The children join as if they had accepted invites (invites are tested in
+-- family_invites.test.sql).
+reset role;
+insert into public.family_members (family_id, user_id, role, display_name) values
+  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000b', 'child', 'Kid'),
+  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-00000000000c', 'child', 'Other');
+select pg_temp.act_as('00000000-0000-0000-0000-00000000000a');
 
 select lives_ok(
   $$ insert into public.chores (id, family_id, title, points, assigned_to) values

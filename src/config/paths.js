@@ -1,5 +1,7 @@
 export const paths = {
   login: '/login',
+  signup: '/signup',
+  join: '/join',
   invite: '/invite',
   onboardingSetup: '/onboarding/setup',
   onboardingInvite: '/onboarding/invite',
@@ -28,6 +30,7 @@ export const paths = {
   moreCreator: '/more/creator',
   moreGovernance: '/more/governance',
   moreCourt: '/more/court',
+  moreFamily: '/more/family',
   moreAppealNegotiation: '/more/appeal/negotiation',
   moreAppealResolution: '/more/appeal/resolution',
 };

@@ -93,6 +93,33 @@ export function AuthProvider({ children }) {
     return { ok: true };
   }, []);
   
+  // Creates an account. When the project requires email confirmation there is
+  // no session yet: the person confirms by email, then signs in.
+  const signUp = useCallback(async ({ email, password, displayName, redirectTo }) => {
+    if (runtimeConfig.authMode !== 'supabase' || !supabase) {
+      return { ok: false, message: 'Sign-up needs a live Supabase project.' };
+    }
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { display_name: displayName }, emailRedirectTo: redirectTo },
+    });
+    if (error) return { ok: false, message: error.message };
+    return { ok: true, needsConfirmation: !data.session };
+  }, []);
+
+  // Records the family role on the account so the right (adult or child)
+  // screens load. Access itself is decided by the database, not this value.
+  const setFamilyRole = useCallback(async (familyRole) => {
+    if (runtimeConfig.authMode !== 'supabase' || !supabase) return;
+    const { data } = await supabase.auth.updateUser({ data: { family_role: familyRole } });
+    if (data?.user) {
+      localStorage.setItem('fhc_user_role', familyRole);
+      setSessionUser(data.user);
+      setRole(familyRole);
+    }
+  }, []);
+
   const logout = useCallback(async () => { 
     if (runtimeConfig.authMode === 'supabase' && supabase) {
       await supabase.auth.signOut();
@@ -110,12 +137,14 @@ export function AuthProvider({ children }) {
     authMode: runtimeConfig.authMode,
     isLoggedIn, 
     login, 
+    signUp,
+    setFamilyRole,
     logout, 
     currentUser, 
     role,
     mockAuthEnabled: runtimeConfig.mockAuthEnabled,
     supabaseAuthEnabled: runtimeConfig.authMode === 'supabase',
-  }), [authReady, isLoggedIn, login, logout, currentUser, role]);
+  }), [authReady, isLoggedIn, login, signUp, setFamilyRole, logout, currentUser, role]);
 
   return (
     <AuthContext.Provider value={contextValue}>
