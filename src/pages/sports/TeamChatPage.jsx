@@ -7,6 +7,8 @@ import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useSports from '../../hooks/useSports';
 import useSignedUrls from '../../hooks/useSignedUrls';
+import useAuth from '../../context/useAuth';
+import { FAMILY_NOT_READY } from '../../hooks/liveResult';
 
 export default function TeamChatPage() {
   const [message, setMessage] = useState('');
@@ -23,9 +25,11 @@ export default function TeamChatPage() {
   const attachmentUrls = useSignedUrls(liveMessages.map((m) => m.attachment_path));
   const nameOf = (userId) => members.find((m) => m.user_id === userId)?.display_name ?? 'Family member';
   const live = sports.live && Boolean(team);
+  // Prototype mode (no live project) keeps messages on this screen only.
+  const prototype = !useAuth().supabaseAuthEnabled;
   const nextEvent = sports.events.find((e) => e.team_id === team?.id);
 
-  const messages = live
+  const messages = !prototype
     ? liveMessages.map((m) => ({
         id: m.id,
         sender: m.author_id === sports.userId ? 'You' : nameOf(m.author_id),
@@ -42,6 +46,10 @@ export default function TeamChatPage() {
 
   const sendMessage = async () => {
     if (!message.trim()) return;
+    if (!prototype && !live) {
+      showToast(sports.live ? 'Add a team in the Locker Room first.' : FAMILY_NOT_READY);
+      return;
+    }
     if (live) {
       const outcome = await sports.sendMessage(team.id, message);
       if (!outcome.ok) {
@@ -55,8 +63,12 @@ export default function TeamChatPage() {
   };
 
   const attach = () => {
-    if (!live) {
+    if (prototype) {
       showToast('No live attachment storage configured yet.');
+      return;
+    }
+    if (!live) {
+      showToast(sports.live ? 'Add a team in the Locker Room first.' : FAMILY_NOT_READY);
       return;
     }
     fileInputRef.current?.click();
@@ -70,7 +82,7 @@ export default function TeamChatPage() {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') sendMessage();
+    if (e.key === 'Enter' && (prototype || live)) sendMessage();
   };
 
   return (
@@ -142,7 +154,7 @@ export default function TeamChatPage() {
           }}
         />
         <div className="flex items-center gap-2 max-w-md mx-auto">
-          <button onClick={attach} className="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:text-primary transition-colors">
+          <button onClick={attach} disabled={!prototype && !live} aria-label="Attach a photo" className="disabled:opacity-50 flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:text-primary transition-colors">
             <span className="material-symbols-outlined">add</span>
           </button>
           <div className="relative flex-1">
@@ -162,7 +174,9 @@ export default function TeamChatPage() {
           </div>
           <button
             onClick={sendMessage}
-            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+            disabled={!prototype && !live}
+            aria-label="Send"
+            className="disabled:opacity-50 flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
           >
             <span className="material-symbols-outlined">send</span>
           </button>

@@ -5,6 +5,7 @@ import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import usePets from '../../hooks/usePets';
+import useAuth from '../../context/useAuth';
 
 const inputClass = 'rounded-lg border border-slate-200 px-3 py-2 text-sm';
 
@@ -18,6 +19,7 @@ export default function PetHubPage() {
   const [toast, showToast] = useToast();
   const { family, membership, members } = useFamilyCore();
   const pets = usePets(family?.id);
+  const { supabaseAuthEnabled } = useAuth();
   const isAdult = membership?.role === 'adult';
   const [petId, setPetId] = useState(null);
   const pet = pets.pets.find((p) => p.id === petId) ?? pets.pets[0] ?? null;
@@ -149,7 +151,8 @@ export default function PetHubPage() {
             <h3 className="text-slate-900 text-lg font-bold tracking-tight">Daily Walks</h3>
             <button
               onClick={() => (pet ? setShowWalkForm((v) => !v) : showToast('Add a pet first.'))}
-              className="flex items-center gap-1 bg-primary text-white px-3 py-1.5 rounded-lg text-sm font-bold"
+              disabled={supabaseAuthEnabled && !pet}
+              className="flex items-center gap-1 bg-primary text-white px-3 py-1.5 rounded-lg text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="material-symbols-outlined text-sm">add</span> Add Walk
             </button>

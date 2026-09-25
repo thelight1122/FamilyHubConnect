@@ -5,6 +5,7 @@ import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useSports from '../../hooks/useSports';
+import useAuth from '../../context/useAuth';
 
 const inputClass = 'rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm';
 
@@ -13,6 +14,7 @@ export default function LockerRoomPage() {
   const [toast, showToast] = useToast();
   const { family, membership } = useFamilyCore();
   const sports = useSports(family?.id);
+  const { supabaseAuthEnabled } = useAuth();
   const isAdult = membership?.role === 'adult';
 
   const [teamId, setTeamId] = useState(null);
@@ -67,7 +69,7 @@ export default function LockerRoomPage() {
                 <span className={`text-xs font-bold ${t.id === team?.id ? 'text-primary' : 'text-slate-500 font-medium'}`}>{t.name}</span>
               </button>
             ))}
-            <button onClick={addTeam} className="flex flex-col items-center gap-2 min-w-[72px] opacity-60">
+            <button onClick={addTeam} disabled={supabaseAuthEnabled && !sports.live} className="flex flex-col items-center gap-2 min-w-[72px] opacity-60 disabled:opacity-30">
               <div className="size-16 rounded-full border-2 border-slate-200 flex items-center justify-center bg-slate-100">
                 <span className="material-symbols-outlined text-slate-400">add</span>
               </div>

@@ -5,6 +5,8 @@ import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useCreatorStudio from '../../hooks/useCreatorStudio';
 import useSignedUrls from '../../hooks/useSignedUrls';
+import useAuth from '../../context/useAuth';
+import { FAMILY_NOT_READY } from '../../hooks/liveResult';
 
 const CREATE_TYPES = [
   { id: 'photo', label: 'Photo Story', icon: 'photo_camera', gradient: 'from-pink-400 to-rose-500' },
@@ -35,6 +37,8 @@ export default function CreatorStudioPage() {
   const [toast, showToast] = useToast();
   const { family, members } = useFamilyCore();
   const studio = useCreatorStudio(family?.id);
+  // Prototype mode (no live project) keeps creations on this screen only.
+  const prototype = !useAuth().supabaseAuthEnabled;
   const mediaUrls = useSignedUrls(studio.posts.map((p) => p.media_path));
 
   // Prototype mode keeps creations on this screen only.
@@ -81,7 +85,7 @@ export default function CreatorStudioPage() {
   };
 
   const startRecording = async () => {
-    if (!studio.live) {
+    if (prototype) {
       setRecordingState('recording');
       return;
     }
@@ -123,8 +127,12 @@ export default function CreatorStudioPage() {
   };
 
   const handleCreateContent = async (type) => {
-    if (!studio.live) {
+    if (prototype) {
       publishLocally(type);
+      return;
+    }
+    if (!studio.live) {
+      showToast(FAMILY_NOT_READY);
       return;
     }
 
@@ -154,7 +162,7 @@ export default function CreatorStudioPage() {
 
   const nameOf = (userId) => (userId === studio.userId ? 'You' : members.find((m) => m.user_id === userId)?.display_name ?? 'Family member');
 
-  const creations = studio.live
+  const creations = !prototype
     ? studio.posts.map((post) => {
         const options = studio.options.filter((o) => o.post_id === post.id);
         const votes = studio.votes.filter((v) => v.post_id === post.id);
@@ -489,7 +497,7 @@ export default function CreatorStudioPage() {
             <div className="p-4 border-t border-slate-100 bg-slate-50">
               <button
                 onClick={() => handleCreateContent(activeCreator)}
-                disabled={publishing || (activeCreator === 'voice' && recordingState !== 'done')}
+                disabled={publishing || (!prototype && !studio.live) || (activeCreator === 'voice' && recordingState !== 'done')}
                 className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined text-sm">send</span>

@@ -4,6 +4,7 @@ import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useTimeline from '../../hooks/useTimeline';
 import useSignedUrls from '../../hooks/useSignedUrls';
+import useAuth from '../../context/useAuth';
 import { paths } from '../../config/paths';
 import BackHeader from '../../components/BackHeader';
 
@@ -143,6 +144,7 @@ export default function TimelinePage() {
   const [toast, showToast] = useToast();
   const { family, members } = useFamilyCore();
   const timeline = useTimeline(family?.id);
+  const { supabaseAuthEnabled } = useAuth();
   const photoUrls = useSignedUrls(timeline.entries.map((e) => e.photo_path));
   const [composing, setComposing] = useState(false);
   const [draft, setDraft] = useState(blankEntry);
@@ -237,8 +239,9 @@ export default function TimelinePage() {
       {/* Floating Action Button */}
       <button
         onClick={() => (timeline.live ? setComposing(true) : showToast('Sign in to a live family to add moments.'))}
+        disabled={supabaseAuthEnabled && !timeline.live}
         aria-label="Add a moment"
-        className="fixed bottom-28 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-30"
+        className="disabled:opacity-50 fixed bottom-28 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-30"
       >
         <span className="material-symbols-outlined text-3xl">add</span>
       </button>

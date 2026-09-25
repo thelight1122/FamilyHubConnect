@@ -4,12 +4,15 @@ import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 import useFamilyCore from '../../hooks/useFamilyCore';
 import useConstitution from '../../hooks/useConstitution';
+import useAuth from '../../context/useAuth';
+import { FAMILY_NOT_READY } from '../../hooks/liveResult';
 
 export default function ConstitutionPage() {
   const navigate = useNavigate();
   const [toast, showToast] = useToast();
   const { family, membership, members } = useFamilyCore();
   const constitution = useConstitution(family?.id);
+  const { supabaseAuthEnabled } = useAuth();
   const isAdult = membership?.role === 'adult';
 
   const [isProposeModalOpen, setIsProposeModalOpen] = useState(false);
@@ -35,7 +38,11 @@ export default function ConstitutionPage() {
       showToast('Please draft an amendment proposal');
       return;
     }
-    if (constitution.live) {
+    if (supabaseAuthEnabled) {
+      if (!constitution.live) {
+        showToast(FAMILY_NOT_READY);
+        return;
+      }
       const ok = await runAndToast(
         constitution.proposeAmendment({ proposal: proposalText, rationale: rationaleText }),
         'Amendment proposal submitted!'
@@ -286,7 +293,8 @@ export default function ConstitutionPage() {
             <div className="mt-8">
               <button 
                 onClick={handleSubmitProposal}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.98]"
+                disabled={supabaseAuthEnabled && !constitution.live}
+                className="disabled:opacity-50 w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.98]"
               >
                 Submit Proposal
               </button>

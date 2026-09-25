@@ -15,7 +15,7 @@ const STATUS_CONFIG = {
 export default function FamilyCourtPage() {
   const navigate = useNavigate();
   const [toast, showToast] = useToast();
-  const { currentUser } = useAuth();
+  const { currentUser, supabaseAuthEnabled } = useAuth();
   const { family, members, canUseLiveData } = useFamilyCore();
 
   const [localStats, setLocalStats] = useState({
@@ -116,19 +116,27 @@ export default function FamilyCourtPage() {
             <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Reflection Management</p>
           </div>
         </div>
-        <button
+        {!supabaseAuthEnabled && <button
           onClick={openAddModal}
           className="bg-primary text-white p-2 rounded-full hover:bg-primary/90 transition-colors flex items-center justify-center shadow-lg shadow-primary/20"
         >
           <span className="material-symbols-outlined">add</span>
-        </button>
+        </button>}
       </header>
 
       <main className="flex-1 w-full">
         {canUseLiveData && family && (
           <AccountabilityPanel familyId={family.id} members={members} currentUserId={currentUser?.id} showToast={showToast} />
         )}
+        {supabaseAuthEnabled && !family && (
+          <p className="m-4 rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm font-semibold text-slate-500">
+            Your family is still loading, or you are not in a family yet.
+          </p>
+        )}
 
+        {/* The reflection list below is the prototype preview; it saves nothing,
+            so it only shows when there is no live project. */}
+        {!supabaseAuthEnabled && (<>
         {/* Stats Section */}
         <section className="p-4 grid grid-cols-2 gap-4">
           <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 shadow-sm">
@@ -277,6 +285,7 @@ export default function FamilyCourtPage() {
             Load Older History
           </button>
         </section>
+        </>)}
       </main>
 
       {/* Add / Edit Modal Overlay */}
