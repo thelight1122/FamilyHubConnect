@@ -1,15 +1,12 @@
 import { Buffer } from 'node:buffer';
 import { test, expect } from '@playwright/test';
-import { createClient } from '@supabase/supabase-js';
-import { localSupabaseEnv } from './supabaseEnv.js';
 import { PARENT, CHILD, NEWCOMER } from './people.js';
 
 // One family, end to end, with real sign-in and the real database rules.
 // Tests run in order and build on each other.
 test.describe.configure({ mode: 'serial' });
 
-// No admin client here: everyone joins through the app, as real families do.
-const { url } = localSupabaseEnv();
+// Everything goes through the app, as real families use it: no admin or direct API calls.
 
 async function signIn(page, person) {
   await page.context().clearCookies();
@@ -279,6 +276,10 @@ test('sports: the parent sets up a team, the child packs and chats', async ({ pa
   await page.getByText('Shin guards').click();
   await expect(page.getByText('1 of 1 packed')).toBeVisible();
   await page.getByText('Open Team Chat').click();
+  // Wait for the chat and its team to load, as a person would see them, before typing.
+  await page.waitForURL(/sports\/chat/);
+  await expect(page.getByRole('heading', { name: 'Team Chat' })).toBeVisible();
+  await expect(page.getByText('Tigers', { exact: true })).toBeVisible();
   await page.getByPlaceholder('Type a message to the team...').fill('Ready for practice!');
   await page.keyboard.press('Enter');
   await expect(page.getByText('Ready for practice!')).toBeVisible();
@@ -314,16 +315,23 @@ test('creator studio: poll voting, a photo story and a recorded voice memo', asy
   await expect(page.getByText('Voice Memo published successfully!')).toBeVisible();
   await expect(page.locator('audio')).toHaveCount(1);
 
-  // The studio route is adult-only for now, so the child votes through the
-  // API with their own sign-in: the same database rules the app uses.
-  const kid = createClient(url, localSupabaseEnv().anonKey, { auth: { persistSession: false } });
-  await kid.auth.signInWithPassword({ email: CHILD.email, password: CHILD.password });
-  const { data: poll } = await kid.from('creator_posts').select('id, family_id, poll_options(id, label)').eq('kind', 'poll').single();
-  const tacos = poll.poll_options.find((o) => o.label === 'Tacos');
-  const { error: voteError } = await kid.from('poll_votes').insert({ post_id: poll.id, option_id: tacos.id, family_id: poll.family_id });
-  expect(voteError).toBeNull();
+  // The child opens the studio, votes, and shares a poll of their own.
+  await signIn(page, CHILD);
+  await page.goto('/more/creator');
+  await expect(page.getByRole('heading', { name: 'Library' }).or(page.getByText('Library'))).toBeVisible();
+  await page.getByRole('button', { name: /Tacos/ }).click();
+  await expect(page.getByText('Vote counted')).toBeVisible();
+  await page.getByText('Family Poll').first().click();
+  await page.getByPlaceholder('Ask the family a question...').fill('Movie tonight?');
+  await page.getByPlaceholder('Option 1').fill('Yes');
+  await page.getByPlaceholder('Option 2').fill('Tomorrow');
+  await page.getByRole('button', { name: /Publish to Family/ }).click();
+  await expect(page.getByText('Family Poll published successfully!')).toBeVisible();
+  await expect(page.getByText(`Movie tonight?`)).toBeVisible();
 
-  await page.reload();
+  await signIn(page, PARENT);
+  await page.goto('/more/creator');
+  await expect(page.getByText(`${CHILD.name} · `, { exact: false }).first()).toBeVisible();
   await page.getByRole('button', { name: /Pizza/ }).click();
   await expect(page.getByText('Vote counted')).toBeVisible();
   await expect(page.getByRole('button', { name: /Tacos\s*1/ })).toBeVisible();
