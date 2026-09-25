@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
+import useAuth from '../../context/useAuth';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import AccountabilityPanel from '../../components/AccountabilityPanel';
 
 const STATUS_CONFIG = {
   in_progress: { dotClass: 'bg-amber-500 animate-pulse', textClass: 'text-amber-600', label: 'In Progress' },
@@ -12,7 +15,9 @@ const STATUS_CONFIG = {
 export default function FamilyCourtPage() {
   const navigate = useNavigate();
   const [toast, showToast] = useToast();
-  
+  const { currentUser } = useAuth();
+  const { family, members, canUseLiveData } = useFamilyCore();
+
   const [localStats, setLocalStats] = useState({
     activeMeasures: 0,
     weeklyResolution: 0,
@@ -120,6 +125,10 @@ export default function FamilyCourtPage() {
       </header>
 
       <main className="flex-1 w-full">
+        {canUseLiveData && family && (
+          <AccountabilityPanel familyId={family.id} members={members} currentUserId={currentUser?.id} showToast={showToast} />
+        )}
+
         {/* Stats Section */}
         <section className="p-4 grid grid-cols-2 gap-4">
           <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 shadow-sm">

@@ -16,7 +16,10 @@ export default function ChoresPage() {
     addChore,
     toggleChore,
     addReward,
+    membership,
   } = useFamilyCore();
+  // Adding chores and rewards is adult-only in the database too.
+  const isAdult = membership?.role === 'adult';
   const [activeTab, setActiveTab] = useState('tasks');
   const [toast, showToast] = useToast();
   const [familyForm, setFamilyForm] = useState({ name: '', displayName: currentUser?.name ?? '' });
@@ -177,7 +180,7 @@ export default function ChoresPage() {
                 />
               </div>
 
-              {family && (
+              {family && isAdult && (
                 <form className="mb-4 grid grid-cols-[1fr_88px_auto] gap-2" onSubmit={handleAddChore}>
                   <input
                     className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"
@@ -256,7 +259,7 @@ export default function ChoresPage() {
             {/* Rewards Store Tab */}
             <section className="py-6 mb-10">
               <h2 className="mb-4 text-xl font-bold">Rewards Store</h2>
-              {family && (
+              {family && isAdult && (
                 <form className="mb-4 grid grid-cols-[1fr_88px_auto] gap-2" onSubmit={handleAddReward}>
                   <input
                     className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-primary"

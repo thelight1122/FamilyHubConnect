@@ -2,22 +2,35 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { currentMember } from '../../data/selectors';
 import { paths } from '../../config/paths';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useFinance from '../../hooks/useFinance';
 
 export default function LoanPage() {
   const navigate = useNavigate();
-  // Using role to switch views, plus a dev toggle for prototype
-  const [isParentView, setIsParentView] = useState(currentMember.role === 'parent');
+  const { family, membership } = useFamilyCore();
+  const finance = useFinance(family?.id);
+  const [toast, showToast] = useToast();
+  // With live data the family membership decides the view; the toggle is
+  // only for reviewing the prototype.
+  const [prototypeParentView, setIsParentView] = useState(currentMember.role === 'parent');
+  const isParentView = finance.live ? membership?.role === 'adult' : prototypeParentView;
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display flex flex-col pb-24">
-      {/* Dev Toggle (Prototype Only) */}
-      <div className="bg-yellow-500/20 text-yellow-700 dark:text-yellow-500 p-2 text-xs flex justify-center gap-4 border-b border-yellow-500/30">
-        <span className="font-bold">Prototype Toggle:</span>
-        <button className={`font-bold ${isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(true)}>Parent View</button>
-        <button className={`font-bold ${!isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(false)}>Child View</button>
-      </div>
+      <Toast message={toast} />
+      {!finance.live && (
+        <div className="bg-yellow-500/20 text-yellow-700 dark:text-yellow-500 p-2 text-xs flex justify-center gap-4 border-b border-yellow-500/30">
+          <span className="font-bold">Prototype Toggle:</span>
+          <button className={`font-bold ${isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(true)}>Parent View</button>
+          <button className={`font-bold ${!isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(false)}>Child View</button>
+        </div>
+      )}
 
-      {isParentView ? <ParentLoanView navigate={navigate} /> : <ChildLoanPitchView navigate={navigate} />}
+      {isParentView
+        ? <ParentLoanView navigate={navigate} />
+        : <ChildLoanPitchView navigate={navigate} finance={finance} showToast={showToast} />}
     </div>
   );
 }
@@ -69,7 +82,21 @@ function ParentLoanView({ navigate }) {
 // ----------------------------------------------------------------------------
 // CHILD LOAN PITCH VIEW (Pitch Request)
 // ----------------------------------------------------------------------------
-function ChildLoanPitchView({ navigate }) {
+function ChildLoanPitchView({ navigate, finance, showToast }) {
+  const [purpose, setPurpose] = useState('');
+  const [amount, setAmount] = useState('');
+
+  const submit = async () => {
+    if (finance.live) {
+      const outcome = await finance.requestLoan({ amount, purpose });
+      if (!outcome.ok) {
+        showToast(outcome.message);
+        return;
+      }
+    }
+    navigate(paths.financeLoanConfirmation);
+  };
+
   return (
     <div className="flex-1 flex flex-col h-full bg-white dark:bg-slate-900 shadow-xl max-w-md mx-auto w-full">
       {/* Header */}
@@ -107,6 +134,8 @@ function ChildLoanPitchView({ navigate }) {
             <textarea 
               className="w-full min-h-[120px] rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent p-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-sm shadow-sm transition-all focus:bg-white" 
               placeholder="Describe the funding request..."
+              value={purpose}
+              onChange={(e) => setPurpose(e.target.value)}
             ></textarea>
           </div>
         </section>
@@ -120,8 +149,10 @@ function ChildLoanPitchView({ navigate }) {
               <input 
                 className="w-full pl-8 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary text-sm font-bold shadow-sm transition-all focus:bg-white" 
                 placeholder="0.00" 
-                step="0.01" 
+                step="0.01"
                 type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
               />
             </div>
           </div>
@@ -180,7 +211,7 @@ function ChildLoanPitchView({ navigate }) {
       {/* Footer Action */}
       <div className="p-4 pt-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 sticky bottom-0 z-20">
         <button 
-          onClick={() => navigate(paths.financeLoanConfirmation)}
+          onClick={submit}
           className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
         >
           <span className="text-[15px] tracking-wide">Submit Pitch to Parents</span>
