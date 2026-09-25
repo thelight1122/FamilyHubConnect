@@ -3,19 +3,57 @@ import { paths } from '../../config/paths';
 import BackHeader from '../../components/BackHeader';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
+import useAuth from '../../context/useAuth';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useHealth, { HEALTH_EVENT_TYPES } from '../../hooks/useHealth';
 
-const EVENT_TYPES = ['Illness', 'Injury', 'Doctor Visit', 'Medication Change', 'Other'];
+const EVENT_ICONS = {
+  Illness: 'sick',
+  Injury: 'healing',
+  'Doctor Visit': 'stethoscope',
+  'Medication Change': 'pill',
+  Other: 'description',
+};
 
 export default function HealthPage() {
   const [showModal, setShowModal] = useState(false);
   const [logType, setLogType] = useState('Illness');
   const [logNote, setLogNote] = useState('');
   const [toast, showToast] = useToast();
+  const { family, membership, members } = useFamilyCore();
+  const health = useHealth(family?.id);
+  const { currentUser } = useAuth();
+  const myId = currentUser?.id;
+  const isAdult = membership?.role === 'adult';
 
-  const handleSave = () => {
+  // Whose health is shown: yourself, or (for adults) one of the children.
+  const people = members.filter((m) => m.user_id === myId || (isAdult && m.role === 'child'));
+  const [subjectId, setSubjectId] = useState(null);
+  const subject = people.find((p) => p.user_id === subjectId) ?? people.find((p) => p.user_id === myId) ?? null;
+
+  const logs = health.logs.filter((log) => log.member_id === subject?.user_id);
+  const medications = health.medications.filter((med) => med.member_id === subject?.user_id);
+
+  const [medForm, setMedForm] = useState({ name: '', dose: '', schedule: '' });
+
+  const handleSave = async () => {
+    if (health.live && subject) {
+      const outcome = await health.logEvent(subject.user_id, logType, logNote);
+      if (!outcome.ok) {
+        showToast(outcome.message);
+        return;
+      }
+    }
     setShowModal(false);
     setLogNote('');
     showToast('Health event logged!');
+  };
+
+  const handleAddMedication = async (event) => {
+    event.preventDefault();
+    const outcome = await health.addMedication(subject.user_id, medForm.name, medForm.dose, medForm.schedule);
+    showToast(outcome.ok ? 'Medication added' : outcome.message);
+    if (outcome.ok) setMedForm({ name: '', dose: '', schedule: '' });
   };
 
   return (
@@ -30,12 +68,31 @@ export default function HealthPage() {
               <span className="material-symbols-outlined text-4xl">person</span>
             </div>
             <div className="flex flex-col">
-              <p className="text-slate-900 text-2xl font-bold leading-tight tracking-tight">Family Member</p>
-              <p className="text-slate-500 text-sm font-normal leading-normal">No live health logs yet</p>
+              <p className="text-slate-900 text-2xl font-bold leading-tight tracking-tight">{subject?.display_name ?? 'Family Member'}</p>
+              <p className="text-slate-500 text-sm font-normal leading-normal">
+                {logs.length ? `${logs.length} recent ${logs.length === 1 ? 'entry' : 'entries'}` : 'No live health logs yet'}
+              </p>
             </div>
           </div>
+          {health.live && people.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto" aria-label="Whose health">
+              {people.map((person) => (
+                <button
+                  key={person.user_id}
+                  onClick={() => setSubjectId(person.user_id)}
+                  className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold border ${
+                    person.user_id === subject?.user_id ? 'bg-primary text-white border-primary' : 'bg-white text-slate-600 border-slate-200'
+                  }`}
+                >
+                  {person.user_id === myId ? 'Me' : person.display_name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+
+      {health.error && <p className="mx-4 rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-700">{health.error}</p>}
 
       {/* Log New Event Action Card */}
       <div className="px-4 py-2">
@@ -58,13 +115,31 @@ export default function HealthPage() {
       <div className="px-4 pt-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-slate-900 text-lg font-bold leading-tight tracking-tight">Medication Tracker</h3>
-          <button className="text-primary text-sm font-semibold">View All</button>
         </div>
         <div className="space-y-3">
-          <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
-            <span className="material-symbols-outlined text-3xl text-slate-300">pill</span>
-            <p className="mt-2 text-sm font-bold text-slate-600">No live medications entered</p>
-          </div>
+          {medications.map((med) => (
+            <div key={med.id} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
+              <span className="material-symbols-outlined text-primary">pill</span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold">{med.name}</p>
+                <p className="text-xs text-slate-500">{[med.dose, med.schedule].filter(Boolean).join(' · ')}</p>
+              </div>
+            </div>
+          ))}
+          {medications.length === 0 && (
+            <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
+              <span className="material-symbols-outlined text-3xl text-slate-300">pill</span>
+              <p className="mt-2 text-sm font-bold text-slate-600">No live medications entered</p>
+            </div>
+          )}
+          {health.live && subject && (
+            <form onSubmit={handleAddMedication} className="grid grid-cols-3 gap-2">
+              <input value={medForm.name} onChange={(e) => setMedForm((f) => ({ ...f, name: e.target.value }))} placeholder="Medication" required className="col-span-3 rounded-lg border border-slate-200 px-3 py-2 text-sm" />
+              <input value={medForm.dose} onChange={(e) => setMedForm((f) => ({ ...f, dose: e.target.value }))} placeholder="Dose" className="rounded-lg border border-slate-200 px-3 py-2 text-sm" />
+              <input value={medForm.schedule} onChange={(e) => setMedForm((f) => ({ ...f, schedule: e.target.value }))} placeholder="When" className="rounded-lg border border-slate-200 px-3 py-2 text-sm" />
+              <button type="submit" className="rounded-lg bg-primary px-3 py-2 text-sm font-bold text-white">Add</button>
+            </form>
+          )}
         </div>
       </div>
 
@@ -72,15 +147,29 @@ export default function HealthPage() {
       <div className="px-4 pt-8">
         <h3 className="text-slate-900 text-lg font-bold leading-tight tracking-tight mb-4">Recent History</h3>
         <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-slate-100">
-          <div className="relative flex gap-4">
-            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 z-10">
-              <span className="material-symbols-outlined text-slate-400 text-xl">description</span>
+          {logs.map((log) => (
+            <div key={log.id} className="relative flex gap-4">
+              <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-primary z-10">
+                <span className="material-symbols-outlined text-primary text-xl">{EVENT_ICONS[log.kind] ?? 'description'}</span>
+              </div>
+              <div className="flex flex-col gap-1 pb-2">
+                <p className="text-slate-900 font-bold">{log.kind}</p>
+                {log.note && <p className="text-slate-600 text-sm">{log.note}</p>}
+                <p className="text-xs text-slate-400">{new Date(log.logged_at).toLocaleString()}</p>
+              </div>
             </div>
-            <div className="flex flex-col gap-1 pb-6">
-              <p className="text-slate-900 font-bold">No live health history entered</p>
-              <p className="text-slate-600 text-sm">Health events will appear here after entry.</p>
+          ))}
+          {logs.length === 0 && (
+            <div className="relative flex gap-4">
+              <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 z-10">
+                <span className="material-symbols-outlined text-slate-400 text-xl">description</span>
+              </div>
+              <div className="flex flex-col gap-1 pb-6">
+                <p className="text-slate-900 font-bold">No live health history entered</p>
+                <p className="text-slate-600 text-sm">Health events will appear here after entry.</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -118,7 +207,7 @@ export default function HealthPage() {
             {/* Event type pills */}
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Event Type</p>
             <div className="flex flex-wrap gap-2 mb-5">
-              {EVENT_TYPES.map(type => (
+              {HEALTH_EVENT_TYPES.map(type => (
                 <button
                   key={type}
                   onClick={() => setLogType(type)}
