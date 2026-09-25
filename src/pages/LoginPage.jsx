@@ -82,12 +82,6 @@ export default function LoginPage() {
               </div>
             )}
 
-            {supabaseAuthEnabled && (
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800" role="status">
-                Supabase authentication is active for this deployment.
-              </div>
-            )}
-
             {mockAuthEnabled && (
               <div className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-medium text-sky-800" role="status">
                 Local preview mode accepts any password.
@@ -141,27 +135,6 @@ export default function LoginPage() {
               <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </button>
           </form>
-
-          {/* Social Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200/50"></div>
-            </div>
-            <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em] font-black">
-              <span className="bg-white/0 px-4 text-slate-400">Or continue with</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
-              <img src="https://lh3.googleusercontent.com/COxitqSgS1P-B82DcEM8hS6S9p2SJniD9egUyzL2TV/+O+3X7" className="w-5 h-5 grayscale opacity-70" alt="" />
-              Continue with Google
-            </button>
-            <button className="flex items-center justify-center gap-2 py-4 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all active:scale-95 shadow-sm font-bold text-sm">
-              <span className="material-symbols-outlined text-xl">apple</span>
-              Continue with Apple
-            </button>
-          </div>
         </div>
 
         <p className="text-center mt-10 text-slate-500 font-medium text-sm">
