@@ -4,27 +4,34 @@ import { emptyFinance } from '../../data/liveData';
 import { paths } from '../../config/paths';
 import { useState } from 'react';
 import useToast from '../../hooks/useToast';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useFinance, { formatCents } from '../../hooks/useFinance';
 import Toast from '../../components/Toast';
 
 export default function FinancePage() {
   const navigate = useNavigate();
+  const { family, membership, members } = useFamilyCore();
+  const finance = useFinance(family?.id);
 
-  // Temporary toggle to review both prototypes easily.
-  // Real implementation would rely solely on `currentMember.role`
-  const [isParentView, setIsParentView] = useState(currentMember.role === 'parent');
+  // With live data the family membership decides the view. The toggle only
+  // exists for reviewing the prototype without a signed-in family.
+  const [prototypeParentView, setIsParentView] = useState(currentMember.role === 'parent');
+  const isParentView = finance.live ? membership?.role === 'adult' : prototypeParentView;
+  const memberName = finance.live ? membership?.display_name ?? currentMember.name : currentMember.name;
   const [toast, showToast] = useToast();
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display flex flex-col pb-24">
       <Toast message={toast} />
-      {/* Dev Toggle (Prototype Only) */}
-      <div className="bg-yellow-500/20 text-yellow-700 dark:text-yellow-500 p-2 text-xs flex justify-center gap-4 border-b border-yellow-500/30">
-        <span className="font-bold">Prototype Toggle:</span>
-        <button className={`font-bold ${isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(true)}>Parent View</button>
-        <button className={`font-bold ${!isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(false)}>Child View</button>
-      </div>
+      {!finance.live && (
+        <div className="bg-yellow-500/20 text-yellow-700 dark:text-yellow-500 p-2 text-xs flex justify-center gap-4 border-b border-yellow-500/30">
+          <span className="font-bold">Prototype Toggle:</span>
+          <button className={`font-bold ${isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(true)}>Parent View</button>
+          <button className={`font-bold ${!isParentView ? 'underline' : ''}`} onClick={() => setIsParentView(false)}>Child View</button>
+        </div>
+      )}
 
-      <header className="flex items-center p-4 border-b border-slate-200 dark:border-slate-800 justify-between sticky top-[36px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-40">
+      <header className={`flex items-center p-4 border-b border-slate-200 dark:border-slate-800 justify-between sticky ${finance.live ? 'top-0' : 'top-[36px]'} bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-40`}>
         <div 
           onClick={() => navigate(-1)}
           className="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
@@ -32,7 +39,7 @@ export default function FinancePage() {
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
         <h2 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center">
-          {isParentView ? 'Family Bank' : `${currentMember.name}'s Wallet`}
+          {isParentView ? 'Family Bank' : `${memberName}'s Wallet`}
         </h2>
         <div className="flex w-10 items-center justify-end">
           {isParentView ? (
@@ -51,7 +58,13 @@ export default function FinancePage() {
         </div>
       </header>
 
-      {isParentView ? <ParentBankView navigate={navigate} /> : <ChildWalletView navigate={navigate} />}
+      {finance.error && (
+        <p className="mx-4 mt-4 rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm font-semibold text-rose-800">{finance.error}</p>
+      )}
+
+      {isParentView
+        ? <ParentBankView navigate={navigate} finance={finance} members={members} showToast={showToast} />
+        : <ChildWalletView navigate={navigate} finance={finance} />}
     </div>
   );
 }
@@ -59,9 +72,16 @@ export default function FinancePage() {
 // ----------------------------------------------------------------------------
 // PARENT BANK VIEW
 // ----------------------------------------------------------------------------
-function ParentBankView({ navigate }) {
-  const pendingPitches = [];
-  const activeLoans = [];
+function ParentBankView({ navigate, finance, members, showToast }) {
+  const pendingPitches = finance.pendingLoans;
+  const activeLoans = finance.approvedLoans;
+  const activeLoanCents = activeLoans.reduce((sum, loan) => sum + loan.amount_cents, 0);
+  const nameOf = (userId) => members.find((m) => m.user_id === userId)?.display_name ?? 'Family member';
+
+  const decide = async (loanId, approve) => {
+    const outcome = await finance.decideLoan(loanId, approve);
+    showToast(outcome.ok ? (approve ? 'Loan approved' : 'Loan declined') : outcome.message);
+  };
 
   return (
     <main className="flex-1 overflow-y-auto">
@@ -71,8 +91,8 @@ function ParentBankView({ navigate }) {
             <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
             <p className="text-white/90 text-sm font-bold leading-normal uppercase tracking-wider">Shared Pool</p>
           </div>
-          <p className="text-white tracking-tight text-3xl font-extrabold leading-tight">$0.00</p>
-          <p className="text-white/80 text-xs font-medium">No live deposits recorded</p>
+          <p className="text-white tracking-tight text-3xl font-extrabold leading-tight">{formatCents(finance.familyTotalCents)}</p>
+          <p className="text-white/80 text-xs font-medium">{finance.entries.length ? 'Across every member' : 'No live deposits recorded'}</p>
         </div>
         <div 
           onClick={() => navigate(paths.financeLoan)}
@@ -82,8 +102,8 @@ function ParentBankView({ navigate }) {
             <span className="material-symbols-outlined text-slate-500 text-sm">payments</span>
             <p className="text-slate-500 dark:text-slate-400 text-sm font-bold leading-normal uppercase tracking-wider">Active Loans</p>
           </div>
-          <p className="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight">$0.00</p>
-          <p className="text-[#ec5b13] text-xs font-bold">0 Total Borrowers</p>
+          <p className="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight">{formatCents(activeLoanCents)}</p>
+          <p className="text-[#ec5b13] text-xs font-bold">{new Set(activeLoans.map((l) => l.borrower_id)).size} Total Borrowers</p>
         </div>
       </section>
 
@@ -93,6 +113,21 @@ function ParentBankView({ navigate }) {
           <span className="bg-[#ec5b13]/10 text-[#ec5b13] text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-widest">{pendingPitches.length} New</span>
         </div>
         <div className="space-y-3">
+          {pendingPitches.map((loan) => (
+            <div key={loan.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-bold">{nameOf(loan.borrower_id)}</p>
+                  <p className="mt-0.5 text-xs text-slate-500">{loan.purpose}</p>
+                </div>
+                <p className="text-lg font-extrabold">{formatCents(loan.amount_cents)}</p>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <button onClick={() => decide(loan.id, true)} className="flex-1 rounded-xl bg-emerald-50 py-2 text-xs font-bold text-emerald-700">Approve</button>
+                <button onClick={() => decide(loan.id, false)} className="flex-1 rounded-xl bg-slate-100 py-2 text-xs font-bold text-slate-600">Decline</button>
+              </div>
+            </div>
+          ))}
           {pendingPitches.length === 0 && (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
               <span className="material-symbols-outlined text-3xl text-slate-300">request_quote</span>
@@ -106,6 +141,15 @@ function ParentBankView({ navigate }) {
       <section className="px-4 py-6">
         <h3 className="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight mb-4">Active Loans</h3>
         <div className="grid grid-cols-1 gap-4">
+          {activeLoans.map((loan) => (
+            <div key={loan.id} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <div className="min-w-0">
+                <p className="text-sm font-bold">{nameOf(loan.borrower_id)}</p>
+                <p className="text-xs text-slate-500 truncate">{loan.purpose}</p>
+              </div>
+              <p className="font-extrabold">{formatCents(loan.amount_cents)}</p>
+            </div>
+          ))}
           {activeLoans.length === 0 && (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
               <span className="material-symbols-outlined text-3xl text-slate-300">payments</span>
@@ -134,8 +178,29 @@ function ParentBankView({ navigate }) {
 // ----------------------------------------------------------------------------
 // CHILD WALLET VIEW
 // ----------------------------------------------------------------------------
-function ChildWalletView({ navigate }) {
-  const transactions = emptyFinance.recentActivity;
+const ENTRY_ICONS = {
+  allowance: 'payments',
+  deposit: 'add_card',
+  withdrawal: 'shopping_bag',
+  reward: 'star',
+  loan_disbursement: 'account_balance',
+  loan_repayment: 'undo',
+  adjustment: 'tune',
+};
+
+function ChildWalletView({ navigate, finance }) {
+  const transactions = finance.live
+    ? finance.myEntries.map((entry) => ({
+        id: entry.id,
+        amount: entry.amount_cents / 100,
+        label: entry.note || entry.kind.replace('_', ' '),
+        date: new Date(entry.created_at).toLocaleDateString(),
+        icon: ENTRY_ICONS[entry.kind] ?? 'receipt_long',
+      }))
+    : emptyFinance.recentActivity;
+  const goal = finance.myGoal;
+  const goalPercent = goal ? Math.min(100, Math.round((Math.max(finance.myBalanceCents, 0) / goal.target_cents) * 100)) : 0;
+  const pendingMine = finance.pendingLoans.length;
 
   return (
     <main className="flex-1 max-w-md mx-auto w-full pb-24">
@@ -152,11 +217,11 @@ function ChildWalletView({ navigate }) {
           </div>
         </div>
         <div className="space-y-1">
-          <p className="text-5xl font-extrabold text-primary tracking-tighter drop-shadow-sm">$0.00</p>
+          <p className="text-5xl font-extrabold text-primary tracking-tighter drop-shadow-sm">{formatCents(finance.myBalanceCents)}</p>
           <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-[10px] pt-1">Current Balance</p>
           <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary px-3 py-1 rounded-full text-[11px] font-bold mt-3">
             <span className="material-symbols-outlined text-[14px]">trending_up</span>
-            <span>Live wallet ready</span>
+            <span>{pendingMine ? `${pendingMine} request${pendingMine > 1 ? 's' : ''} waiting` : 'Live wallet ready'}</span>
           </div>
         </div>
       </section>
@@ -190,7 +255,7 @@ function ChildWalletView({ navigate }) {
           <div className="flex justify-between items-start mb-5">
             <div>
               <p className="text-blue-100 text-[10px] font-bold uppercase tracking-widest mb-1">Active Savings Goal</p>
-              <h3 className="text-[22px] font-extrabold tracking-tight">No live goal entered</h3>
+              <h3 className="text-[22px] font-extrabold tracking-tight">{goal?.title ?? 'No live goal entered'}</h3>
             </div>
             <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-sm">
               <span className="material-symbols-outlined text-3xl text-white">pedal_bike</span>
@@ -198,11 +263,11 @@ function ChildWalletView({ navigate }) {
           </div>
           <div className="space-y-3">
             <div className="flex justify-between text-xs font-bold tracking-wider">
-              <span className="text-white/90">$0.00 / $0.00</span>
-              <span className="text-white">0%</span>
+              <span className="text-white/90">{formatCents(goal ? Math.max(finance.myBalanceCents, 0) : 0)} / {formatCents(goal?.target_cents ?? 0)}</span>
+              <span className="text-white">{goalPercent}%</span>
             </div>
             <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden p-[2px]">
-              <div className="bg-white h-full rounded-full w-0 relative">
+              <div className="bg-white h-full rounded-full relative" style={{ width: `${goalPercent}%` }}>
                 {/* Shine effect */}
                 <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-r from-transparent via-white/50 to-transparent translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>
               </div>

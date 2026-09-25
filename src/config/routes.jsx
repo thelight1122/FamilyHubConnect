@@ -104,7 +104,8 @@ export const mainLayoutRoute = {
     { path: paths.moreAppealReview, element: <ProtectedRoute allowedRoles={['adult']}><AppealReviewPage /></ProtectedRoute> },
     { path: paths.moreCreator, element: <ProtectedRoute allowedRoles={['adult']}><CreatorStudioPage /></ProtectedRoute> },
     { path: paths.moreGovernance, element: <ProtectedRoute allowedRoles={['adult']}><FamilyGovernancePage /></ProtectedRoute> },
-    { path: paths.moreCourt, element: <ProtectedRoute allowedRoles={['adult']}><FamilyCourtPage /></ProtectedRoute> },
+    // Accountability is mutual: children give their accounts too (spec §3).
+    { path: paths.moreCourt, element: <ProtectedRoute allowedRoles={['adult', 'child']}><FamilyCourtPage /></ProtectedRoute> },
     { path: paths.moreAppealResolution, element: <ProtectedRoute allowedRoles={['adult']}><ResolutionConfirmedPage /></ProtectedRoute> },
   ]
 };

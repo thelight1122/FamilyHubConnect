@@ -2,25 +2,48 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
+import useFamilyCore from '../../hooks/useFamilyCore';
+import useConstitution from '../../hooks/useConstitution';
 
 export default function ConstitutionPage() {
   const navigate = useNavigate();
   const [toast, showToast] = useToast();
-  
+  const { family, membership, members } = useFamilyCore();
+  const constitution = useConstitution(family?.id);
+  const isAdult = membership?.role === 'adult';
+
   const [isProposeModalOpen, setIsProposeModalOpen] = useState(false);
   const [proposalText, setProposalText] = useState('');
   const [rationaleText, setRationaleText] = useState('');
-  
-  const missionText = '';
-  const values = [];
-  const rules = [];
+  const [missionDraft, setMissionDraft] = useState('');
+  const [valueDraft, setValueDraft] = useState('');
+  const [ruleDraft, setRuleDraft] = useState('');
 
-  const handleSubmitProposal = () => {
+  const missionText = constitution.mission;
+  const values = constitution.values;
+  const rules = constitution.rules.map((rule) => rule.body);
+  const nameOf = (userId) => members.find((m) => m.user_id === userId)?.display_name ?? 'Family member';
+
+  const runAndToast = async (promise, success) => {
+    const outcome = await promise;
+    showToast(outcome.ok ? success : outcome.message);
+    return outcome.ok;
+  };
+
+  const handleSubmitProposal = async () => {
     if(!proposalText.trim()) {
       showToast('Please draft an amendment proposal');
       return;
     }
-    showToast('Amendment proposal submitted!');
+    if (constitution.live) {
+      const ok = await runAndToast(
+        constitution.proposeAmendment({ proposal: proposalText, rationale: rationaleText }),
+        'Amendment proposal submitted!'
+      );
+      if (!ok) return;
+    } else {
+      showToast('Amendment proposal submitted!');
+    }
     setIsProposeModalOpen(false);
     setProposalText('');
     setRationaleText('');
@@ -79,6 +102,12 @@ export default function ConstitutionPage() {
             <h3 className="text-lg font-bold">Our Core Values</h3>
           </div>
           <div className="grid grid-cols-1 gap-3">
+            {values.map((value) => (
+              <div key={value.id} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <span className="material-symbols-outlined text-primary">auto_awesome</span>
+                <span className="text-sm font-bold">{value.title}</span>
+              </div>
+            ))}
             {values.length === 0 && (
               <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center dark:border-slate-800 dark:bg-slate-900">
                 <span className="material-symbols-outlined text-3xl text-slate-300">auto_awesome</span>
@@ -108,11 +137,70 @@ export default function ConstitutionPage() {
           </ul>
         </section>
 
+        {constitution.live && isAdult && (
+          <section className="px-4 py-2 space-y-3" aria-label="Edit constitution">
+            <h3 className="px-2 text-sm font-bold uppercase tracking-wider text-slate-500">Edit (adults)</h3>
+            <form
+              className="flex gap-2"
+              onSubmit={async (event) => {
+                event.preventDefault();
+                if (await runAndToast(constitution.saveMission(missionDraft), 'Mission saved')) setMissionDraft('');
+              }}
+            >
+              <input value={missionDraft} onChange={(e) => setMissionDraft(e.target.value)} placeholder="Family mission" className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
+              <button type="submit" disabled={!missionDraft.trim()} className="rounded-xl bg-primary px-3 py-2 text-sm font-bold text-white disabled:opacity-50">Save mission</button>
+            </form>
+            <form
+              className="flex gap-2"
+              onSubmit={async (event) => {
+                event.preventDefault();
+                if (await runAndToast(constitution.addValue(valueDraft), 'Value added')) setValueDraft('');
+              }}
+            >
+              <input value={valueDraft} onChange={(e) => setValueDraft(e.target.value)} placeholder="New value" className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
+              <button type="submit" disabled={!valueDraft.trim()} className="rounded-xl bg-primary px-3 py-2 text-sm font-bold text-white disabled:opacity-50">Add value</button>
+            </form>
+            <form
+              className="flex gap-2"
+              onSubmit={async (event) => {
+                event.preventDefault();
+                if (await runAndToast(constitution.addRule(ruleDraft), 'Rule added')) setRuleDraft('');
+              }}
+            >
+              <input value={ruleDraft} onChange={(e) => setRuleDraft(e.target.value)} placeholder="New rule" className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
+              <button type="submit" disabled={!ruleDraft.trim()} className="rounded-xl bg-primary px-3 py-2 text-sm font-bold text-white disabled:opacity-50">Add rule</button>
+            </form>
+          </section>
+        )}
+
+        {constitution.live && constitution.amendments.length > 0 && (
+          <section className="px-4 py-6 space-y-3">
+            <h3 className="px-2 text-lg font-bold">Amendments</h3>
+            {constitution.amendments.map((amendment) => (
+              <div key={amendment.id} className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <p className="text-sm font-bold">{amendment.proposal}</p>
+                {amendment.rationale && <p className="mt-1 text-xs text-slate-500">{amendment.rationale}</p>}
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  {nameOf(amendment.proposed_by)} · {amendment.status}
+                </p>
+                {isAdult && amendment.status === 'proposed' && (
+                  <div className="mt-3 flex gap-2">
+                    <button onClick={() => runAndToast(constitution.decideAmendment(amendment.id, true), 'Amendment adopted')} className="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">Adopt</button>
+                    <button onClick={() => runAndToast(constitution.decideAmendment(amendment.id, false), 'Amendment declined')} className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">Decline</button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
+
         {/* Acknowledgment Section */}
         <section className="px-4 py-6 space-y-4">
           <div className="flex items-center justify-between px-2">
             <h3 className="text-lg font-bold">Signatories</h3>
-            <span className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">No live signatures</span>
+            <span className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">
+              {constitution.signatures.length ? `${constitution.signatures.length} signed` : 'No live signatures'}
+            </span>
           </div>
           
           <div className="flex flex-wrap items-center gap-3 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
@@ -122,12 +210,22 @@ export default function ConstitutionPage() {
               </div>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold truncate">No live signatories recorded</p>
-              <p className="text-xs text-slate-500">Family Hub</p>
+              <p className="text-sm font-bold truncate">
+                {constitution.signatures.length
+                  ? constitution.signatures.map((s) => nameOf(s.user_id)).join(', ')
+                  : 'No live signatories recorded'}
+              </p>
+              <p className="text-xs text-slate-500">{family?.name ?? 'Family Hub'}</p>
             </div>
-            <div className="text-primary pr-2">
-              <span className="material-symbols-outlined block text-2xl">verified</span>
-            </div>
+            {constitution.live && !constitution.hasSigned ? (
+              <button onClick={() => runAndToast(constitution.sign(), 'Signed')} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-white">
+                Sign
+              </button>
+            ) : (
+              <div className="text-primary pr-2">
+                <span className="material-symbols-outlined block text-2xl">verified</span>
+              </div>
+            )}
           </div>
         </section>
 
