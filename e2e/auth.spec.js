@@ -49,8 +49,8 @@ test.describe('LoginPage', () => {
     await expect(page.getByText('alex@example.com - adult')).toBeVisible();
   });
 
-  test('Google and Apple sign-in buttons are visible', async ({ page }) => {
-    await expect(page.getByText('Continue with Google')).toBeVisible();
-    await expect(page.getByText('Continue with Apple')).toBeVisible();
+  test('no status banner or unwired social sign-in on the login screen', async ({ page }) => {
+    await expect(page.getByText(/authentication is active/i)).toHaveCount(0);
+    await expect(page.getByText(/Continue with (Google|Apple)/)).toHaveCount(0);
   });
 });
