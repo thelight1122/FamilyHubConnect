@@ -1,19 +1,22 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { paths } from '../../config/paths';
-import { ONBOARDING_FAMILY_DRAFT_KEY } from './OnboardingSetupPage';
-
-function readDraft() {
-  try {
-    return JSON.parse(localStorage.getItem(ONBOARDING_FAMILY_DRAFT_KEY) ?? 'null');
-  } catch {
-    return null;
-  }
-}
+import useAuth from '../../context/useAuth';
+import { clearDraft, readDraft } from './draft';
+import { finishOnboarding } from '../../lib/onboarding';
+import { inviteLink } from '../../hooks/useInvites';
 
 export default function InviteFamilyPage() {
   const navigate = useNavigate();
+  const { supabaseAuthEnabled } = useAuth();
   const draft = readDraft();
+  // With a live project the last step creates the real family; the prototype keeps its preview.
+  if (supabaseAuthEnabled) return <LiveFinish draft={draft} />;
+  return <PrototypeInvite draft={draft} navigate={navigate} />;
+}
+
+function PrototypeInvite({ draft, navigate }) {
   const inviteCandidates = useMemo(
     () => (draft?.members ?? []).filter((member) => member.email),
     [draft]
@@ -149,6 +152,105 @@ export default function InviteFamilyPage() {
           </button>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function LiveFinish({ draft }) {
+  const navigate = useNavigate();
+  const { isLoggedIn, currentUser, authReady } = useAuth();
+  const [result, setResult] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copied, setCopied] = useState(null);
+
+  const finish = async () => {
+    setIsSubmitting(true);
+    setResult(await finishOnboarding(draft ?? {}, currentUser.id, currentUser.name));
+    setIsSubmitting(false);
+  };
+
+  const share = async (invite) => {
+    const url = inviteLink(invite.code);
+    try {
+      if (navigator.share) await navigator.share({ title: 'Join our family on Family Hub', text: `${invite.name}, here's your invite.`, url });
+      else {
+        await navigator.clipboard.writeText(url);
+        setCopied(invite.code);
+      }
+    } catch {
+      // Cancelled or unavailable; the link is on screen.
+    }
+  };
+
+  const done = () => {
+    clearDraft();
+    navigate(paths.dashboard);
+  };
+
+  return (
+    <div className="relative flex min-h-screen w-full max-w-md mx-auto flex-col bg-white shadow-2xl overflow-x-hidden font-display text-slate-900">
+      <header className="sticky top-0 z-10 flex items-center border-b border-slate-100 bg-white/80 p-4 backdrop-blur-md">
+        <button onClick={() => navigate(paths.onboardingRules)} aria-label="Back to rules" className="flex size-10 items-center justify-center rounded-full hover:bg-slate-100">
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 className="ml-2 flex-1 text-lg font-bold">Finish Setup</h1>
+      </header>
+
+      <main className="flex-1 space-y-6 p-6 pb-32">
+        <section>
+          <p className="text-sm font-bold uppercase tracking-wider text-primary">4 of 4</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight">{result?.ok ? 'Your family is ready' : 'Create your family'}</h2>
+        </section>
+
+        {!draft?.familyName ? (
+          <p className="rounded-2xl border border-dashed border-slate-200 p-6 text-center text-sm font-semibold text-slate-500">
+            Start from the first step. <Link to={paths.onboardingSetup} className="text-primary font-bold">Set up your family</Link>
+          </p>
+        ) : !authReady ? null : !isLoggedIn ? (
+          <p className="rounded-2xl bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+            Sign in to finish. <Link to={`${paths.login}?next=${encodeURIComponent(paths.onboardingInvite)}`} className="font-bold underline">Sign in</Link>
+          </p>
+        ) : result?.ok ? (
+          <section className="space-y-3" aria-label="Invites to share">
+            <p className="text-sm text-slate-600">
+              {result.familyName} is set up, and its constitution starts with your values and rules.
+              {result.invites.length ? ' Share each invite with the person it is for: every code works once and expires in 7 days.' : ''}
+            </p>
+            {result.invites.map((invite) => (
+              <div key={invite.code} className="rounded-2xl border border-slate-100 p-4">
+                <p className="text-sm font-bold">{invite.name} <span className="text-xs font-medium capitalize text-slate-400">· {invite.role}</span></p>
+                <p className="mt-1 font-mono text-lg font-black tracking-[0.25em]" data-testid={`invite-code-${invite.name}`}>{invite.code}</p>
+                <p className="break-all text-xs text-slate-500">{inviteLink(invite.code)}</p>
+                <button onClick={() => share(invite)} className="mt-2 w-full rounded-xl bg-primary/10 py-2 text-sm font-bold text-primary">
+                  {copied === invite.code ? 'Link copied' : 'Share invite link'}
+                </button>
+              </div>
+            ))}
+          </section>
+        ) : (
+          <section className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+            <h3 className="text-lg font-black">{draft.familyName}</h3>
+            <p className="text-sm text-slate-600"><strong>Values:</strong> {draft.values?.length ? draft.values.join(', ') : 'none chosen'}</p>
+            <p className="text-sm text-slate-600"><strong>Rules:</strong> {draft.rules?.length ? draft.rules.join('; ') : 'none chosen'}</p>
+            <p className="text-sm text-slate-600">
+              <strong>Invites for:</strong> {draft.members?.filter((m) => m.name).map((m) => `${m.name} (${m.role})`).join(', ') || 'no one yet'}
+            </p>
+            {result && !result.ok && <p className="text-sm font-semibold text-rose-600" role="alert">{result.message} Nothing is lost: try again.</p>}
+          </section>
+        )}
+      </main>
+
+      {draft?.familyName && isLoggedIn && (
+        <footer className="fixed bottom-0 left-1/2 z-20 w-full max-w-md -translate-x-1/2 border-t border-slate-100 bg-white/90 px-6 py-4 backdrop-blur-md">
+          {result?.ok ? (
+            <button onClick={done} className="w-full rounded-xl bg-primary py-4 font-bold text-white">Go to your family</button>
+          ) : (
+            <button onClick={finish} disabled={isSubmitting} className="w-full rounded-xl bg-primary py-4 font-bold text-white disabled:opacity-60">
+              {isSubmitting ? 'Setting up…' : 'Create family'}
+            </button>
+          )}
+        </footer>
+      )}
     </div>
   );
 }

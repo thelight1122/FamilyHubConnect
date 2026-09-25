@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { readDraft, saveDraft } from './draft';
 
 const PRESET_RULES = [
   { id: 1, text: 'No phones at dinner', icon: 'no_sim' },
@@ -10,9 +11,21 @@ const PRESET_RULES = [
 
 export default function OnboardingRulesPage() {
   const navigate = useNavigate();
-  const [checked, setChecked] = useState([1, 2]);
+  // Choices are saved to the draft; custom rules from an earlier visit come back.
+  const saved = readDraft()?.rules;
+  const [rules, setRules] = useState(() => [
+    ...PRESET_RULES,
+    ...(saved ?? [])
+      .filter((text) => !PRESET_RULES.some((r) => r.text === text))
+      .map((text, i) => ({ id: 1000 + i, text, icon: 'rule' })),
+  ]);
+  const [checked, setChecked] = useState(() => (saved ? rules.filter((r) => saved.includes(r.text)).map((r) => r.id) : [1, 2]));
   const [customRule, setCustomRule] = useState('');
-  const [rules, setRules] = useState(PRESET_RULES);
+
+  const goTo = (path) => {
+    saveDraft({ rules: rules.filter((r) => checked.includes(r.id)).map((r) => r.text) });
+    navigate(path);
+  };
 
   const toggleRule = (id) => {
     setChecked((prev) =>
@@ -133,13 +146,13 @@ export default function OnboardingRulesPage() {
       <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 py-4">
         <div className="max-w-md mx-auto flex gap-4">
           <button 
-            onClick={() => navigate('/onboarding/values')}
+            onClick={() => goTo('/onboarding/values')}
             className="flex-1 py-4 px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
           >
             Back
           </button>
           <button 
-            onClick={() => navigate('/onboarding/invite')}
+            onClick={() => goTo('/onboarding/invite')}
             className="flex-[2] py-4 px-6 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2"
           >
             Next: Invite Decision

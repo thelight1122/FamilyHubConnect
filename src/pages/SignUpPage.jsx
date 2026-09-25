@@ -6,7 +6,7 @@ import useAuth from '../context/useAuth';
 const inputClass = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold outline-none focus:border-primary focus:ring-2 focus:ring-primary/20';
 
 // Creates a live account. After an invite link this returns to /join; a new
-// parent goes on to create their family.
+// parent continues into the setup wizard.
 export default function SignUpPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -29,7 +29,7 @@ export default function SignUpPage() {
       email: form.email.trim(),
       password: form.password,
       displayName: form.displayName.trim(),
-      redirectTo: `${window.location.origin}${next ?? paths.chores}`,
+      redirectTo: `${window.location.origin}${next ?? paths.onboardingSetup}`,
     });
     setIsSubmitting(false);
 
@@ -41,7 +41,7 @@ export default function SignUpPage() {
       setConfirmSent(true);
       return;
     }
-    navigate(next ?? paths.chores);
+    navigate(next ?? paths.onboardingSetup);
   };
 
   const signInLink = `${paths.login}${next ? `?next=${encodeURIComponent(next)}` : ''}`;

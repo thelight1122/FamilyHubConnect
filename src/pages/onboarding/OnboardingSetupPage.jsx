@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../config/paths';
-
-const STORAGE_KEY = 'fhc:onboarding-family-draft';
+import useAuth from '../../context/useAuth';
+import { readDraft, saveDraft } from './draft';
 
 const blankMember = () => ({
   id: crypto.randomUUID(),
@@ -13,15 +13,26 @@ const blankMember = () => ({
 
 export default function OnboardingSetupPage() {
   const navigate = useNavigate();
-  const [account, setAccount] = useState({ name: '', email: '' });
-  const [familyName, setFamilyName] = useState('');
-  const [members, setMembers] = useState([blankMember()]);
+  const { supabaseAuthEnabled, isLoggedIn, currentUser, signUp } = useAuth();
+  // Live and already signed in: the account exists, so skip the login fields.
+  const signedIn = supabaseAuthEnabled && isLoggedIn;
+  const needsAccount = supabaseAuthEnabled && !isLoggedIn;
+  const saved = readDraft();
+  const [account, setAccount] = useState({ name: saved?.account?.name ?? '', email: saved?.account?.email ?? '' });
+  const [password, setPassword] = useState('');
+  const [familyName, setFamilyName] = useState(saved?.familyName ?? '');
+  const [members, setMembers] = useState(() =>
+    saved?.members?.length ? saved.members.map((member) => ({ ...member, id: crypto.randomUUID() })) : [blankMember()]
+  );
+  const [message, setMessage] = useState(null);
+  const [confirmSent, setConfirmSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const canContinue = useMemo(() => {
-    const accountReady = account.name.trim() && account.email.trim() && familyName.trim();
+    const accountReady = signedIn || (account.name.trim() && account.email.trim() && (!needsAccount || password.length >= 8));
     const membersReady = members.every((member) => member.name.trim());
-    return Boolean(accountReady && membersReady);
-  }, [account, familyName, members]);
+    return Boolean(accountReady && familyName.trim() && membersReady);
+  }, [account, familyName, members, needsAccount, password, signedIn]);
 
   const updateMember = (id, patch) => {
     setMembers((current) => current.map((member) => (
@@ -35,11 +46,11 @@ export default function OnboardingSetupPage() {
     setMembers((current) => current.length === 1 ? current : current.filter((member) => member.id !== id));
   };
 
-  const handleContinue = () => {
-    const draft = {
+  const handleContinue = async () => {
+    saveDraft({
       account: {
-        name: account.name.trim(),
-        email: account.email.trim(),
+        name: signedIn ? currentUser?.name ?? account.name.trim() : account.name.trim(),
+        email: signedIn ? currentUser?.email ?? account.email.trim() : account.email.trim(),
       },
       familyName: familyName.trim(),
       members: members.map((member) => ({
@@ -47,9 +58,28 @@ export default function OnboardingSetupPage() {
         email: member.email.trim(),
         role: member.role,
       })),
-    };
+    });
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    if (needsAccount) {
+      setIsSubmitting(true);
+      setMessage(null);
+      const result = await signUp({
+        email: account.email.trim(),
+        password,
+        displayName: account.name.trim(),
+        redirectTo: `${window.location.origin}${paths.onboardingValues}`,
+      });
+      setIsSubmitting(false);
+      if (!result.ok) {
+        setMessage(result.message);
+        return;
+      }
+      if (result.needsConfirmation) {
+        setConfirmSent(true);
+        return;
+      }
+    }
+
     navigate(paths.onboardingValues);
   };
 
@@ -87,6 +117,11 @@ export default function OnboardingSetupPage() {
 
           <section className="px-4 py-4 space-y-3">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Your Login</h3>
+            {signedIn ? (
+              <p className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-600">
+                Signed in as {currentUser?.email ?? currentUser?.name}.
+              </p>
+            ) : (<>
             <label className="block">
               <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Your name</span>
               <input
@@ -106,6 +141,20 @@ export default function OnboardingSetupPage() {
                 placeholder="you@example.com"
               />
             </label>
+            {needsAccount && (
+              <label className="block">
+                <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Password</span>
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold outline-none focus:border-primary focus:bg-white"
+                  placeholder="At least 8 characters"
+                />
+              </label>
+            )}
+            </>)}
             <label className="block">
               <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Family name</span>
               <input
@@ -184,9 +233,15 @@ export default function OnboardingSetupPage() {
         </main>
 
         <footer className="fixed bottom-0 left-1/2 z-20 w-full max-w-md -translate-x-1/2 border-t border-slate-100 bg-white/90 px-4 py-4 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/90">
+          {message && <p className="mb-2 text-sm font-semibold text-rose-600" role="alert">{message}</p>}
+          {confirmSent && (
+            <p className="mb-2 text-sm font-semibold text-slate-600" role="status">
+              Check your email: open the confirmation link on this device to continue setting up {familyName}.
+            </p>
+          )}
           <button
             onClick={handleContinue}
-            disabled={!canContinue}
+            disabled={!canContinue || isSubmitting || confirmSent}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-4 font-bold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-primary/40"
           >
             Continue to Family Values
@@ -198,4 +253,3 @@ export default function OnboardingSetupPage() {
   );
 }
 
-export { STORAGE_KEY as ONBOARDING_FAMILY_DRAFT_KEY };
