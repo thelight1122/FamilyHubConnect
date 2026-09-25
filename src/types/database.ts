@@ -286,6 +286,47 @@ export type Database = {
           },
         ]
       }
+      creator_posts: {
+        Row: {
+          author_id: string
+          caption: string
+          created_at: string
+          duration_seconds: number | null
+          family_id: string
+          id: string
+          kind: string
+          media_path: string | null
+        }
+        Insert: {
+          author_id?: string
+          caption?: string
+          created_at?: string
+          duration_seconds?: number | null
+          family_id: string
+          id?: string
+          kind: string
+          media_path?: string | null
+        }
+        Update: {
+          author_id?: string
+          caption?: string
+          created_at?: string
+          duration_seconds?: number | null
+          family_id?: string
+          id?: string
+          kind?: string
+          media_path?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_posts_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           created_at: string
@@ -361,6 +402,44 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "family_members_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      health_logs: {
+        Row: {
+          created_by: string | null
+          family_id: string
+          id: string
+          kind: string
+          logged_at: string
+          member_id: string
+          note: string
+        }
+        Insert: {
+          created_by?: string | null
+          family_id: string
+          id?: string
+          kind: string
+          logged_at?: string
+          member_id: string
+          note?: string
+        }
+        Update: {
+          created_by?: string | null
+          family_id?: string
+          id?: string
+          kind?: string
+          logged_at?: string
+          member_id?: string
+          note?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_logs_family_id_fkey"
             columns: ["family_id"]
             isOneToOne: false
             referencedRelation: "families"
@@ -460,6 +539,299 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "families"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_items: {
+        Row: {
+          created_at: string
+          detail: string
+          due_on: string | null
+          family_id: string
+          handled_at: string | null
+          id: string
+          monthly_cost_cents: number | null
+          section: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          detail?: string
+          due_on?: string | null
+          family_id: string
+          handled_at?: string | null
+          id?: string
+          monthly_cost_cents?: number | null
+          section: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          detail?: string
+          due_on?: string | null
+          family_id?: string
+          handled_at?: string | null
+          id?: string
+          monthly_cost_cents?: number | null
+          section?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_items_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medications: {
+        Row: {
+          active: boolean
+          created_at: string
+          dose: string
+          family_id: string
+          id: string
+          member_id: string
+          name: string
+          schedule: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          dose?: string
+          family_id: string
+          id?: string
+          member_id: string
+          name: string
+          schedule?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          dose?: string
+          family_id?: string
+          id?: string
+          member_id?: string
+          name?: string
+          schedule?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medications_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pet_feedings: {
+        Row: {
+          family_id: string
+          id: string
+          label: string
+          pet_id: string
+          time_of_day: string
+        }
+        Insert: {
+          family_id: string
+          id?: string
+          label: string
+          pet_id: string
+          time_of_day: string
+        }
+        Update: {
+          family_id?: string
+          id?: string
+          label?: string
+          pet_id?: string
+          time_of_day?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_feedings_pet_id_family_id_fkey"
+            columns: ["pet_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      pet_walks: {
+        Row: {
+          distance_km: number | null
+          family_id: string
+          id: string
+          minutes: number
+          pet_id: string
+          walked_at: string
+          walked_by: string
+        }
+        Insert: {
+          distance_km?: number | null
+          family_id: string
+          id?: string
+          minutes: number
+          pet_id: string
+          walked_at?: string
+          walked_by?: string
+        }
+        Update: {
+          distance_km?: number | null
+          family_id?: string
+          id?: string
+          minutes?: number
+          pet_id?: string
+          walked_at?: string
+          walked_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_walks_pet_id_family_id_fkey"
+            columns: ["pet_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          birth_date: string | null
+          created_at: string
+          family_id: string
+          id: string
+          name: string
+          species: string
+          weight_kg: number | null
+        }
+        Insert: {
+          birth_date?: string | null
+          created_at?: string
+          family_id: string
+          id?: string
+          name: string
+          species?: string
+          weight_kg?: number | null
+        }
+        Update: {
+          birth_date?: string | null
+          created_at?: string
+          family_id?: string
+          id?: string
+          name?: string
+          species?: string
+          weight_kg?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pets_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_options: {
+        Row: {
+          family_id: string
+          id: string
+          label: string
+          position: number
+          post_id: string
+        }
+        Insert: {
+          family_id: string
+          id?: string
+          label: string
+          position?: number
+          post_id: string
+        }
+        Update: {
+          family_id?: string
+          id?: string
+          label?: string
+          position?: number
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_options_post_id_family_id_fkey"
+            columns: ["post_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "creator_posts"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      poll_votes: {
+        Row: {
+          created_at: string
+          family_id: string
+          option_id: string
+          post_id: string
+          voter_id: string
+        }
+        Insert: {
+          created_at?: string
+          family_id: string
+          option_id: string
+          post_id: string
+          voter_id?: string
+        }
+        Update: {
+          created_at?: string
+          family_id?: string
+          option_id?: string
+          post_id?: string
+          voter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_option_id_post_id_fkey"
+            columns: ["option_id", "post_id"]
+            isOneToOne: false
+            referencedRelation: "poll_options"
+            referencedColumns: ["id", "post_id"]
+          },
+          {
+            foreignKeyName: "poll_votes_post_id_family_id_fkey"
+            columns: ["post_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "creator_posts"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      post_likes: {
+        Row: {
+          created_at: string
+          family_id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          family_id: string
+          post_id: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          family_id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_likes_post_id_family_id_fkey"
+            columns: ["post_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "creator_posts"
+            referencedColumns: ["id", "family_id"]
           },
         ]
       }
@@ -623,6 +995,269 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "accountability_sessions"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_checklist: {
+        Row: {
+          critical: boolean
+          family_id: string
+          id: string
+          label: string
+          packed: boolean
+          team_id: string
+        }
+        Insert: {
+          critical?: boolean
+          family_id: string
+          id?: string
+          label: string
+          packed?: boolean
+          team_id: string
+        }
+        Update: {
+          critical?: boolean
+          family_id?: string
+          id?: string
+          label?: string
+          packed?: boolean
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_checklist_team_id_family_id_fkey"
+            columns: ["team_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      team_contacts: {
+        Row: {
+          email: string
+          family_id: string
+          id: string
+          name: string
+          phone: string
+          role: string
+          team_id: string
+        }
+        Insert: {
+          email?: string
+          family_id: string
+          id?: string
+          name: string
+          phone?: string
+          role?: string
+          team_id: string
+        }
+        Update: {
+          email?: string
+          family_id?: string
+          id?: string
+          name?: string
+          phone?: string
+          role?: string
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_contacts_team_id_family_id_fkey"
+            columns: ["team_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      team_events: {
+        Row: {
+          family_id: string
+          id: string
+          kind: string
+          location: string
+          starts_at: string
+          team_id: string
+          title: string
+        }
+        Insert: {
+          family_id: string
+          id?: string
+          kind?: string
+          location?: string
+          starts_at: string
+          team_id: string
+          title: string
+        }
+        Update: {
+          family_id?: string
+          id?: string
+          kind?: string
+          location?: string
+          starts_at?: string
+          team_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_events_team_id_family_id_fkey"
+            columns: ["team_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      team_messages: {
+        Row: {
+          attachment_path: string | null
+          author_id: string
+          body: string
+          created_at: string
+          family_id: string
+          id: string
+          team_id: string
+        }
+        Insert: {
+          attachment_path?: string | null
+          author_id?: string
+          body?: string
+          created_at?: string
+          family_id: string
+          id?: string
+          team_id: string
+        }
+        Update: {
+          attachment_path?: string | null
+          author_id?: string
+          body?: string
+          created_at?: string
+          family_id?: string
+          id?: string
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_messages_team_id_family_id_fkey"
+            columns: ["team_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id", "family_id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          created_at: string
+          family_id: string
+          id: string
+          league: string
+          name: string
+          record: string
+        }
+        Insert: {
+          created_at?: string
+          family_id: string
+          id?: string
+          league?: string
+          name: string
+          record?: string
+        }
+        Update: {
+          created_at?: string
+          family_id?: string
+          id?: string
+          league?: string
+          name?: string
+          record?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teams_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timeline_entries: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          family_id: string
+          id: string
+          kind: string
+          occurred_on: string
+          photo_path: string | null
+          title: string
+          visibility: string
+        }
+        Insert: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          family_id: string
+          id?: string
+          kind: string
+          occurred_on?: string
+          photo_path?: string | null
+          title?: string
+          visibility?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          family_id?: string
+          id?: string
+          kind?: string
+          occurred_on?: string
+          photo_path?: string | null
+          title?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timeline_entries_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vet_appointments: {
+        Row: {
+          family_id: string
+          id: string
+          pet_id: string
+          reason: string
+          scheduled_at: string
+        }
+        Insert: {
+          family_id: string
+          id?: string
+          pet_id: string
+          reason: string
+          scheduled_at: string
+        }
+        Update: {
+          family_id?: string
+          id?: string
+          pet_id?: string
+          reason?: string
+          scheduled_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vet_appointments_pet_id_family_id_fkey"
+            columns: ["pet_id", "family_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id", "family_id"]
           },
         ]
       }
